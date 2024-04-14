@@ -1,2 +1,3 @@
 /manim project/__pycache__/*.pyc
 /manim project/media/
+*.pdf

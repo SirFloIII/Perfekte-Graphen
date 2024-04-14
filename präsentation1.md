@@ -60,6 +60,12 @@ todo: grafik
 
 ---
 
+## Induzierter Teilgraph von G:
+
+## für $A \subset V$ definiere $G_A := (A, \{vw \in E|v, w \in A\})$
+
+---
+
 ## $G$ ist ein perfekter Graph $:\Leftrightarrow$
 
 ## $\forall A \subset V: \chi(G_A) = \omega(G_A)$
@@ -70,7 +76,15 @@ todo: grafik
 
 ---
 
-## Schwacher Perfekte-Graphen-Satz
+## Schwacher Perfekte-Graphen-Satz [Lovász 1972]
+
+### Graph $G$ ist genau dann perfekt, wenn $\bar G$ perfekt ist.
+ 
+### Alternative Formulierung: Diese 3 Aussagen sind equivalent:
+
+- $\forall A \subset V: \chi(G_A) = \omega(G_A)$
+- $\forall A \subset V: k(G_A) = \alpha(G_A)$
+- $\forall A \subset V: \omega(G_A)\cdot\alpha(G_A) \geq |A|$
 
 ---
 
@@ -85,17 +99,23 @@ todo: grafik
 
 ## Triangulierte Graphen
 
-Todo: Def
+### Definition: Ein Graph $G$ heißt trianguliert $:\Leftrightarrow$
+
+Jeder Kreis in $G$ mit Länge $\geq 4$ besitzt eine Kante, die zwei im Kreis nicht benachbarte Knoten verbindet.
+
+todo: skizze
 
 ---
 
-## $v \in V$ heißt simplektischer Knoten $:\Leftrightarrow$
+### $v \in V$ heißt simplektischer Knoten $:\Leftrightarrow$
 
-## $Adj(v) \cong K_n$ für $n$ passend
+### $Adj(v)$ ist vollständiger Teilgraph von $G$
 
-### Lemma 1: Ein triangulierter Graph hat mindestens 2 simplektische Knoten.
+###
 
-### Lemma 2: Wenn $v$ ein simplektischer Knoten von $G$ ist und $G - v$ trianguliert ist, dann ist $G$ trianguliert.
+Lemma 1: Ein triangulierter Graph hat mindestens 2 simplektische Knoten.
+
+Lemma 2: Wenn $v$ ein simplektischer Knoten von $G$ ist und $G - v$ trianguliert ist, dann ist $G$ trianguliert.
 
 ---
 
@@ -121,12 +141,27 @@ Lineare Laufzeit $O(|V| + |E|)$
 
 ---
 
-## Interval-Schnitt Graph
+## Ausblick:
 
-todo: Def
+### Interval-Schnitt-Graph
 
-Todo: def proper
+Ein Graph heißt Interval-Schnitt-Graph, wenn es eine Familie von (reellen) Intervallen gibt, die in bijektiv auf die Knoten abgebildet werden und eine Kante zwischen 2 Knoten existiert gdw. die zugehörigen Intervalle überlappen.
+
+todo: grafik
+
+Ein Interval-Schnitt-Graph heißt proper, wenn keines der Intervalle ganz in einem anderen ist.
 
 ---
 
-Nakamara et al
+## Aufzählungsschema für Proper Interval-Schnitt-Graphen
+
+Paper von Kawahara et al
+
+Gewisse Binärstrings $\cong$ Proper Interval-Schnitt-Graphen
+
+Bau eines Binary-Decision-Diagrams
+
+---
+
+# Danke für Ihre Aufmerksamkeit
+
