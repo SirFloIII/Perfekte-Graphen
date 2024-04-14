@@ -24,7 +24,19 @@ class: invert
 
 ### $\bar G := \left(V, \left\{ ab | a \neq b \in V, ab\not\in E\right\}\right)$
 
-todo: grafik
+---
+
+![](Bilder/Komplement%C3%A4rer_Graph.png)
+
+---
+
+## Induzierter Teilgraph von G:
+
+## für $A \subset V$ definiere $G_A := (A, \{vw \in E|v, w \in A\})$
+
+---
+
+![](Bilder/subgraph.png)
 
 ---
 
@@ -56,13 +68,7 @@ Wie groß ist die größte stabilste Menge (Anti-Clique) in $G$?
 
 ## Sowie: $k(G) \geq \alpha(G)$
 
-todo: grafik
-
----
-
-## Induzierter Teilgraph von G:
-
-## für $A \subset V$ definiere $G_A := (A, \{vw \in E|v, w \in A\})$
+![bg 80%](Bilder/coloring.png)
 
 ---
 
@@ -93,17 +99,15 @@ todo: grafik
 - Vollständige Graphen
 - Bipartite Graphen
 - Triangulierte Graphen
-- Interval-Schnitt Graphen
+- Interval-Schnitt-Graphen
 
 ---
 
-## Triangulierte Graphen
-
 ### Definition: Ein Graph $G$ heißt trianguliert $:\Leftrightarrow$
 
-Jeder Kreis in $G$ mit Länge $\geq 4$ besitzt eine Kante, die zwei im Kreis nicht benachbarte Knoten verbindet.
+Jeder Kreis in $G$ mit Länge $\geq 4$ besitzt eine Kante, die zwei im Kreis nicht Knoten verbindet.
 
-todo: skizze
+![](Bilder/triangulated.png)
 
 ---
 
@@ -119,7 +123,7 @@ Lemma 2: Wenn $v$ ein simplektischer Knoten von $G$ ist und $G - v$ trianguliert
 
 ---
 
-### Erster (Naiver) Erkennungsalgorithmus für triangulierbare Graphen:
+### Erster (naiver) Erkennungsalgorithmus für triangulierbare Graphen:
 
 Iterativ simplektische Knoten entfernen:
 - Wenn man alle Knoten entfernen kann, ist der Graph trianguliert
@@ -127,7 +131,7 @@ Iterativ simplektische Knoten entfernen:
 
 Reihenfolge der Knoten nennt man Perfektes Knoten-Eliminations-Schema.
 
-Laufzeit $O(|V|^3|E|)$ ist schlecht
+Laufzeit $O(|V|^3|E|)$ ist relativ schlecht
 
 ---
 
@@ -141,13 +145,11 @@ Lineare Laufzeit $O(|V| + |E|)$
 
 ---
 
-## Ausblick:
-
 ### Interval-Schnitt-Graph
 
 Ein Graph heißt Interval-Schnitt-Graph, wenn es eine Familie von (reellen) Intervallen gibt, die in bijektiv auf die Knoten abgebildet werden und eine Kante zwischen 2 Knoten existiert gdw. die zugehörigen Intervalle überlappen.
 
-todo: grafik
+![](Bilder/intervals.png)
 
 Ein Interval-Schnitt-Graph heißt proper, wenn keines der Intervalle ganz in einem anderen ist.
 

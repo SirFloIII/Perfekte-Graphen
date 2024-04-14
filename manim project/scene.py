@@ -17,7 +17,11 @@ class ExampleImperfectGraph(Scene):
             #(4, 6),
             ]
 
-        graph = Graph(V, E)
+        graph = Graph(V, E,
+                    layout = "spring",
+                    vertex_type=Dot,
+                    vertex_config={"radius" : 0.15},
+                    )
 
         text1 = MathTex(r"{{\omega(G) = 3}}").shift(3*DOWN)
         text2 = MathTex(r"{{\omega(G) = 3}}= \chi(G)").shift(3*DOWN)
@@ -130,7 +134,9 @@ def Lex_BFS(G: Graph) -> list:
                         (d, g),
                     ],
                     layout = "kamada_kawai",
-                    layout_scale = 3.2).shift(2*DOWN + 2*RIGHT)
+                    layout_scale = 3.2,
+                    vertex_config={"radius" : 0.15},
+                    ).shift(2*DOWN + 2*RIGHT)
 
         self.play(Create(G))
         
@@ -164,7 +170,7 @@ def Lex_BFS(G: Graph) -> list:
             
             ### line 5
             v = pick_maximal_unnumbered_vertex(label, order)
-            self.play(Indicate(G.vertices[v]))
+            self.play(G.vertices[v].animate.set_fill(GREEN))
 
             ### line 6
             order.append(v)
@@ -183,9 +189,24 @@ def Lex_BFS(G: Graph) -> list:
                 new_t = MathTex("{{"+w+"}}" + "{{: [}}"+"{{,}}".join(map(str, label[w]))+"{{]}}").scale(0.8).next_to(G.vertices[w], 0.4*UR * (-1 if w in "efg" else 1))
                 self.play(TransformMatchingTex(t, new_t), run_time = 0.2)
                 label_anim[w] = new_t
+
+            self.play(G.vertices[v].animate.set_fill(GRAY))
+
         
 
         ### line 9
         #return reversed(order)
+        self.play(FadeOut(i_anim_old)
+        )
+        order_anim_new = MathTex(r"{{return [}}{{"+"}},{{".join(reversed(order))+"}}{{]}}").shift(DOWN*2 + LEFT*4)
+        self.play(TransformMatchingTex(order_anim, order_anim_new))
+        order_anim = order_anim_new
+
+        self.wait(5)
+
+        for v in reversed(order):
+            self.play(FadeOut(G.remove_vertices(v)),
+                      FadeOut(label_anim[v]),)
+ #                     Indicate(G.adj(v)))
 
         self.wait(10)
