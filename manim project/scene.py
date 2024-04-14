@@ -134,7 +134,7 @@ def Lex_BFS(G: Graph) -> list:
                         (d, g),
                     ],
                     layout = "kamada_kawai",
-                    layout_scale = 3.2,
+                    layout_scale = 3,
                     vertex_config={"radius" : 0.15},
                     ).shift(2*DOWN + 2*RIGHT)
 
