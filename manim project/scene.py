@@ -1,4 +1,6 @@
 from manim import *
+from RecognizingTriangulatedGraphs import GraphWithAdj, pick_maximal_unnumbered_vertex
+
 
 class ExampleImperfectGraph(Scene):
     def construct(self):
@@ -84,3 +86,106 @@ class ExampleImperfectGraph(Scene):
 
         self.wait(1)
         self.play(FadeOut(graph, text4))
+
+class RecognizingTriangulatedGraphs(Scene):
+    def construct(self):
+        code = Code(code = """
+def Lex_BFS(G: Graph) -> list:
+    label = {v : [] for v in G.vertices}
+    order = []
+    for i in range(len(G.vertices), 0, -1):
+        v = pick_maximal_unnumbered_vertex(label, order)
+        order.append(v)
+        for w in G.adj(v):
+            label[w].append(i)
+    return reversed(order)""",
+                    font="Consolas",
+                    language="Python",
+                    style="monokai"
+                   ).shift(2*UP + LEFT)
+
+        self.play(FadeIn(code))
+        self.wait(1)
+
+        a = "a"
+        b = "b"
+        c = "c"
+        d = "d"
+        e = "e"
+        f = "f"
+        g = "g"
+
+        G = GraphWithAdj([a, b, c, d, e, f, g],
+                    [
+                        (a, b),
+                        (b, c),
+                        (c, d),
+                        (e, f),
+                        (f, g),
+                        (a, e),
+                        (b, e),
+                        (b, f),
+                        (c, f),
+                        (c, g),
+                        (d, g),
+                    ],
+                    layout = "kamada_kawai",
+                    layout_scale = 3.2).shift(2*DOWN + 2*RIGHT)
+
+        self.play(Create(G))
+        
+        label_anim = {v : MathTex(v).scale(0.8).next_to(G.vertices[v], 0.4*UR * (-1 if v in "efg" else 1)) for v in G.vertices}
+        
+        self.play(*[FadeIn(t) for t in label_anim.values()])
+
+
+        ### line 2
+        label = {v : [] for v in G.vertices}
+        for v in label_anim.keys():
+            t = label_anim[v]
+            new_t = MathTex("{{"+v+"}}" + "{{: [}}{{]}}").scale(0.8).next_to(G.vertices[v], 0.4*UR * (-1 if v in "efg" else 1))
+            self.play(TransformMatchingTex(t, new_t), run_time = 0.2)
+            label_anim[v] = new_t
+
+        ### line 3
+        order = []
+        order_anim = MathTex(r"{{order = [}}{{]}}").shift(DOWN*1 + LEFT*4)
+        self.play(Create(order_anim))
+
+
+        ### line 4
+        for i in range(len(G.vertices), 0, -1):
+            i_anim = MathTex(r"{{i = }}"+str(i)).shift(DOWN*2 + LEFT*4)
+            if i == len(G.vertices):
+                self.play(Create(i_anim))
+                i_anim_old = i_anim
+            else:
+                self.play(Transform(i_anim_old, i_anim))
+            
+            ### line 5
+            v = pick_maximal_unnumbered_vertex(label, order)
+            self.play(Indicate(G.vertices[v]))
+
+            ### line 6
+            order.append(v)
+            order_anim_new = MathTex(r"{{order = [}}{{"+"}},{{".join(order)+"}}{{]}}").shift(DOWN*1 + LEFT*4)
+            self.play(TransformMatchingTex(order_anim, order_anim_new))
+            order_anim = order_anim_new
+
+            ### line 7
+            for w in G.adj(v):
+                self.play(Indicate(G.vertices[w]))
+
+
+                ### line 8
+                label[w].append(i)
+                t = label_anim[w]
+                new_t = MathTex("{{"+w+"}}" + "{{: [}}"+"{{,}}".join(map(str, label[w]))+"{{]}}").scale(0.8).next_to(G.vertices[w], 0.4*UR * (-1 if w in "efg" else 1))
+                self.play(TransformMatchingTex(t, new_t), run_time = 0.2)
+                label_anim[w] = new_t
+        
+
+        ### line 9
+        #return reversed(order)
+
+        self.wait(10)
