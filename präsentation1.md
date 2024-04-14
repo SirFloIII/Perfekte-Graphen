@@ -9,6 +9,8 @@ class: invert
 
 ## und Algorithmen für bestimmte Teilklassen davon
 
+### Florian Bogner
+
 ---
 
 ### Wir betrachten folgende Graphen:
