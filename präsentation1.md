@@ -119,7 +119,7 @@ Jeder Kreis in $G$ mit Länge $\geq 4$ besitzt eine Kante, die zwei im Kreis nic
 
 ###
 
-Lemma 1: Ein triangulierter Graph hat mindestens 2 simplektische Knoten.
+Lemma 1: Ein (nicht-trivialer) triangulierter Graph hat mindestens 2 simplektische Knoten.
 
 Lemma 2: Wenn $v$ ein simplektischer Knoten von $G$ ist und $G - v$ trianguliert ist, dann ist $G$ trianguliert.
 

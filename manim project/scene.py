@@ -93,22 +93,8 @@ class ExampleImperfectGraph(Scene):
 
 class RecognizingTriangulatedGraphs(Scene):
     def construct(self):
-        code = Code(code = """
-def Lex_BFS(G: Graph) -> list:
-    label = {v : [] for v in G.vertices}
-    order = []
-    for i in range(len(G.vertices), 0, -1):
-        v = pick_maximal_unnumbered_vertex(label, order)
-        order.append(v)
-        for w in G.adj(v):
-            label[w].append(i)
-    return reversed(order)""",
-                    font="Consolas",
-                    language="Python",
-                    style="monokai"
-                   ).shift(2*UP + LEFT)
+        self.build_code_block()
 
-        self.play(FadeIn(code))
         self.wait(1)
 
         a = "a"
@@ -144,8 +130,10 @@ def Lex_BFS(G: Graph) -> list:
         
         self.play(*[FadeIn(t) for t in label_anim.values()])
 
+        self.prev_line = 1
 
         ### line 2
+        self.highlight(1)
         label = {v : [] for v in G.vertices}
         for v in label_anim.keys():
             t = label_anim[v]
@@ -154,12 +142,14 @@ def Lex_BFS(G: Graph) -> list:
             label_anim[v] = new_t
 
         ### line 3
+        self.highlight(2)
         order = []
         order_anim = MathTex(r"{{order = [}}{{]}}").shift(DOWN*1 + LEFT*4)
         self.play(Create(order_anim))
 
 
         ### line 4
+        self.highlight(3)
         for i in range(len(G.vertices), 0, -1):
             i_anim = MathTex(r"{{i = }}"+str(i)).shift(DOWN*2 + LEFT*4)
             if i == len(G.vertices):
@@ -169,21 +159,25 @@ def Lex_BFS(G: Graph) -> list:
                 self.play(Transform(i_anim_old, i_anim))
             
             ### line 5
+            self.highlight(4)
             v = pick_maximal_unnumbered_vertex(label, order)
             self.play(G.vertices[v].animate.set_fill(GREEN))
 
             ### line 6
+            self.highlight(5)
             order.append(v)
             order_anim_new = MathTex(r"{{order = [}}{{"+"}},{{".join(order)+"}}{{]}}").shift(DOWN*1 + LEFT*4)
             self.play(TransformMatchingTex(order_anim, order_anim_new))
             order_anim = order_anim_new
 
             ### line 7
+            self.highlight(6)
             for w in G.adj(v):
                 self.play(Indicate(G.vertices[w]))
 
 
                 ### line 8
+                self.highlight(7)
                 label[w].append(i)
                 t = label_anim[w]
                 new_t = MathTex("{{"+w+"}}" + "{{: [}}"+"{{,}}".join(map(str, label[w]))+"{{]}}").scale(0.8).next_to(G.vertices[w], 0.4*UR * (-1 if w in "efg" else 1))
@@ -196,6 +190,7 @@ def Lex_BFS(G: Graph) -> list:
 
         ### line 9
         #return reversed(order)
+        self.highlight(8)
         self.play(FadeOut(i_anim_old)
         )
         order_anim_new = MathTex(r"{{return [}}{{"+"}},{{".join(reversed(order))+"}}{{]}}").shift(DOWN*2 + LEFT*4)
@@ -205,8 +200,48 @@ def Lex_BFS(G: Graph) -> list:
         self.wait(5)
 
         for v in reversed(order):
-            self.play(FadeOut(G.remove_vertices(v)),
-                      FadeOut(label_anim[v]),)
- #                     Indicate(G.adj(v)))
+            self.play(
+                    *(Indicate(G.vertices[w]) for w in G.adj(v)),
+                    FadeOut(label_anim[v]),
+                    FadeOut(G.remove_vertices(v)),
+                    )
 
         self.wait(10)
+    
+    def build_code_block(self):
+        # build the code block
+        code = Code(code = """
+def Lex_BFS(G: Graph) -> list:
+    label = {v : [] for v in G.vertices}
+    order = []
+    for i in range(len(G.vertices), 0, -1):
+        v = pick_maximal_unnumbered_vertex(label, order)
+        order.append(v)
+        for w in G.adj(v):
+            label[w].append(i)
+    return reversed(order)""",
+                    font="Consolas",
+                    language="Python",
+                    style="monokai"
+                   ).shift(2*UP + LEFT)
+        self.play(FadeIn(code))
+        # build sliding windows (SurroundingRectangle)
+        self.sliding_wins = VGroup()
+        height = code.code[0].height
+        for line in code.code:
+            self.sliding_wins.add(
+                SurroundingRectangle(line)
+                .set_fill(YELLOW)
+                .set_opacity(0)
+                .stretch_to_fit_width(code.background_mobject.get_width())
+                .align_to(code.background_mobject, LEFT)
+            )
+
+        self.add(self.sliding_wins)
+        return code
+
+    def highlight(self, line):
+        self.play(self.sliding_wins[self.prev_line].animate.set_opacity(0.3))
+        self.play(ReplacementTransform(self.sliding_wins[self.prev_line], self.sliding_wins[line]))
+        self.play(self.sliding_wins[line].animate.set_opacity(0.3))
+        self.prev_line = line
