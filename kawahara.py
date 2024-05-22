@@ -6,7 +6,7 @@ Bottom = False
 Top = True
 
 
-class BBD_node:
+class BDD_node:
     def __init__(self) -> None:
         self.L = None
         self.R = None
@@ -24,13 +24,13 @@ class BBD_node:
             return "OneTerminal"
         return "BranchingNode"
 
-def Algo_1(n: int) -> BBD_node: 
-    root = BBD_node()
+def Algo_1(n: int) -> BDD_node: 
+    root = BDD_node()
     state = bidict({root : (1, 0, 0, Bottom)})
 
-    ZeroTerminal = BBD_node()
+    ZeroTerminal = BDD_node()
     ZeroTerminal.is_zero_terminal = True
-    OneTerminal = BBD_node()
+    OneTerminal = BDD_node()
     OneTerminal.is_one_terminal = True
 
     unprocessed_nodes = [root]
@@ -98,15 +98,15 @@ def compute_R_state(i, hL, hR, F):
 
 def add_to_bidict(the_bidict, key, the_list):
     if key not in the_bidict.inverse:
-        node = BBD_node()
+        node = BDD_node()
         the_bidict[node] = key
         the_list.append(node)
 
-def BBD_DFS(root: BBD_node) -> list:
+def BDD_DFS(root: BDD_node) -> list:
     out = []
     current_string = []
 
-    def recurse(node: BBD_node):
+    def recurse(node: BDD_node):
         if node.is_zero_terminal:
             return
         if node.is_one_terminal:
@@ -242,7 +242,7 @@ if __name__ == "__main__":
     for n in range(18, 100):
 
         root, bdd_time = time_it(Algo_1, n)
-        # strings, dfs_time = time_it(BBD_DFS, root)
+        # strings, dfs_time = time_it(BDD_DFS, root)
 
         # for s in strings:
         #     visualize_string(unalternate(s))
