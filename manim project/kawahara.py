@@ -12,21 +12,23 @@ class BDD_node:
         self.R = None
         self.is_zero_terminal = False
         self.is_one_terminal = False
+        self.state = None
 
     @property
     def is_terminal(self):
         return self.is_zero_terminal or self.is_one_terminal
 
-    def __str__(self):
+    def __repr__(self):
         if self.is_zero_terminal:
             return "ZeroTerminal"
         if self.is_one_terminal:
             return "OneTerminal"
-        return "BranchingNode"
+        return str(self.state)
 
 def Algo_1(n: int) -> BDD_node: 
     root = BDD_node()
     state = bidict({root : (1, 0, 0, Bottom)})
+    root.state = state[root]
 
     ZeroTerminal = BDD_node()
     ZeroTerminal.is_zero_terminal = True
@@ -93,12 +95,10 @@ def compute_R_state(i, hL, hR, F):
         else:
             return False, (i+1, hL-1, hR, F)
 
-
-
-
 def add_to_bidict(the_bidict, key, the_list):
     if key not in the_bidict.inverse:
         node = BDD_node()
+        node.state = key
         the_bidict[node] = key
         the_list.append(node)
 
@@ -147,88 +147,20 @@ def visualize_string(s: str) -> None:
         R = s.find("R", R+1)
         print(" "*L + "[" + "="*(R-L-1) + "]")
 
+def collect(root: BDD_node):
+    nodes = set()
+    arcs = set()
+    def recurse(node: BDD_node):
+        if node not in nodes:
+            nodes.add(node)
+            if not node.is_terminal:
+                arcs.add((node, node.L))
+                arcs.add((node, node.R))
+                recurse(node.L)
+                recurse(node.R)
+    recurse(root)
+    return nodes, arcs
 
-
-
-import glfw
-import OpenGL.GL as gl
-import imgui
-from imgui.integrations.glfw import GlfwRenderer
-
-def gui_main(state):
-    window = impl_glfw_init()
-    imgui.create_context()
-    impl = GlfwRenderer(window)
-
-    try:
-        
-        while not glfw.window_should_close(window):
-            glfw.poll_events()
-            impl.process_inputs()
-    
-            imgui.new_frame()
-            
-            try:
-                imgui.begin("ZeroTerminal")
-                imgui.end()
-                imgui.begin("OneTerminal")
-                imgui.end()
-                
-
-                for node, s in state.items():
-                    try:
-                        imgui.begin(str(s))
-                        imgui.text("L: " + (str(node.L) if node.L.is_terminal else str(state[node.L])))
-                        imgui.text("R: " + (str(node.R) if node.R.is_terminal else str(state[node.R])))
-                    finally:
-                        imgui.end()
-
-            except Exception as e:
-                imgui.begin("Error:")
-                imgui.text(str(e))
-                imgui.end()
-            finally:
-                pass
-    
-            gl.glClearColor(.1, .1, .1, 1)
-            gl.glClear(gl.GL_COLOR_BUFFER_BIT)
-    
-            imgui.render()
-            impl.render(imgui.get_draw_data())
-            glfw.swap_buffers(window)
-
-    finally:
-        impl.shutdown()
-        glfw.terminate()
-        
-
-def impl_glfw_init():
-    width, height = 1280, 720
-    window_name = "minimal ImGui/GLFW3 example"
-
-    if not glfw.init():
-        print("Could not initialize OpenGL context")
-        exit(1)
-
-    # OS X supports only forward-compatible core profiles from 3.2
-    glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR, 3)
-    glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 3)
-    glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
-
-    glfw.window_hint(glfw.OPENGL_FORWARD_COMPAT, gl.GL_TRUE)
-
-    # Create a windowed mode window and its OpenGL context
-    window = glfw.create_window(
-        int(width), int(height), window_name, None, None
-    )
-    glfw.make_context_current(window)
-
-    if not window:
-        glfw.terminate()
-        print("Could not initialize Window")
-        exit(1)
-
-    return window
 
 from time import time
 def time_it(f, *args, **kwargs):
@@ -239,21 +171,26 @@ def time_it(f, *args, **kwargs):
 
 if __name__ == "__main__":
     
-    for n in range(18, 100):
+    n = 3
+    # for n in range(18, 100):
 
-        root, bdd_time = time_it(Algo_1, n)
-        # strings, dfs_time = time_it(BDD_DFS, root)
+    root, bdd_time = time_it(Algo_1, n)
+    strings, dfs_time = time_it(BDD_DFS, root)
 
-        # for s in strings:
-        #     visualize_string(unalternate(s))
-        #     print(unalternate(s), "<-", s)
+    for s in strings:
+        visualize_string(unalternate(s))
+        print(unalternate(s), "<-", s)
 
-        print(f"{n:2} -> {0:9} : {bdd_time:.6f} : {0:.6f}")
-        #print(f"{n:2} -> {len(strings):9} : {bdd_time:.6f} : {dfs_time:.6f}")
-        #gui_main(state)
+    print(collect(root)[1])
+
+    # print(f"{n:2} -> {0:9} : {bdd_time:.6f} : {0:.6f}")
+    # print(f"{n:2} -> {len(strings):9} : {bdd_time:.6f} : {dfs_time:.6f}")
+    #gui_main(state)
 
 
-        # OEIS: A007123
+    # OEIS: A007123
+
+
 
 """
  n ->   #graphs : algo-t[s] : dfs-t [s]

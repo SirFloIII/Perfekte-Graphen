@@ -245,3 +245,24 @@ def Lex_BFS(G: Graph) -> list:
         self.play(ReplacementTransform(self.sliding_wins[self.prev_line], self.sliding_wins[line]))
         self.play(self.sliding_wins[line].animate.set_opacity(0.3))
         self.prev_line = line
+
+
+from kawahara import Algo_1, collect
+
+
+class Kawahara(Scene):
+    def construct(self):
+        
+        root = Algo_1(3)
+
+        V, E = collect(root)
+
+        graph = DiGraph(V, E,
+                        layout = "spring",
+                        vertex_type=RoundedRectangle,
+                        vertex_config={"corner_radius" : 0.15,
+                                       "height" : 1.0,
+                                       "width" : 3.0},
+                       )
+
+        self.play(Create(graph))
