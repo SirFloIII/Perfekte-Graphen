@@ -120,7 +120,7 @@ class RecognizingTriangulatedGraphs(Scene):
                         (d, g),
                     ],
                     layout = "kamada_kawai",
-                    layout_scale = 3,
+                    layout_scale = 9,
                     vertex_config={"radius" : 0.15},
                     ).shift(2*DOWN + 2*RIGHT)
 
@@ -253,16 +253,43 @@ from kawahara import Algo_1, collect
 class Kawahara(Scene):
     def construct(self):
         
-        root = Algo_1(3)
+        n = 4
+
+        root = Algo_1(n)
 
         V, E = collect(root)
 
         graph = DiGraph(V, E,
-                        layout = "spring",
+                        # layout = "spring",
                         vertex_type=RoundedRectangle,
-                        vertex_config={"corner_radius" : 0.15,
-                                       "height" : 1.0,
-                                       "width" : 3.0},
+                        vertex_config={
+                            "corner_radius" : 0.15,
+                            "height" : 0.3,
+                            "width" : 1.2,
+                            "fill_color" : LOGO_BLACK,
+                            "fill_opacity" : 1.0,
+                        },
                        )
 
+        for node, mobj in graph.vertices.items():
+            text = Text(str(node), font_size=18)
+            text.move_to(mobj)
+            mobj.add(text)
+
+        for edge, mobj in graph.edges.items():
+            if edge[0].L == edge[1]:
+                mobj.set_color(RED)
+            else:
+                mobj.set_color(GREEN)
+
+        offset = 4
+        spacing = 3.2/n
+
+        for i in range(1, 2*n+1):
+            VGroup(*[graph.vertices[node] for node in V if not node.is_terminal and node.state[0] == i]).arrange().set_y(offset-spacing*i)
+
+        VGroup(*[graph.vertices[node] for node in V if node.is_terminal]).arrange().set_y(offset-spacing*(2*n+1))
+
         self.play(Create(graph))
+
+        self.pause(10)

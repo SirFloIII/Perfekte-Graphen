@@ -20,10 +20,10 @@ class BDD_node:
 
     def __repr__(self):
         if self.is_zero_terminal:
-            return "ZeroTerminal"
+            return "0-Term"
         if self.is_one_terminal:
-            return "OneTerminal"
-        return str(self.state)
+            return "1-Term"
+        return ",".join((str(self.state[0]), str(self.state[1]), str(self.state[2]), "⊤" if self.state[3] else"⊥"))
 
 def Algo_1(n: int) -> BDD_node: 
     root = BDD_node()
@@ -147,7 +147,7 @@ def visualize_string(s: str) -> None:
         R = s.find("R", R+1)
         print(" "*L + "[" + "="*(R-L-1) + "]")
 
-def collect(root: BDD_node):
+def collect(root: BDD_node) -> tuple[set[BDD_node], set[BDD_node]]:
     nodes = set()
     arcs = set()
     def recurse(node: BDD_node):
