@@ -47,7 +47,7 @@ Von links nach rechts die Enden der Intervalle mitschreiben.
 
 Die *Höhe* eines Strings: $h_s(i) := |c_1 \dots c_i|_L - |c_1 \dots c_i|_R$
 
-Beispiel: mit $s = LLLRLRLLRRLRRLRR$:
+Beispiel: mit $s = \color{#FC6255}L\color{#FC6255}L\color{#FC6255}L\color{#83C167}R\color{#FC6255}L\color{#83C167}R\color{#FC6255}L\color{#FC6255}L\color{#83C167}R\color{#83C167}R\color{#FC6255}L\color{#83C167}R\color{#83C167}R\color{#FC6255}L\color{#83C167}R\color{#83C167}R$:
 
 $$h_s(2) = 2-0 = 2$$
 
@@ -57,8 +57,8 @@ $$h_s(8) = 6-2 = 4$$
 
 ### Lemma: Sei $s = c_1 \dots c_{2n}$ eine String-Darstellung eines zusammenhängenden proper Intervall-Graphen $G$. Dann gilt:
 
-- $c_1 = L$ und $c_{2n} = R$
-- $s$ hat gleich viele $L$ wie $R$
+- $c_1 = \color{#FC6255}L$ und $c_{2n} = \color{#83C167}R$
+- $s$ hat gleich viele $\color{#FC6255}L$ wie $\color{#83C167}R$
 - $h_s(i) > 0$ für $i$ in $\{1, \dots , 2n-1\}$
 - $\max\limits_i h_s(i) = k(G)$
 
@@ -85,11 +85,11 @@ linken und rechten Nachfolger.
 
 1-Terminal akzeptiert:
 
-- z.B.: LRLR, LLRR
+- z.B.: $\color{#FC6255}L\color{#83C167}R\color{#FC6255}L\color{#83C167}R\color{white}, \color{#FC6255}L\color{#FC6255}L\color{#83C167}R\color{#83C167}R$
 
 0-Terminal verwirft:
 
-- z.B. LLL, R, LRLL
+- z.B. $\color{#FC6255}L\color{#FC6255}L\color{#FC6255}L, \color{#83C167}R, \color{#FC6255}L\color{#83C167}R\color{#FC6255}L\color{#FC6255}L$
 
 ---
 
@@ -136,8 +136,6 @@ Der *State* einer Node ist $(i, h_L, h_R, F) \in \mathbb N_{\leq 2n} \times  \ma
 # Live Demo!
 
 (pls work)
-
-OEIS: A007123
 
 ---
 
