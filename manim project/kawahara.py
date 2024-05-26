@@ -190,12 +190,12 @@ def live_demo_1():
         print(unalternate(s), "<-", s)
 
 def live_demo_2():
+    print(" n ->   #graphs : algo-t[s] : dfs-t [s]")
     for n in range(1, 30):
-        
         root, bdd_time = time_it(Algo_1, n)
         strings, dfs_time = time_it(BDD_DFS, root)
 
-        print(f"{n:2} -> {len(strings):9} : {bdd_time:.6f} : {dfs_time:.6f}")
+        print(f"{n:2} -> {len(strings):9} :  {bdd_time:.6f} : {dfs_time:.6f}")
 
 
 
