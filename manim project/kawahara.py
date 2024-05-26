@@ -168,28 +168,47 @@ def time_it(f, *args, **kwargs):
     result = f(*args, **kwargs)
     return result, time() - t
 
+def catalan(n):
+    raise NotImplemented
 
-if __name__ == "__main__":
-    
-    n = 3
-    # for n in range(18, 100):
+def binomial(n, k):
+    raise NotImplemented
 
-    root, bdd_time = time_it(Algo_1, n)
-    strings, dfs_time = time_it(BDD_DFS, root)
+from math import floor
 
+def a(n):
+    return 1 if n==1 else (catalan(n - 1) + binomial(n - 1, floor((n - 1)/2)))/2
+
+
+def live_demo_1():
+
+    n = 15
+
+    strings = BDD_DFS(Algo_1(n))
     for s in strings:
         visualize_string(unalternate(s))
         print(unalternate(s), "<-", s)
 
-    print(collect(root)[1])
+def live_demo_2():
+    for n in range(1, 30):
+        
+        root, bdd_time = time_it(Algo_1, n)
+        strings, dfs_time = time_it(BDD_DFS, root)
 
-    # print(f"{n:2} -> {0:9} : {bdd_time:.6f} : {0:.6f}")
-    # print(f"{n:2} -> {len(strings):9} : {bdd_time:.6f} : {dfs_time:.6f}")
-    #gui_main(state)
+        print(f"{n:2} -> {len(strings):9} : {bdd_time:.6f} : {dfs_time:.6f}")
 
+
+
+if __name__ == "__main__":
+    
+    live_demo_1()
+    # live_demo_2()
 
     # OEIS: A007123
-
+    # Number of connected unit interval graphs with n nodes;
+    # also number of bracelets (turnover necklaces) with n
+    # black beads and n-1 white beads. 
+    # https://oeis.org/A007123
 
 
 """

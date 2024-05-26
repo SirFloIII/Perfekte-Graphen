@@ -253,43 +253,57 @@ from kawahara import Algo_1, collect
 class Kawahara(Scene):
     def construct(self):
         
-        n = 4
+        n = 6
 
         root = Algo_1(n)
 
         V, E = collect(root)
 
-        graph = DiGraph(V, E,
-                        # layout = "spring",
-                        vertex_type=RoundedRectangle,
-                        vertex_config={
-                            "corner_radius" : 0.15,
-                            "height" : 0.3,
-                            "width" : 1.2,
-                            "fill_color" : LOGO_BLACK,
-                            "fill_opacity" : 1.0,
-                        },
-                       )
+        mobj_from_V = {}
 
-        for node, mobj in graph.vertices.items():
+        for node in V:
             text = Text(str(node), font_size=18)
+            mobj = RoundedRectangle(corner_radius=0.15, height=0.3, width=1.2, fill_color=LOGO_BLACK, fill_opacity=1.0)
             text.move_to(mobj)
             mobj.add(text)
-
-        for edge, mobj in graph.edges.items():
-            if edge[0].L == edge[1]:
-                mobj.set_color(RED)
-            else:
-                mobj.set_color(GREEN)
+            text.z_index = 0
+            mobj.z_index = 0
+            mobj_from_V[node] = mobj
 
         offset = 4
         spacing = 3.2/n
 
         for i in range(1, 2*n+1):
-            VGroup(*[graph.vertices[node] for node in V if not node.is_terminal and node.state[0] == i]).arrange().set_y(offset-spacing*i)
+            VGroup(*[mobj_from_V[node] for node in V if not node.is_terminal and node.state[0] == i]).arrange().set_y(offset-spacing*i)
 
-        VGroup(*[graph.vertices[node] for node in V if node.is_terminal]).arrange().set_y(offset-spacing*(2*n+1))
+        # VGroup(*[mobj_from_V[node] for node in V if node.is_terminal]).arrange().set_y(offset-spacing*(2*n+1))
+        
+        VGroup(*[mobj_from_V[node] for node in V if node.is_zero_terminal]).set_y(0).set_x(5)
+        VGroup(*[mobj_from_V[node] for node in V if node.is_one_terminal]).arrange().set_y(offset-spacing*(2*n+1))
 
-        self.play(Create(graph))
 
-        self.pause(10)
+
+        L_arrows = {}
+        R_arrows = {}
+        
+        for node, mobj in mobj_from_V.items():
+            if node.is_terminal:
+                continue
+            for child, color, zerocolor, arrows, offset in [(node.L, RED, rgb_to_color((158, 60, 53)), L_arrows, -0.3), (node.R, GREEN, GREEN_E, R_arrows, 0.3)]:
+                arrow = Arrow(stroke_width=4, max_stroke_width_to_length_ratio=100)
+                arrow.put_start_and_end_on(mobj.get_center()+DOWN*0.15+RIGHT*offset, mobj_from_V[child].get_center()+UP*0.15)
+                arrow.set_color(zerocolor if child.is_zero_terminal else color)
+                arrows[node] = arrow
+
+        
+        for node, mobj in mobj_from_V.items():
+            if not node.is_terminal:
+                self.add(L_arrows[node])
+                self.add(R_arrows[node])
+        for node, mobj in mobj_from_V.items():
+            self.add(mobj)
+
+        self.add(Text("L", color=RED).move_to(UP*3 + LEFT*5))
+        self.add(Text("R", color=GREEN).move_to(UP*3 + RIGHT*5))
+
+        

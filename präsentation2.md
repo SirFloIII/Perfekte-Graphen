@@ -103,9 +103,39 @@ $$\alpha(abcxyz) = azbycx$$
 
 ---
 
-Algorithmus zum Bauen von BDD
+### Enumeration Algorithmus (von Kawahara et al.)
+
+für gegebenes $n \in \mathbb N$ baut Binary Decision Diagram. Sei $s$ ein String:
+
+$\alpha(s)$ wird akzeptiert $\Leftrightarrow$ $s$ repräsentiert einen zusammenhängenden proper Intervalgraphen mit $n$ Knoten (in kanonischer Darstellung)
+
+Die Laufzeit zur Erstellung ist $O(n^3)$.
 
 ---
+
+### Enumeration Algorithmus (von Kawahara et al.)
+
+Jeder Node aus dem BDD wird ein sogenannter *State* zugeteilt. Aus dem *State* einer Node kann in konstanter Zeit der State der beiden Nachfolger berechntet werden.
+
+Der *State* einer Node ist $(i, h_L, h_R, F) \in \mathbb N_{\leq 2n} \times  \mathbb N_{\leq n} \times \mathbb N_{\leq n} \times \{\top, \bot\}$
+
+---
+
+![bg](Bilder/kawahara_n=3.png)
+
+---
+
+![bg](Bilder/kawahara_n=4.png)
+
+---
+
+![bg](Bilder/kawahara_n=5.png)
+
+---
+
+# Live Demo!
+
+(pls work)
 
 OEIS: A007123
 
