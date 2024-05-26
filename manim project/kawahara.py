@@ -182,7 +182,7 @@ def a(n):
 
 def live_demo_1():
 
-    n = 15
+    n = 5
 
     strings = BDD_DFS(Algo_1(n))
     for s in strings:
