@@ -71,7 +71,31 @@ Kapitel Interval Graphs
 
     Definition proper Interval Graph (aus kawahara et al)
 
-    Algo 1 aus kawahara
+    Fun Fact: proper <=> unit interval
+
+    Satz: G ist Interval Graph <=> G ist trianguliert und das Komplement von G ist Ordnungsgraph
+    (Theorem 8.1 & Corrolary 8.2 aus dem Buch)
+
+    Korollar: Interval => Perfekt
+
+    Algo 1 aus Kawahara et al.:
+        Intro Binary Strings (mit L und R)
+        Definition BDD
+        Definition alternate string
+        Definition canonical
+        Erkärung Nodes mit State
+            - i
+            - hL
+            - hR
+            - F
+        L und R State berechnen
+        O(n³)
+        
+    Beispiele
+
+    Anzahl OEIS
+
+    Anzahl geschlossene Form?
 
 
 
