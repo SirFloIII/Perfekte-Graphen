@@ -38,7 +38,7 @@ Kapitel Basics:
 
 Kapitel Triangulated Graphs
 
-    Definition
+    Definition: Ein Graph heißt *trianguliert*, wenn jeder Zyklus im Graphen mit Länge >= 4 eine Sehne (Chord) besitzt. Eine Sehne eines Zykluses ist eine Kante, die zwei im Zyklus nicht aufeinanderfolgende Kanten verbindet.
 
     Beispiel und Gegenbeispiel
         Fig 4.1
@@ -47,6 +47,10 @@ Kapitel Triangulated Graphs
         Triangulated Graphs sind nicht Triangle-Mesh Graphs
         Gegenbeispiel: Oktaeder-Graph, Equator ist 4 Cyclus ohne Chord
 
+        Anmerkung: Triangulierte Graphen sind nicht Dreieck-Mesh-Graphen zu verwechselen, wie man sie zum Beispiel aus der Computergrafik kennt. Der Oktaeder-Graph (siehe Fig. X) besteht nur aus Dreiecken, ist aber nicht trianguliert, da der farblich markierte 4-Cyclus keine Sehnen besitzt.
+
+    Definition: Simplektischer Knoten: Ein Knoten u heißt *simplektisch* (simplical), wenn seine Nachbaren alle untereinander verbunden sind, i.e. adj(u) ist eine Clique.
+    
     Thm 4.1 und Lem 4.2 bringen
 
     Naiver Algo in O(|V|^4) lol
