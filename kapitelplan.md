@@ -40,6 +40,8 @@ Kapitel Triangulated Graphs
 
     Definition: Ein Graph heißt *trianguliert*, wenn jeder Zyklus im Graphen mit Länge >= 4 eine Sehne (Chord) besitzt. Eine Sehne eines Zykluses ist eine Kante, die zwei im Zyklus nicht aufeinanderfolgende Kanten verbindet.
 
+    Anmerkung: Trianguliert sein ist eine hereditäre Eigenschaft, i.e.: Wenn $G$ ein triangulierter Graph ist, dann ist auch jeder induzierte Subgraph $G_A$ trianguliert.
+
     Beispiel und Gegenbeispiel
         Fig 4.1
 
@@ -71,11 +73,16 @@ Kapitel Triangulated Graphs
 
         Induktionsanfang: Ein einzelner Knoten ist als Graph gesehen vollständig.
 
-        Induktionsschritt: Sei also $G$ nicht vollständig, also existieren zwei nicht benachbarte Knoten $a$ und $b$. Sei $S$ ein minimaler Knoten-Seperator für $a$ und $b$. Die Komponenten von $G_{V \setminus S}$, die $a$ und $b$ enthalten jeweils $G_A$ und $G_B$.
+        Induktionsschritt: Sei also $G$ nicht vollständig, also existieren zwei nicht benachbarte Knoten $a$ und $b$. Sei $S$ ein minimaler Knoten-Seperator für $a$ und $b$. Die Komponenten von $G_{V \setminus S}$, die $a$ und $b$ enthalten nennen wir jeweils $G_A$ und $G_B$. Nun nutzen wir die Induktionsvorraussetzung auf $G_{A \cup S}$: Entweder $A \cup S$ ist vollständig, dann ist jeder Knoten in $A$ simplektisch, oder es exitieren zwei simplektische nicht benachbarte Knoten in $A \cup S$ und es können nicht beide in $S$ sein, da $S$ laut Lemma [[[vorher]]] vollständig ist. In jedem Fall existiert ein simplektischer Knoten in $A$ und analog in $B$ auch. Diese sind nicht benachbart, da $A$ und $B$ getrennte Kompnenten sind. \qed
     
-    
-    
+    Perfektes Knoten-Eliminationsschema (PKE) erklären
 
+    Thm 4.1 Teil 2
+        Sei $G = (V, E)$ ein Graph. Dann ist $G$ trianguliert, genau dann wenn $G$ ein perfektes Knoten-Eliminationsschema besitzt. Insbesondere kann jeder simplektischer Knoten ein perfektes Knoten-Eliminationsschema starten.
+
+        Bew: "=>" Aufgrund des Lemmas [[[vorher]]] hat $G$ einen simplektischen Knoten $x \in V$. Der induzierte Subgraph $G_{V \setminus \{x\}} ist ebenfalls trianguliert und hat nach Induktion über Knotenanzahl ein perfektes Knoten-Eliminationsschema. Wenn man $x$ vorne an dieses anhängt, hat man ein perfektes Knoten-Eliminationschema für ganz $G$.
+
+        "<=" Sei $C$ ein Zyklus in $G$. Es ist zu zeigen, das $C$ eine Sehne hat. Sei also nach Vorraussetzung ein perfektes Knoten-Eliminationsschema gegeben. Wir nennen den Knoten in $C$ mit dem kleinsten Index im PKE $x$. Die beiden Nachbaren von $x$ im Zyklus werden erst nach $x$ im PKE enfernt und sind verbunden, da $x$ an diesem Punkt im PKE simplektisch ist. Sie bilden also eine Sehne. \qed
 
     Naiver Algo in O(|V|^4) lol
 
