@@ -51,7 +51,7 @@ Kapitel Triangulated Graphs
 
         Anmerkung: Triangulierte Graphen sind nicht Dreieck-Mesh-Graphen zu verwechselen, wie man sie zum Beispiel aus der Computergrafik kennt. Der Oktaeder-Graph (siehe Fig. X) besteht nur aus Dreiecken, ist aber nicht trianguliert, da der farblich markierte 4-Cyclus keine Sehnen besitzt.
 
-    Definition: Simplektischer Knoten: Ein Knoten u heißt *simplektisch* (simplical), wenn seine Nachbaren alle untereinander verbunden sind, i.e. adj(u) ist eine Clique.
+    Definition: Simplektischer Knoten: Ein Knoten $u$ heißt *simplektisch* (simplical), wenn seine Nachbaren alle untereinander verbunden sind, i.e. $adj(u)$ ist eine Clique.
     
     Definition: Für einen Graphen $G = (V, E)$ und zwei Knoten $a, b \in V$ nennen wir eine Menge $S \subset V$ einen \emph{Knoten-Seperator} oder \emph{$a$-$b$-Seperator}, wenn der induzierte Subgraph von $V \setminus S$ in zwei (oder mehr) Kompenenten zerfällt und $a$ und $b$ in verschiedenen Komponenten sind. Wenn keine echte Teilmenge von $S$ selbst ein $a$-$b$-Seperator ist, dann nennen wir $S$ einen \emph{minimalen Knoten-Seperator}.
 
@@ -84,7 +84,11 @@ Kapitel Triangulated Graphs
 
         "<=" Sei $C$ ein Zyklus in $G$. Es ist zu zeigen, das $C$ eine Sehne hat. Sei also nach Vorraussetzung ein perfektes Knoten-Eliminationsschema gegeben. Wir nennen den Knoten in $C$ mit dem kleinsten Index im PKE $x$. Die beiden Nachbaren von $x$ im Zyklus werden erst nach $x$ im PKE enfernt und sind verbunden, da $x$ an diesem Punkt im PKE simplektisch ist. Sie bilden also eine Sehne. \qed
 
-    Naiver Algo in O(|V|^4) lol
+    Naiver Algo in O(|V|^4):
+    Der vorherige Satz lässt uns auf einen ersten Algorithmus zum Erkennen von triangulierten Graphen schließen: Man suche nach simplektischen Knoten und entferne diese iterativ. Wenn immer simplektische Knoten gefunden werden können, bis der Graph leer ist, dann ist der Graph trianguliert. Wenn in einem Schritt kein simplektischer Knoten gefunden werden kann, dann ist der Graph nicht trianguliert.
+
+    Dieser naive Algorithmus hat asymptotische Laufzeit von $O(|V|^4)$: 
+
 
     Besserer Algo von Fulkerson-Gross
 
