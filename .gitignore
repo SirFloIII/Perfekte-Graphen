@@ -2,3 +2,5 @@
 /manim project/media/
 *.pdf
 imgui.ini
+live.main.log
+live.main.tex
