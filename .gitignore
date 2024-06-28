@@ -4,3 +4,14 @@
 imgui.ini
 live.main.log
 live.main.tex
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.xml
+*.gz
+*.toc
