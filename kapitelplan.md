@@ -40,6 +40,8 @@ Kapitel Triangulated Graphs
 
     Definition: Ein Graph heißt *trianguliert*, wenn jeder Zyklus im Graphen mit Länge >= 4 eine Sehne (Chord) besitzt. Eine Sehne eines Zykluses ist eine Kante, die zwei im Zyklus nicht aufeinanderfolgende Kanten verbindet.
 
+    Anmerkung: Trianguliert sein ist eine hereditäre Eigenschaft, i.e.: Wenn $G$ ein triangulierter Graph ist, dann ist auch jeder induzierte Subgraph $G_A$ trianguliert.
+
     Beispiel und Gegenbeispiel
         Fig 4.1
 
@@ -49,7 +51,7 @@ Kapitel Triangulated Graphs
 
         Anmerkung: Triangulierte Graphen sind nicht Dreieck-Mesh-Graphen zu verwechselen, wie man sie zum Beispiel aus der Computergrafik kennt. Der Oktaeder-Graph (siehe Fig. X) besteht nur aus Dreiecken, ist aber nicht trianguliert, da der farblich markierte 4-Cyclus keine Sehnen besitzt.
 
-    Definition: Simplektischer Knoten: Ein Knoten u heißt *simplektisch* (simplical), wenn seine Nachbaren alle untereinander verbunden sind, i.e. adj(u) ist eine Clique.
+    Definition: Simplektischer Knoten: Ein Knoten $u$ heißt *simplektisch* (simplical), wenn seine Nachbaren alle untereinander verbunden sind, i.e. $adj(u)$ ist eine Clique.
     
     Definition: Für einen Graphen $G = (V, E)$ und zwei Knoten $a, b \in V$ nennen wir eine Menge $S \subset V$ einen \emph{Knoten-Seperator} oder \emph{$a$-$b$-Seperator}, wenn der induzierte Subgraph von $V \setminus S$ in zwei (oder mehr) Kompenenten zerfällt und $a$ und $b$ in verschiedenen Komponenten sind. Wenn keine echte Teilmenge von $S$ selbst ein $a$-$b$-Seperator ist, dann nennen wir $S$ einen \emph{minimalen Knoten-Seperator}.
 
@@ -71,13 +73,22 @@ Kapitel Triangulated Graphs
 
         Induktionsanfang: Ein einzelner Knoten ist als Graph gesehen vollständig.
 
-        Induktionsschritt: Sei also $G$ nicht vollständig, also existieren zwei nicht benachbarte Knoten $a$ und $b$. Sei $S$ ein minimaler Knoten-Seperator für $a$ und $b$. Die Komponenten von $G_{V \setminus S}$, die $a$ und $b$ enthalten jeweils $G_A$ und $G_B$.
+        Induktionsschritt: Sei also $G$ nicht vollständig, also existieren zwei nicht benachbarte Knoten $a$ und $b$. Sei $S$ ein minimaler Knoten-Seperator für $a$ und $b$. Die Komponenten von $G_{V \setminus S}$, die $a$ und $b$ enthalten nennen wir jeweils $G_A$ und $G_B$. Nun nutzen wir die Induktionsvorraussetzung auf $G_{A \cup S}$: Entweder $A \cup S$ ist vollständig, dann ist jeder Knoten in $A$ simplektisch, oder es exitieren zwei simplektische nicht benachbarte Knoten in $A \cup S$ und es können nicht beide in $S$ sein, da $S$ laut Lemma [[[vorher]]] vollständig ist. In jedem Fall existiert ein simplektischer Knoten in $A$ und analog in $B$ auch. Diese sind nicht benachbart, da $A$ und $B$ getrennte Kompnenten sind. \qed
     
-    
-    
+    Perfektes Knoten-Eliminationsschema (PKE) erklären
 
+    Thm 4.1 Teil 2
+        Sei $G = (V, E)$ ein Graph. Dann ist $G$ trianguliert, genau dann wenn $G$ ein perfektes Knoten-Eliminationsschema besitzt. Insbesondere kann jeder simplektischer Knoten ein perfektes Knoten-Eliminationsschema starten.
 
-    Naiver Algo in O(|V|^4) lol
+        Bew: "=>" Aufgrund des Lemmas [[[vorher]]] hat $G$ einen simplektischen Knoten $x \in V$. Der induzierte Subgraph $G_{V \setminus \{x\}} ist ebenfalls trianguliert und hat nach Induktion über Knotenanzahl ein perfektes Knoten-Eliminationsschema. Wenn man $x$ vorne an dieses anhängt, hat man ein perfektes Knoten-Eliminationschema für ganz $G$.
+
+        "<=" Sei $C$ ein Zyklus in $G$. Es ist zu zeigen, das $C$ eine Sehne hat. Sei also nach Vorraussetzung ein perfektes Knoten-Eliminationsschema gegeben. Wir nennen den Knoten in $C$ mit dem kleinsten Index im PKE $x$. Die beiden Nachbaren von $x$ im Zyklus werden erst nach $x$ im PKE enfernt und sind verbunden, da $x$ an diesem Punkt im PKE simplektisch ist. Sie bilden also eine Sehne. \qed
+
+    Naiver Algo in O(|V|^4):
+    Der vorherige Satz lässt uns auf einen ersten Algorithmus zum Erkennen von triangulierten Graphen schließen: Man suche nach simplektischen Knoten und entferne diese iterativ. Wenn immer simplektische Knoten gefunden werden können, bis der Graph leer ist, dann ist der Graph trianguliert. Wenn in einem Schritt kein simplektischer Knoten gefunden werden kann, dann ist der Graph nicht trianguliert.
+
+    Dieser naive Algorithmus hat asymptotische Laufzeit von $O(|V|^4)$: 
+
 
     Besserer Algo von Fulkerson-Gross
 
