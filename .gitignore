@@ -1,6 +1,6 @@
 /manim project/__pycache__/*.pyc
 /manim project/media/
-*.pdf
+präsentation*
 imgui.ini
 live.main.log
 live.main.tex

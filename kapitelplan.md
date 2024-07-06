@@ -106,16 +106,43 @@ Kapitel Split Graphs
 
 Kapitel Interval Graphs
 
-    Definition
+    Einführendes Beispiel:
+    Versetzen wir uns in die Rolle einer Universität bei der Planung der Raumvergabe für das nächste Semester. Wir haben eine Menge von Vorlesungen mit Beginnzeit und Endzeit sowie eine Menge an Hörsäalen. Wir wollen die Vorlesungen so auf die Hörsäale aufteilen, das nie zwei Vorlesungen zur gleichen Zeit im gleichen Hörsaal stattfinden.
 
-    Definition proper Interval Graph (aus kawahara et al)
+        Ist dies möglich?
+        Wie viele Hörsäale brauchen wir maximal?
+        Können wir eine optimale Zuweisung effizient berechnen?
 
-    Fun Fact: proper <=> unit interval
+    Diese Fragen sind leicht zu beantworten, wenn wir das Problem mit Graphentheorie greifbar machen und führt uns zum Begriff des Interval-Graphen. Wir stellen uns die Vorlesungen als Knoten in einem Graphen vor. Zwei Knoten sind mit einer Kante verbunden, wenn sich die Zeitintervalle der Vorlesungen überschneiden. Dieser Graph ist dann ein Interval-Graph.
+
+    Definition:
+    Ein Graph $G = (V, E)$ heißt \emph{Interval-Graph}, genau dann wenn eine Familie von Intervalen $\mathcal \{[a_v, b_v] \subset \mathbb R : v \in V\}$ existiert, sodass $$vw \in E \Leftrightarrow [a_v, b_v] \cup [a_w, b_w] \neq \emptyset$$. Eine solche Familie nennen wir eine Interval-Repräsentation von $G$.
+
+    Anmerkung:
+    In dieser Definition werden zur Einfachheit abschlossene reelle Intervalle verwendet. Man kann auch offene, halboffene, oder gemischte Intervalle verwenden oder gar Intervalle auf irgendeiner anderen geordneten Menge. Die Klasse der Intervalgraphen ist in jedem Fall gleich. \todo{cite this fact}
+
+    Fortsetzung Beispiel:
+    Wenn wir jeden Hörsaal mit einer Farbe identifizieren\footnote{Fast wie im Freihaus.}, dann ist eine geforderte Raumvergabe genau eine Färbung des Interval-Graphen. Die minimale Anzahl von Hörsäalen ist also die chromatische Zahl. Eine Clique entspricht einer Menge von Vorlesungen, die zu einem Zeitpunkt alle gleichzeitig stattfinden. Wie wir später beweisen werden, sind Interval-Graphen perfekt. Damit reicht es die Cliquen-Zahl zu finden, und dies ist effizient möglich.
+
+    Algorithmus:
+    Für einen Interval-Graphen $G$ mit $n$ Knoten und mit Interval-Repräsentation $\mathcal I$ lässt sich die Cliquenzahl $\omega(G)$ in $O(n \log n)$ berechnen.
+
+    Wir sortieren die Intervalgrenzen aus $\mathcal I$ in eine $2n$ lange Liste (in $O(n \log n)$ viel Zeit). Sei $h_0 := 0$. Wir durchlaufen die Liste mit Laufindex $i$. Wenn an $i$-ter Stelle ein Intervalanfang ist, dann setzen wir $h_{i+1} := h_i + 1$. Bei einem Intervalende setzen wir hingegen $h_{i+1} := h_i - 1$. Der Wert $h_i$ zählt also umgangssprachlich, wie viele Intervalle angefangen, aber noch nicht beendet wurden und wird auch die \emph{Höhe} genannt. Die gesuchte Kliquenzahl $\omega(G) = max_{i = 0}^{2n} h_i$ und lässt sich aus der Liste in $O(n)$ Zeit finden.
+
+    Wir müssen also noch beweisen, dass Intervalgraphen perfekt sind. Tatsächlich beweisen wir eine stärkere Charakterisierung von Interval-Graphen, aus der uns die Perfektheit dann als Korollar herausfällt.
+
+    Satz:
+    Sei $G = (V, E)$ ein Graph.
 
     Satz: G ist Interval Graph <=> G ist trianguliert und das Komplement von G ist Ordnungsgraph
     (Theorem 8.1 & Corrolary 8.2 aus dem Buch)
 
     Korollar: Interval => Perfekt
+
+    Definition proper Interval Graph (aus kawahara et al)
+
+    Fun Fact: proper <=> unit interval
+    Roberts [1969a] 
 
     Algo 1 aus Kawahara et al.:
         Intro Binary Strings (mit L und R)
