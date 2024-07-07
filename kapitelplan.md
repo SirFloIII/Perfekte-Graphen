@@ -107,7 +107,7 @@ Kapitel Split Graphs
 Kapitel Interval Graphs
 
     Einführendes Beispiel:
-    Versetzen wir uns in die Rolle einer Universität bei der Planung der Raumvergabe für das nächste Semester. Wir haben eine Menge von Vorlesungen mit Beginnzeit und Endzeit sowie eine Menge an Hörsäalen. Wir wollen die Vorlesungen so auf die Hörsäale aufteilen, das nie zwei Vorlesungen zur gleichen Zeit im gleichen Hörsaal stattfinden.
+    Versetzen wir uns in die Rolle einer Universität bei der Planung der Raumvergabe für das nächste Semester. Wir haben eine Menge von Vorlesungen mit Beginnzeit und Endzeit sowie eine Menge an Hörsäalen. Wir wollen die Vorlesungen so auf die Hörsäale aufteilen, sodass nie zwei Vorlesungen zur gleichen Zeit im gleichen Hörsaal stattfinden.
 
         Ist dies möglich?
         Wie viele Hörsäale brauchen wir maximal?
@@ -119,7 +119,7 @@ Kapitel Interval Graphs
     Ein Graph $G = (V, E)$ heißt \emph{Interval-Graph}, genau dann wenn eine Familie von Intervalen $\mathcal \{[a_v, b_v] \subset \mathbb R : v \in V\}$ existiert, sodass $$vw \in E \Leftrightarrow [a_v, b_v] \cup [a_w, b_w] \neq \emptyset$$. Eine solche Familie nennen wir eine Interval-Repräsentation von $G$.
 
     Anmerkung:
-    In dieser Definition werden zur Einfachheit abschlossene reelle Intervalle verwendet. Man kann auch offene, halboffene, oder gemischte Intervalle verwenden oder gar Intervalle auf irgendeiner anderen geordneten Menge. Die Klasse der Intervalgraphen ist in jedem Fall gleich. \todo{cite this fact}
+    In dieser Definition werden zur Einfachheit abschlossene reelle Intervalle verwendet. Man kann auch offene, halboffene, oder gemischte Intervalle verwenden oder gar Intervalle auf beliebigen anderen geordneten Menge. Die Klasse der Intervalgraphen ist in jedem Fall gleich. \todo{cite this fact}
 
     Fortsetzung Beispiel:
     Wenn wir jeden Hörsaal mit einer Farbe identifizieren\footnote{Fast wie im Freihaus.}, dann ist eine geforderte Raumvergabe genau eine Färbung des Interval-Graphen. Die minimale Anzahl von Hörsäalen ist also die chromatische Zahl. Eine Clique entspricht einer Menge von Vorlesungen, die zu einem Zeitpunkt alle gleichzeitig stattfinden. Wie wir später beweisen werden, sind Interval-Graphen perfekt. Damit reicht es die Cliquen-Zahl zu finden, und dies ist effizient möglich.
