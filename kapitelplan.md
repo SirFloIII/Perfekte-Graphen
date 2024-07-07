@@ -26,6 +26,11 @@ Kapitel Basics:
     Beispiele perfekter Graphen + jeweils Beweis dafür
         (bipartite, complete, empty)
 
+    Wichtiges Beispiel: Comparability Graph
+        also Definition von Comparability Graph
+        und Beweis nach Buch-Satz 5.34
+        der ist ur schnell, hätt ich nicht gedacht 
+
     Weak Theorem
 
     Strong Theorem ohne Beweis
