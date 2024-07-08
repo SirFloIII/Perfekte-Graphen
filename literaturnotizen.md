@@ -17,3 +17,8 @@ von einem der obigen Autoren, sehr informatives high level overview.
 
 Efficient Non-isomorphic Graph Enumeration Algorithms for Subclasses of Perfect Graphs:
 relativ neues Paper vom Gitti
+
+A characterizaton of comparability etc...
+Theorem 2 ist (unter Verwendung von Theorem 1) äqivalent zu Buch-Satz 8.1 (i)<=>(ii)
+
+
