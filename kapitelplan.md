@@ -26,6 +26,15 @@ Kapitel Basics:
     Beispiele perfekter Graphen + jeweils Beweis dafür
         (bipartite, complete, empty)
 
+    Betrachten wir zunächst einige Beispiele für Klassen von perfekten Graphen. Jede der in dieser Arbeit betrachteten Klassen ist \emph{hereditär}. Das bedeutet: Wenn ein Graph aus der Klasse ist, dann sind auch alle induzierten Teilgraphen davon aus der Klasse. Das macht es leicht, die Perfektheit zu zeigen, da nur noch die perfekte Gleichung für einen gegebenen Graphen $G$ selbst gezeigt werden muss, und die perfekte Gleichung für alle induzierten Teilgraphen $G_A$ ist damit automatisch mitgezeigt.
+
+    \begin{itemize}
+        \item Vollständige Graphen: Ein Graph $G = (V, E)$ heißt \emph{vollständig}, wenn je zwei Knoten durch eine Kante verbunden sind. Offensichtlich gehören damit alle Knoten zur größten Klique von $G$ und $\omega(G) = \|V\|$. Jeder Knoten muss in einer zulässigen Färbung eine eigene Farbe bekommen und damit gilt $\chi(G) = \|V\|$. Ergo, vollständige Graphen sind perfekt.
+        \item Leere Graphen: Ein Graph $G = (V, E)$ heißt \emph{leer}, wenn er keine Kanten enthält, i.e. $E = \emptyset$. Für eine zulässige Färbung kann jeder Knoten mit der gleichen Farbe eingefärbt werden und es gibt keine Kliquen außer einzelne Knoten. Damit gilt $\chi(G) = 1 = \omega(G)$, also sind leere Graphen perfekt.
+        \item Bipartite Graphen: Ein Graph $G = (V, E)$ heißt \emph{bipartit}, wenn es zwei Mengen $A, B \subset V$ gibt, für die gilt $A \dot\cup B = V$ und $G_A, G_B$ sind leer. Alle Kanten laufen also zwischen $A$ und $B$. Wenn es keine Kante gibt, dann ist $G$ leer und damit ist schon gezeigt, das $G$ perfekt ist. Andernfalls, sei $ab \in E$ mit $a \in A$ und $b \in B$. Sei $c \in V$ ein beliebiger dritter Knoten. Falls $c \in A$, dann $ac \notin E$. Andernfalls $c \in B$ und $bc \notin E$. In jedem Fall ist $\{a, b, c\}$ keine Klique und damit (weil $ab$ und $c$ beliebig waren) $\{a, b\} \subset V$ bereits eine maximale Klique. Um eine zulässige Färbung zu erhalten, können wir alle Knoten aus $A$ apfelgrün und alle Knoten aus $B$ in blau färben. Also gilt $\chi(G) = 2 = \omega(G)$, also sind bipartite Graphen perfekt.
+        \item Vergleichbarkeitgraphen:
+    \end{itemize}
+
     Wichtiges Beispiel: Comparability Graph
         also Definition von Comparability Graph
         und Beweis nach Buch-Satz 5.34
