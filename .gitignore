@@ -17,3 +17,6 @@ live.main.tex
 *.xml
 *.gz
 *.toc
+LaTeX/chapters/_minted/*
+*.minted
+*.bbl-SAVE-ERROR

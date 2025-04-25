@@ -1,11 +1,15 @@
 \documentclass[../main.tex]{subfiles}
 \begin{document}
 
-\chapter{History}
+\chapter{Grundlagen}
+\label{chapter:grundlagen}
+
+\section{Geschichte}
+\label{section:geschichte}
 
 1960: Claude Berge
 
-1961: Claude Berge formuliert die Schwache und die Starke Perfekter Graph Vermutung (WPGC & SPGC)
+1961: Claude Berge formuliert die Schwache und die Starke Perfekter Graph Vermutung (WPGC und SPGC)
 
 1972: László Lovász beweist die WPGC
 
@@ -17,12 +21,12 @@ Juni 2002: Claude Berge stirbt.
 
 Nov 2002: Die oben et al. finden einen polynomiellen Algorithmus, um perfekte Graphen zu erkennen.
 
-2004: 2nd Edition vom Buch
+2004: 2nd Edition vom Buch\cite{das_Buch}
 
 2023: Jun Kawahara et al. releasen ihr Paper über die effiziente Enumeration.
 
-\chapter{Grundlagen}
-\label{chapter:basics}
+\section{Grundlegende Definitionen}
+\label{section:definitionen}
 
 \begin{definition}
     Graph
@@ -38,6 +42,8 @@ ergo $O(2^{|V|})$
 
 NP-Hardness via Karp's 21 NP-complete problems
 
+Fun Fact: Sudoku ist ein Graph Coloring Problem
+
 Def Clique
 
 Def Perfekter Graph
@@ -48,25 +54,129 @@ Reduktionsschema bzw. Induktion nach Knotenanzahl:
 Beispiele perfekter Graphen + jeweils Beweis dafür
     (bipartite, complete, empty)
 
-Betrachten wir zunächst einige Beispiele für Klassen von perfekten Graphen. Jede der in dieser Arbeit betrachteten Klassen ist \emph{hereditär}. Das bedeutet: Wenn ein Graph aus der Klasse ist, dann sind auch alle induzierten Teilgraphen davon aus der Klasse. Das macht es leicht, die Perfektheit zu zeigen, da nur noch die perfekte Gleichung für einen gegebenen Graphen $G$ selbst gezeigt werden muss, und die perfekte Gleichung für alle induzierten Teilgraphen $G_A$ ist damit automatisch mitgezeigt.
+Betrachten wir zunächst einige Beispiele für Klassen von perfekten Graphen. Jede der in dieser Arbeit betrachteten Klassen ist \emph{hereditär}. Das bedeutet: Wenn ein Graph aus der Klasse ist, dann sind auch alle induzierten Teilgraphen davon aus der Klasse. Das macht es leicht, die Perfektheit zu zeigen, da nur noch die perfekte Gleichung für einen gegebenen Graphen $G = (V, E)$ selbst gezeigt werden muss, und die perfekte Gleichung für alle induzierten Teilgraphen $G_A$ für $A \subset V$ ist damit automatisch mitgezeigt.
 
 \begin{itemize}
     \item Vollständige Graphen: Ein Graph $G = (V, E)$ heißt \emph{vollständig}, wenn je zwei Knoten durch eine Kante verbunden sind. Offensichtlich gehören damit alle Knoten zur größten Klique von $G$ und $\omega(G) = |V|$. Jeder Knoten muss in einer zulässigen Färbung eine eigene Farbe bekommen und damit gilt $\chi(G) = |V|$. Ergo, vollständige Graphen sind perfekt.
     \item Leere Graphen: Ein Graph $G = (V, E)$ heißt \emph{leer}, wenn er keine Kanten enthält, i.e. $E = \emptyset$. Für eine zulässige Färbung kann jeder Knoten mit der gleichen Farbe eingefärbt werden und es gibt keine Kliquen außer einzelne Knoten. Damit gilt $\chi(G) = 1 = \omega(G)$, also sind leere Graphen perfekt.
-    \item Bipartite Graphen: Ein Graph $G = (V, E)$ heißt \emph{bipartit}, wenn es zwei Mengen $A, B \subset V$ gibt, für die gilt $A \dot\cup B = V$ und $G_A, G_B$ sind leer. Alle Kanten laufen also zwischen $A$ und $B$. Wenn es keine Kante gibt, dann ist $G$ leer und damit ist schon gezeigt, das $G$ perfekt ist. Andernfalls, sei $ab \in E$ mit $a \in A$ und $b \in B$. Sei $c \in V$ ein beliebiger dritter Knoten. Falls $c \in A$, dann $ac \notin E$. Andernfalls $c \in B$ und $bc \notin E$. In jedem Fall ist $\{a, b, c\}$ keine Klique und damit (weil $ab$ und $c$ beliebig waren) $\{a, b\} \subset V$ bereits eine maximale Klique. Um eine zulässige Färbung zu erhalten, können wir alle Knoten aus $A$ apfelgrün und alle Knoten aus $B$ blau färben. Also gilt $\chi(G) = 2 = \omega(G)$, also sind bipartite Graphen perfekt.
+    \item Bipartite Graphen: Ein Graph $G = (V, E)$ heißt \emph{bipartit}, wenn es zwei disjunkte Mengen $A, B \subset V$ gibt, für die gilt $A \dot\cup B = V$ und $G_A, G_B$ sind leer. Alle Kanten laufen also zwischen $A$ und $B$. Wenn es keine Kante gibt, dann ist $G$ leer und damit ist schon gezeigt, das $G$ perfekt ist. Andernfalls, sei $ab \in E$ mit $a \in A$ und $b \in B$. Sei $c \in V$ ein beliebiger dritter Knoten. Falls $c \in A$, dann $ac \notin E$. Andernfalls $c \in B$ und $bc \notin E$. In jedem Fall ist $\{a, b, c\}$ keine Klique und damit (weil $ab$ und $c$ beliebig waren) $\{a, b\} \subset V$ bereits eine maximale Klique. Um eine zulässige Färbung zu erhalten, können wir alle Knoten aus $A$ apfelgrün und alle Knoten aus $B$ blau färben. Also gilt $\chi(G) = 2 = \omega(G)$, also sind bipartite Graphen perfekt.
 \end{itemize}
 
 Ein weiteres Beispiel für perfekte Graphen sind Vergleichbarkeitsgraphen. Dies sind jene Graphen $(V, E)$, welche die Vergleichbarkeitsrelation zu einer (strikten) Halbordnung $(V, <)$ darstellen, i.e. $uv \in E \Leftrightarrow u < v \vee v < u$. Ihre Perfektheit ist verglichen\footnote{Ba Dum Tss} nicht so trivial wie die vorherigen Beispiele.
 
-\begin{definition}
+Um im Rahmen der Graphentheorie zu bleiben, interpretieren wir diese strikte Halbordnung selbst als gerichteten Graphen.
+
+\begin{definition}[Vergleichbarkeitsgraph]
     Ein (ungerichteter) Graph $(V, E)$ heißt \emph{Vergleichbarkeitsgraph}, wenn es einen gerichteten Graphen $(V, F)$ gibt, für den gilt:
     \begin{itemize}
-        \item                                                              uv \in F
+        \item Richtungszuweisung: $\forall u, v \in V : uv \in F \vee vu \in F \Leftrightarrow uv \in E$
+        \item Transitivität: $\forall u, v, w \in V : uv \in F \wedge vw \in F \Rightarrow uw \in F$
+        \item Antisymmetrie: $\forall u, v \in V : uv \in F \Rightarrow vu \notin F$
     \end{itemize}
+    Wir nennen den Graphen $(V, F)$ eine \emph{Orientierung} von $(V, E)$.
 \end{definition}
 
+Offensichtlich ist Vergleichbarkeitsgraph zu sein ebenfalls eine hereditäre Eigenschaft. Zu gegebener Knotenmenge $A \subset V$ ist $(A, F \cap (A \times A))$ eine Orientierung von $G_A$. Es reicht also wieder, nur $\chi(G) = \omega(G)$ im nachfolgenden Teil zu zeigen.
 
-Wichtiges Beispiel: Comparability Graph
+\begin{bemerkung}
+    Orientierungen von Vergleichbarkeitsgraphen sind nicht mit Hasse-Diagrammen zu verwechselen. Während in den Orientierungen explizit die Transitivität gefordert wird, sind in Hasse-Diagrammen Kanten, die wegen der Transitivität impliziert werden, weggelassen.
+\end{bemerkung}
+
+\todo{Grafik: Vergleich Graph, Orientierung und Hassediagramm}
+
+\begin{satz}
+    Sei $(V, E)$ ein Vergleichbarkeitsgraph. Dann ist $(V, E)$ perfekt.
+\end{satz}
+\begin{proof}
+    Sei $(V, F)$ eine Orientierung von $(V, E)$. Wir definieren rekursiv eine sogenannte Höhenfunktion $h$ auf den Knoten:
+    \begin{align*}
+        h : V &\to \N \\
+        v &\mapsto \begin{cases}
+            0 &v \text{ ist eine Senke}\\
+            \max\limits_{wv \in F} h(w) + 1 &\text {sonst}
+        \end{cases}
+    \end{align*}
+    
+    Aufgrund der Transitivität und der Antisymmetrie ist der Graph $(V, F)$ zyklenfrei und weil $V$ endlich ist gibt es mindestens eine Senke. Damit ist $h$ wohldefiniert. Definiere $m := \max_{v \in V} h(v)$.
+
+    Für eine Kante $uv \in F$ gilt $$h(u) \leq \max\limits_{wv \in F} h(w) < h(v).$$
+
+    Damit ist $h$ also eine zulässige Knotenfärbung für $(V, E)$ mit $m + 1$ vielen Farben.
+    
+    Zu einem solchen Knoten $v$, bei dem $h(v) = m$ maximal ist, findet man einen Pfad $v =: u_m, \hdots, u_0$ von $v$ zu einer Senke $u_0$ mit $h(u_i) = i\, \forall i \in \N_{\leq m}$, indem man einfach in jedem Schritt einen Zeugen des Maximums in der Definiton von $h$ als nächsten Knoten wählt. Aufgrund der Transitivität von $F$ ist $\{u_i : i \in \N_{\leq m}\}$ sogar eine $m+1$ große Clique.
+    
+    Es kann also keine größere Clique und keine kleinere Färbung geben und $\chi(G) = m+1 = \omega(G)$. Wegen der Hereditärität ist $(V, E)$ also perfekt.
+\end{proof}
+
+\begin{korollar}
+    Sei $(V, E)$ ein Vergleichbarkeitsgraph und sei eine Orientierung $(V, E)$ gegeben. Dann kann eine minimale zulässige Färbung $h : V \to \N$, sowie eine maximale Clique in linearer Zeit, also $O(|V| + |F|)$ gefunden werden.
+\end{korollar}
+\begin{proof}
+    
+    Die Höhenfunktion $h: V \to \N$ aus dem vorherigen Beweis ist eine zulässige minimale Färbung und kann in linearer Zeit mit Algorithmus \ref{algo:heightfunction} berechnet werden.
+    
+    \begin{figure}[ht]
+        \label{algo:heightfunction}
+        \centering
+        \begin{minted}{python3}
+def compute_height(G: DirectedGraph) -> dict[Vertex, int]:
+    h = dict()
+    unset_inneighbor_count = {u: u.indegree for u in G.vertices}
+    
+    def DFS(u: Vertex):
+        unset_inneighbor_count[u] -= 1
+        if unset_inneighbor_count[u] == 0:
+            h[u] = max(h[v] for v in u.in_neighbors) + 1
+            for w in u.out_neighbors:
+                DFS(w)
+        
+    for u in G.vertices:
+        if u.indegree == 0:
+            h[u] = 0
+            for v in u.out_neighbors:
+                DFS(v)
+    
+    return h
+        \end{minted}
+        \caption{Pseudo-Pseudo-Code zur Berechnung der Höhenfunktion. Details zur Implementierung gibt es in Appendix \ref{appendix:code}.}
+    \end{figure}
+    
+    Der Algorithmus läuft über eine Tiefensuche \emph{(eng. Depth-First-Search, DFS)}, wobei $h$ für einen Knoten erst berechnet wird, wenn $h$ für alle Ausgang-Nachbaren bereits berechnet sind. In \verb|unset_outneighbor_count[u]| wird absteigend gezählt, wie oft die Funktion \verb|DFS| für einen Knoten \verb|u| aufgerufen wurde. Sobald \verb|DFS| von jedem seiner Ausgang-Nachbaren aufgerufen wurde und \verb|unset_outneighbor_count[u]| $= 0$ ist sicher, das $h$ für alle Ausgang-Nachbaren von \verb|u| berechnet wurde.
+    
+    \verb|DFS| wird pro Kante einmal aufgerufen und pro (nicht Senke-)Knoten $u$ wird einmal der Teil innerhalb der \verb|if|-Abfrage ausgeführt, welcher $O(Ausgrad(u))$ für das Maximum und $O(Ingrad(u))$ für das Aufrufen von \verb|DFS| braucht.
+    
+    Die Vorbereitung von \verb|unset_outneighbor_count| sowie das Durchlaufen der Knoten auf der Suche nach den Senken braucht jeweils $O(|V|)$. Insgesamt braucht der Algorithmus also $O(2\cdot|V| + 3\cdot|F|) = O(|V| + |F|)$ viel Zeit.
+
+    \begin{figure}[ht]
+        \label{algo:clique}
+        \centering
+        \begin{minted}{python3}
+def find_path(G: DirectedGraph) -> list[Vertex]:
+    h = compute_height(G)
+
+    max_vertex = max(h, key=h.get)
+    
+    current_vertex = max_vertex
+    path = [max_vertex]
+    while h[current_vertex] > 0:
+        for neighbor in current_vertex.in_neighbors:
+            if h[neighbor] == h[current_vertex] - 1:
+                current_vertex = neighbor
+                break
+        path.append(current_vertex)
+
+    path.reverse()
+    return path
+        \end{minted}
+        \caption{Pseudo-Pseudo-Code zur Berechnung einer Clique.}
+    \end{figure}
+
+\end{proof}
+    
+    
+    
+    
+    Wichtiges Beispiel: Comparability Graph
     also Definition von Comparability Graph
     und Beweis nach Buch-Satz 5.34
     der ist ur schnell, hätt ich nicht gedacht 

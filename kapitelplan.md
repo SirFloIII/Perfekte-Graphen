@@ -156,7 +156,13 @@ Kapitel Interval Graphs
     Definition proper Interval Graph (aus kawahara et al)
 
     Fun Fact: proper <=> unit interval
-    Roberts [1969a] 
+        Roberts [1969a] 
+
+        Äquivalenz zeigen durch expliziten Algorithmus
+            Iterieren über obere Intervalgrenzen und rescalen
+            Reparametrisierung stetig und stückweise wie man will, zB linear oder C^\infty über smoothstep oder über spline Interpolation.
+
+        Algorithmus visualisieren und interaktiv gestalten (Github.io Webapp weil ich cool bin?)
 
     Algo 1 aus Kawahara et al.:
         Intro Binary Strings (mit L und R)
@@ -176,6 +182,5 @@ Kapitel Interval Graphs
     Anzahl OEIS
 
     Anzahl geschlossene Form?
-
 
 

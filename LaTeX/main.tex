@@ -10,8 +10,14 @@
 % Lade weitere Pakete
 \usepackage{NumPDEsMacros} % in NumPDEsMacros.sty sind einige nützliche Befehle definiert
 
+% \usepackage{minted}
+
 % Subfile-Paket für modulare Struktur
 \usepackage{subfiles}
+\usepackage{minted}
+\usepackage[toc,page]{appendix}
+
+\newcommand{\todo}[1]{{\color{BrickRed} TODO: {#1}}}
 
 % Bevor die Arbeit gedruckt wird, sollten die Farben ausgeschaltet werden, indem die folgende Zeile auskommentiert wird.
 % \hypersetup{colorlinks=false,citecolor=black,linkcolor=black,urlcolor=black,pagebackref=false}
@@ -126,9 +132,18 @@ Wien, am {\color{change}Datum} %\today
 % Es bietet sich an, jedes Kapitel in einem eigenen File zu schreiben und mit \subfile{filename} einzubinden
 % Die subfiles können auch einzeln kompiliert werden, indem sie als Hauptdatei gesetzt werden
 
+\chapter{Test-Chapter}
+\begin{minted}{python3}
+def f(x):
+    return x**3
+\end{minted}
 %\subfile{chapters/einleitung}
 %\subfile{chapters/manual}
+\subfile{chapters/basics.tex}
 \subfile{chapters/triangulierte_graphen.tex}
+\subfile{chapters/appendix.tex}
+    
+% \end{subarray}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % LITERATURVERZEICHNIS MIT BIBLATEX --> MATHSCINET VERWENDEN

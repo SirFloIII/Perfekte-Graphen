@@ -1,0 +1,56 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+\begin{appendices}
+
+\chapter{Details zu Pseudo-Pseudo-Code}
+\label{appendix:code}
+
+Wie das geübte Auge sicher bereits erkannt hat, handelt es sich bei allem Code in dieser Arbeit um \emph{Python}-Code. Dies hat mehrere Gründe:
+\begin{itemize}
+    \item Da es echter Code ist, den man ausführen kann, kann man den Code auch auf Korrektheit testen und Tipp-Fehler vermeiden.
+    \item Das \LaTeX-Paket \verb|minted| erlaubt automatisches Syntax-Highlighting für viele Programmiersprachen, darunter auch \emph{Python}.
+    \item \todo{follow me for more two element bullet points ~tumblr user raginrayguns glaub ich}
+    \item \todo{irgendwas über pseudocode in worten der dadurch ur unnachvollziehbar wird und gleich text hätte sein können}
+\end{itemize}
+
+\section{Die Graph Klasse}
+    \todo{Graph und Vertex}
+
+\section{Weniger offensichtliche \emph{Python}-Features}
+
+Im Pseudo-Pseudo-Code werden Features von \emph{Python} verwendet, die vielleicht nicht jeder kennt, aber dennoch den Code schöner oder kompakter machen. Sie sollen hier erläutert werden:
+
+\begin{itemize}
+    \item \textbf{Type Hints:} In einer Funktionsdefinition kann man optional den Typen der Parameter und des Rückgabewerts angeben. Dies hilft einerseits den Lesern und Programmierern selbst, und andererseits auch dem Texteditor, der mit dieser Information besseres \emph{autocomplete} anbieten kann. Bei einem Parameter kommt nach dem Namen ein Doppelpunkt und dann der Typ. Der Typ des Ausgabewerts kommt nach der Funktionssignatur nach einem Pfeil \verb|->|. Zum Beispiel:
+    
+    \begin{minted}{python3}
+def my_function(a: str, b: int) -> float:
+    ...
+    \end{minted}
+
+    Diese Signatur bedeutet, das \verb|a| ein String (\verb|str|) und \verb|b| ein Integer (\verb|int|) und eine Gleitkommazahl (\verb|float|) zurückgegeben wird. Typen können auch zusammengebaut werden. Zum Beispiel eine Liste von Integern wird mit \verb|list[int]| angeschrieben. Der Rückgabewert aus Algorithmus \ref{algo:heightfunction}, namhaft \verb|dict[Vertex, int]| bedeutet ein Dictionary (\verb|dict|), dessen Keys vom Typ \verb|Vertex| sind und dessen Values Integer sind.
+
+    \item \textbf{List Comprehensions und Generator Expressions:} Eine \emph{List Comprehension} ist eine Möglichkeit, Listen in \emph{Python} zu erstellen, die ganz ähnlich der üblichen Schreibweise für Mengen in der Mathematik ist. Am Beispiel die ersten 100 Quadratzahlen (inkl. $0$), vergleichen wir die folgenden beiden Ausdrücke.
+    $$\left\{n^2 : n \in \N_{<100}\right\}$$
+
+    \begin{minted}{python3}
+                      [n**2 for n in range(100)]
+    \end{minted}
+
+    Die eins-zu-eins Korrespondenz der Terme ist offensichtlich. Ersetzt man die eckigen Klammern \verb|[]| durch geschwungene \verb|{}|, so wird daraus eine \emph{Set Comprehension} und das Resultat ist ein \emph{Python} \verb|set| mit den gleichen Elementen. Hat der erste Ausdruck einen Doppelpunkt \verb|:|, so hat man eine \emph{Dictionary Comprehension}. Der Teil vor dem \verb|:| ist der Key und der Teil danach ist die Value. In Algorithmus \ref{algo:heightfunction} verwenden wir zum Beispiel:
+
+    \begin{minted}{python3}
+                {u : u.outdegree for u in G.vertices}
+    \end{minted}
+
+    Das Resultat ist ein Dictionary, bei dem die Keys die Knoten aus \verb|G.vertices| selbst sind, und die dazugehörigen Values das jeweilige \verb|outdegree|.
+
+
+
+
+\end{itemize}
+
+
+\end{appendices}
+\end{document}
