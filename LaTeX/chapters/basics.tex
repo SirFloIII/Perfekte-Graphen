@@ -46,13 +46,36 @@ Fun Fact: Sudoku ist ein Graph Coloring Problem
 
 Def Clique
 
+Die Chromatische Zahl und die Cliquen-Zahl kann beliebig weit auseinander liegen. Mit der Konstruktion von Jan Myceilski \cite{Mycielski1955} kann man aus einem Graph einen weiteren bauen, sodass die Cliquen-Zahl gleich bleibt, aber die Chromatische Zahl um 1 steigt.
+
+\begin{satz}
+    Für alle $n \in \N, n \geq 2$ existiert ein Graph $M_n$ mit $\chi(M_n) = n$ und $\omega(M_n) = 2$.
+\end{satz}
+\begin{proof}
+    per Induktion: für $n = 2$ erfüllt der Graph $M_2 := K_2$ mit 2 Knoten und einer Kante das gewünschte.
+    für $n > 2$ sei also $M_{n-1}$ (mit $m$ Knoten) gegeben und seien $u_1, \hdots, u_m$ die Knoten von $M_{n-1}$. Wir definieren zuerst $M_n$ und zeigen dann, dass $M_n$ die gewünschten Eigenschaften hat.
+
+    $M_n$ soll $M_{n-1}$ als Subgraphen enthalten, sowie $m+1$ extra Knoten: einen Knoten $v_i$ pro Knoten $u_i$ sowie einen Extraknoten $w$. Für jede Kante $u_iu_j$ in $M_{n-1}$ gibt es drei Kanten in $M_n$: Die originale Kante $u_iu_j$ selbst sowie $u_iv_j$ und $v_iu_j$. Des weiteren sind gibt es zu jedem neuen Knoten $v_i$ die Kante $v_iw$. Das sind alle\footnote{Au* intensifies} Kanten.
+    
+    Z.z. $\omega(M_n) = 2$: Wir wollen also zeigen, dass es keine Cliquen der Größe 3, i.e. Dreiecke gibt. Wir betrachten Tripel von Knoten und unterscheiden nach der Kategorie der Knoten:
+    \begin{itemize}
+        \item $(w, u_i, v_j)$ oder $(w, u_i, u_j)$: $w$ ist nicht mit den Originalknoten $u_i$ verbunden, also ist dies kein Dreieck.
+        \item $(w, v_i, v_j)$ oder $(v_i, v_j, u_k)$ oder $(v_i, v_j, v_k)$: Die Knoten $v_i$ sind nicht untereinander verbunden, also ist auch dies kein Dreieck.
+        \item $(u_i, u_j, u_k)$: Aufgrund der Induktionsvorraussetzung ist $M_{n-1}$ dreieckfrei, also ist auch dies kein Dreieck.
+        \item $(u_i, u_j, v_k)$: Ist $k=i$ (bzw. $k=j$), dann ist $u_i$ (bzw. $u_j$) und $v_k$ nicht verbunden. Andernfalls ist $(u_i, u_j, v_k)$ genau dann ein Dreieck, wenn $(u_i, u_j, u_k)$ eines ist. Dies ist laut Induktionsvorraussetzung nicht der Fall.
+    \end{itemize}
+    Damit ist $\omega(M_n) = 2$ gezeigt.
+
+    Z.z. $\chi(M_n) \geq n$: Angenommen es gibt ein Coloring $c$ mit $n-1$ Farben, o.B.d.A. mit $c(w) = n-1$. 
+
+\end{proof}
+
+\section{Perfekte Graphen}
+
 Def Perfekter Graph
 
-Reduktionsschema bzw. Induktion nach Knotenanzahl:
-    Eine typische Beweisidee: Wir sehen, die gefragte Aussage gilt trivialerweise für den Ein-Knoten-Graph, und nehmen an, das die Aussage schon für alle kleineren Graphen gezeigt ist. Dann wählen wir geschickt einen Knoten oder eine Teilmenge der Knoten aus, die wir aus dem Graphen entfernen. Der übrige Graph erfüllt die Aussage und das wieder hinzufügen der weggenommenen Knoten ist verträglich mit der Aussage. qed
-
-Beispiele perfekter Graphen + jeweils Beweis dafür
-    (bipartite, complete, empty)
+%Reduktionsschema bzw. Induktion nach Knotenanzahl:
+    %Eine typische Beweisidee: Wir sehen, die gefragte Aussage gilt trivialerweise für den Ein-Knoten-Graph, und nehmen an, das die Aussage schon für alle kleineren Graphen gezeigt ist. Dann wählen wir geschickt einen Knoten oder eine Teilmenge der Knoten aus, die wir aus dem Graphen entfernen. Der übrige Graph erfüllt die Aussage und das wieder hinzufügen der weggenommenen Knoten ist verträglich mit der Aussage. qed
 
 Betrachten wir zunächst einige Beispiele für Klassen von perfekten Graphen. Jede der in dieser Arbeit betrachteten Klassen ist \emph{hereditär}. Das bedeutet: Wenn ein Graph aus der Klasse ist, dann sind auch alle induzierten Teilgraphen davon aus der Klasse. Das macht es leicht, die Perfektheit zu zeigen, da nur noch die perfekte Gleichung für einen gegebenen Graphen $G = (V, E)$ selbst gezeigt werden muss, und die perfekte Gleichung für alle induzierten Teilgraphen $G_A$ für $A \subset V$ ist damit automatisch mitgezeigt.
 
@@ -99,7 +122,8 @@ Offensichtlich ist Vergleichbarkeitsgraph zu sein ebenfalls eine hereditäre Eig
     
     Aufgrund der Transitivität und der Antisymmetrie ist der Graph $(V, F)$ zyklenfrei und weil $V$ endlich ist gibt es mindestens eine Senke. Damit ist $h$ wohldefiniert. Definiere $m := \max_{v \in V} h(v)$.
 
-    Für eine Kante $uv \in F$ gilt $$h(u) \leq \max\limits_{wv \in F} h(w) < h(v).$$
+    Für eine Kante $uv \in F$ gilt
+    $$h(u) \leq \max\limits_{wv \in F} h(w) = h(v) - 1 < h(v).$$
 
     Damit ist $h$ also eine zulässige Knotenfärbung für $(V, E)$ mit $m + 1$ vielen Farben.
     
