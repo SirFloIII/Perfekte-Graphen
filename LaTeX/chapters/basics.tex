@@ -51,29 +51,21 @@ Die Chromatische Zahl und die Cliquen-Zahl kann beliebig weit auseinander liegen
 \begin{satz}
     Für alle $n \in \N, n \geq 2$ existiert ein Graph $M_n$ mit $\chi(M_n) = n$ und $\omega(M_n) = 2$.
 \end{satz}
-\begin{figure}[h]
+\begin{figure}[ht]
     \label{fig:joke}
     \centering
     \includegraphics[width=0.5\textwidth,trim={0 7cm 0 26.5cm},clip]{figures/joke.jpg}
     \caption{Ein vom Myceilskigraphen $M_4$ inspiriertes Bondagemuster. Der Knoten $w$ ist der große mittige Knoten. \todo{remove this lol}}
 \end{figure}
-\begin{figure}[h]
+\begin{figure}[ht]
     \label{fig:myceilski}
     \centering
     \begin{tikzpicture}[scale=0.8]
-<<<<<<< HEAD
-=======
-        % Left: Complete graph with 2 nodes
->>>>>>> 8273624965b9fbba679b24da37bb6ac68bd21ccb
         \node[circle, draw, fill=TealBlue] (u1) at (0, 0) {$u_1$};
         \node[circle, draw, fill=LimeGreen] (u2) at (2, 0) {$u_2$};
         \draw (u1) -- (u2);
     \end{tikzpicture}
     \begin{tikzpicture}[scale=0.8]
-<<<<<<< HEAD
-=======
-        % Middle: Cycle with 5 nodes
->>>>>>> 8273624965b9fbba679b24da37bb6ac68bd21ccb
         \node[circle, draw, fill=TealBlue ] (c1) at ({126-360/5 * (1 - 1)}:2) {$u_1$};
         \node[circle, draw, fill=LimeGreen] (c2) at ({126-360/5 * (2 - 1)}:2) {$u_2$};
         \node[circle, draw, fill=TealBlue ] (c3) at ({126-360/5 * (3 - 1)}:2) {$v_1$};
@@ -86,10 +78,6 @@ Die Chromatische Zahl und die Cliquen-Zahl kann beliebig weit auseinander liegen
         }
     \end{tikzpicture}
     \begin{tikzpicture}[scale=0.8]        
-<<<<<<< HEAD
-=======
-        % Right: Mycielski graph M_4
->>>>>>> 8273624965b9fbba679b24da37bb6ac68bd21ccb
         \node[circle, draw, fill=TealBlue ] (u1) at ({126-360/5 * (1 - 1)}:3) {$u_1$};
         \node[circle, draw, fill=LimeGreen] (u2) at ({126-360/5 * (2 - 1)}:3) {$u_2$};
         \node[circle, draw, fill=TealBlue ] (u3) at ({126-360/5 * (3 - 1)}:3) {$u_3$};
@@ -282,17 +270,17 @@ def find_path(G: DirectedGraph) -> list[Vertex]:
 
 \end{proof}
     
+\begin{figure}[ht]
+    \label{fig:comparability_graph}
+    \centering
+    \includegraphics[width=\textwidth]{figures/comparability_graph.png}
+    \caption{Beispiel für (die Orientierung eines) Vergleichbarkeitsgraphen. Die Knoten sind Zahlenpaare und $(a, b) < (c, d) :\Leftrightarrow a < c \wedge b < d$. Die Farbe der Knoten entspricht der Höhe $h$. Die dick eingezeichneten Kanten sind jene, wo der Höhenunterschied nur 1 ist. In Rot ist ein Pfad (und damit eine Clique) eingezeichnet.}
+\end{figure}
     
-    
-    
-    Wichtiges Beispiel: Comparability Graph
-    also Definition von Comparability Graph
-    und Beweis nach Buch-Satz 5.34
-    der ist ur schnell, hätt ich nicht gedacht 
 
-Weak Theorem
+\todo{Weak Theorem}
 
-Strong Theorem ohne Beweis
+\todo{Strong Theorem ohne Beweis}
 
 
 Ausblick:

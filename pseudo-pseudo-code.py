@@ -4,6 +4,7 @@ from itertools import permutations
 import networkx as nx
 from matplotlib.colors import BoundaryNorm
 import matplotlib.pyplot as plt
+from math import sqrt
 
 class DirectedGraph:
     def __init__(self) -> None:
@@ -130,9 +131,23 @@ def generate_random_graph(num_vertices: int, num_edges: int) -> DirectedGraph:
 
     return graph
 
+def generate_random_comparability_graph(num_vertices: int, density_parameter: int, spacing: int = 0) -> DirectedGraph:
+    vertices = []
 
-def generate_random_comparability_graph(num_vertices: int, density_parameter: int) -> DirectedGraph:
-    vertices = [tuple(random.randint(0, 100) for _ in range(density_parameter)) for _ in range(num_vertices)]
+    def dist(v, w):
+        return sqrt(sum((v[i] - w[i])**2 for i in range(density_parameter)))
+
+    def clear(v):
+        for w in vertices:
+            if dist(v, w) < spacing:
+                return False
+        return True
+
+    for _ in range(num_vertices):
+        while not clear(v := tuple(random.randint(0, 100) for _ in range(density_parameter))):
+            pass
+        vertices.append(v)
+    
     graph = DirectedGraph()
     graph.add_vertices(vertices)
 
@@ -182,12 +197,15 @@ def find_path(G: DirectedGraph) -> list[Vertex]:
 if __name__ == "__main__":
     num_vertices = 50
     density_parameter = 2
-    graph = generate_random_comparability_graph(num_vertices, density_parameter)
-    
+    spacing = 9
 
+    height = {0:0}
 
-    # Compute the height of the graph
-    height = compute_height(graph)
+    while height[max(height, key=height.get)] < 11:
+        graph = generate_random_comparability_graph(num_vertices, density_parameter, spacing)
+        
+        # Compute the height of the graph
+        height = compute_height(graph)
 
     # Find the path in the graph
     path = find_path(graph)
@@ -234,7 +252,8 @@ if __name__ == "__main__":
     cbar.set_label('Height')
     cbar.set_ticks([level + 0.5 for level in levels[:-1]])  # Shift ticks to the center of each color
     cbar.set_ticklabels(levels[:-1])  # Set tick labels to match the levels
-    
+    plt.gcf().set_size_inches(12, 12)
+    plt.axis("equal")
     plt.show()
 
 
