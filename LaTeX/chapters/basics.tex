@@ -51,11 +51,64 @@ Die Chromatische Zahl und die Cliquen-Zahl kann beliebig weit auseinander liegen
 \begin{satz}
     Für alle $n \in \N, n \geq 2$ existiert ein Graph $M_n$ mit $\chi(M_n) = n$ und $\omega(M_n) = 2$.
 \end{satz}
+\begin{figure}[h]
+    \label{fig:joke}
+    \centering
+    \includegraphics[width=0.5\textwidth,trim={0 7cm 0 26.5cm},clip]{figures/joke.jpg}
+    \caption{Ein vom Myceilskigraphen $M_4$ inspiriertes Bondagemuster. Der Knoten $w$ ist der große mittige Knoten. \todo{remove this lol}}
+\end{figure}
+\begin{figure}[h]
+    \label{fig:myceilski}
+    \centering
+    \begin{tikzpicture}[scale=0.8]
+        \node[circle, draw, fill=TealBlue] (u1) at (0, 0) {$u_1$};
+        \node[circle, draw, fill=LimeGreen] (u2) at (2, 0) {$u_2$};
+        \draw (u1) -- (u2);
+    \end{tikzpicture}
+    \begin{tikzpicture}[scale=0.8]
+        \node[circle, draw, fill=TealBlue ] (c1) at ({126-360/5 * (1 - 1)}:2) {$u_1$};
+        \node[circle, draw, fill=LimeGreen] (c2) at ({126-360/5 * (2 - 1)}:2) {$u_2$};
+        \node[circle, draw, fill=TealBlue ] (c3) at ({126-360/5 * (3 - 1)}:2) {$v_1$};
+        \node[circle, draw, fill=Dandelion] (c4) at ({126-360/5 * (4 - 1)}:2) {$w$};
+        \node[circle, draw, fill=LimeGreen] (c5) at ({126-360/5 * (5 - 1)}:2) {$v_2$};
+        
+        \foreach \i in {1, 2, 3, 4, 5} {
+            \pgfmathtruncatemacro{\j}{mod(\i, 5) + 1}
+            \draw (c\i) -- (c\j);
+        }
+    \end{tikzpicture}
+    \begin{tikzpicture}[scale=0.8]        
+        \node[circle, draw, fill=TealBlue ] (u1) at ({126-360/5 * (1 - 1)}:3) {$u_1$};
+        \node[circle, draw, fill=LimeGreen] (u2) at ({126-360/5 * (2 - 1)}:3) {$u_2$};
+        \node[circle, draw, fill=TealBlue ] (u3) at ({126-360/5 * (3 - 1)}:3) {$u_3$};
+        \node[circle, draw, fill=Dandelion] (u4) at ({126-360/5 * (4 - 1)}:3) {$u_4$};
+        \node[circle, draw, fill=LimeGreen] (u5) at ({126-360/5 * (5 - 1)}:3) {$u_5$};
+        \foreach \i in {1, 2, 3, 4, 5} {
+            \pgfmathtruncatemacro{\j}{mod(\i, 5) + 1}
+            \draw (u\i) -- (u\j);
+        }
+        \node[circle, draw, fill=TealBlue ] (v1) at ({126-360/5 * (1 - 1)}:1.5) {$v_1$};
+        \node[circle, draw, fill=LimeGreen] (v2) at ({126-360/5 * (2 - 1)}:1.5) {$v_2$};
+        \node[circle, draw, fill=TealBlue ] (v3) at ({126-360/5 * (3 - 1)}:1.5) {$v_3$};
+        \node[circle, draw, fill=Dandelion] (v4) at ({126-360/5 * (4 - 1)}:1.5) {$v_4$};
+        \node[circle, draw, fill=LimeGreen] (v5) at ({126-360/5 * (5 - 1)}:1.5) {$v_5$};
+
+        \node[circle,  draw, fill=RedOrange] (w) at (0, 0) {$w$};
+        \foreach \i in {1, 2, 3, 4, 5} {
+            \pgfmathtruncatemacro{\j}{mod(\i, 5) + 1}
+            \pgfmathtruncatemacro{\k}{mod(\i+3, 5) + 1}
+            \draw (u\j) -- (v\i);
+            \draw (u\k) -- (v\i);
+            \draw (v\i) -- (w);
+        }
+    \end{tikzpicture}
+    \caption{Die ersten drei Myceilski-Graphen: $M_2 = K_2, M_3 = C_5, M_4$}
+\end{figure}
 \begin{proof}
     per Induktion: für $n = 2$ erfüllt der Graph $M_2 := K_2$ mit 2 Knoten und einer Kante das gewünschte.
     für $n > 2$ sei also $M_{n-1}$ (mit $m$ Knoten) gegeben und seien $u_1, \hdots, u_m$ die Knoten von $M_{n-1}$. Wir definieren zuerst $M_n$ und zeigen dann, dass $M_n$ die gewünschten Eigenschaften hat.
 
-    $M_n$ soll $M_{n-1}$ als Subgraphen enthalten, sowie $m+1$ extra Knoten: einen Knoten $v_i$ pro Knoten $u_i$ sowie einen Extraknoten $w$. Für jede Kante $u_iu_j$ in $M_{n-1}$ gibt es drei Kanten in $M_n$: Die originale Kante $u_iu_j$ selbst sowie $u_iv_j$ und $v_iu_j$. Des weiteren sind gibt es zu jedem neuen Knoten $v_i$ die Kante $v_iw$. Das sind alle\footnote{Au* intensifies} Kanten.
+    $M_n$ soll $M_{n-1}$ als Subgraphen enthalten, sowie $m+1$ extra Knoten: einen Knoten $v_i$ pro Knoten $u_i$ sowie einen Extraknoten $w$. Für jede Kante $u_iu_j$ in $M_{n-1}$ gibt es drei Kanten in $M_n$: Die originale Kante $u_iu_j$ selbst sowie $u_iv_j$ und $v_iu_j$. Des weiteren sind gibt es zu jedem neuen Knoten $v_i$ die Kante $v_iw$. Das sind alle\footnote{Au$\star$ intensifies} Kanten.
     
     Z.z. $\omega(M_n) = 2$: Wir wollen also zeigen, dass es keine Cliquen der Größe 3, i.e. Dreiecke gibt. Wir betrachten Tripel von Knoten und unterscheiden nach der Kategorie der Knoten:
     \begin{itemize}
@@ -66,9 +119,29 @@ Die Chromatische Zahl und die Cliquen-Zahl kann beliebig weit auseinander liegen
     \end{itemize}
     Damit ist $\omega(M_n) = 2$ gezeigt.
 
-    Z.z. $\chi(M_n) \geq n$: Angenommen es gibt ein Coloring $c$ mit $n-1$ Farben, o.B.d.A. mit $c(w) = n-1$. 
+    Z.z. $\chi(M_n) \geq n$: Angenommen es gibt ein Coloring $c$ mit $n-1$ Farben, o.B.d.A. mit $c(w) = n-1$. Da $w$ mit allen Knoten $v_i$ verbunden ist, gilt $c(v_i) \neq n-1$. Wir definieren eine neue Färbung $c'$ von $M_{n-1}$ mit $n-2$ Farben.
+    \begin{align*}
+        c' : M_{n-1} &\to \N_{\leq n-2} \\
+        u_i &\mapsto \begin{cases}
+            c(v_i) &c(u_i) = n-1 \\
+            c(u_i) &sonst
+        \end{cases}
+    \end{align*}
 
+    Nach Konstruktion von $M_n$ sind die Nachbaren von $u_i$ alle mit $v_i$ benachbart, also ist $c'$ eine zulässige Färbung mit $n-2$ Farben, ein Widerspruch zur Induktionsannahme.
+
+    Z.z. $\chi(M_n) \leq n$: Mit einer zulässigen Färbung $c'$ von $M_{n-1}$ mit $n-1$ Farben, lässt sich einfach eine zulässige Färbung $c$ von $M_n$ mit $n$ Farben definieren:
+    \begin{align*}
+        c : M_n &\to \N_{\leq n} \\
+        c(u_i) &:= c'(u_i) \\
+        c(v_i) &:= c'(u_i) \\
+        c(w) &:= n
+    \end{align*}
+
+    Damit gilt also zusammengefasst $\chi(M_n) = n$.
 \end{proof}
+
+Die so konstruierten Graphen werden \emph{Myceilski-Graphen} genannt. In Abbildung \ref{fig:myceilski} sind die ersten drei Myceilskigraphen mit der Färbung $c$ aus dem letzten Beweisschritt dargestellt.
 
 \section{Perfekte Graphen}
 
