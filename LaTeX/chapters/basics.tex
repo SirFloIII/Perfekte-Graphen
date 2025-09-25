@@ -347,6 +347,7 @@ def find_path(G: DirectedGraph) -> list[Vertex]:
     
 
 \begin{satz}
+    \label{thm:wpgt}
     Der schwache Perfekte-Graphen-Satz: Sei $G = (V, E)$ ein Graph. Dann sind die folgenden Aussagen äquivalent:
     \begin{align}
         \omega(G_A) &= \chi(G_A) &(\forall A \subset V) \tag{P1}\label{eq:P1}\\
@@ -368,6 +369,7 @@ Bereits im März 1960 stellt Claude Berge diese Frage und vermutet, dass dies al
 Dieses Resultat führt zu einer \emph{forbidden minor}-Charakterisierung der Perfektheit, ähnlich zu planaren Graphen mit $K_5$ und $K_{3,3}$:
 
 \begin{satz}
+    \label{thm:spgt}
     Der starke Perfekte-Graphen-Satz: Ein Graph $G = (V, E)$ ist genau dann perfekt, wenn $G$ keinen induzierten Teilgraphen isomorph zu $C_n$ oder $\overline{C_n}$ für $n \in \N, n > 3, n$ ungerade hat.
 \end{satz}
 
