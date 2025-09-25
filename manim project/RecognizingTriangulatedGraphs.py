@@ -33,6 +33,47 @@ def lexographical_order(a, b):
         return a[0] > b[0]
     return lexographical_order(a[1:], b[1:])
 
+def argmax(d: dict):
+    max_key = None
+    max_value = None
+    for k, v in d.items():
+        if max_value is None or v > max_value:
+            max_key = k
+            max_value = v
+    return max_key
+
+def MCS(G: Graph) -> list:
+    cardinality = {v : 0 for v in G.vertices}
+    order = []
+    for _ in range(len(G.vertices)):
+        u = argmax(cardinality)
+        order.append(u)
+        del cardinality[u]
+        for w in G.adj(u):
+            if w in cardinality:
+                cardinality[w] += 1
+    return reversed(order)
+
+def MCS2(G: Graph) -> list:
+    cardinality = {v : 0 for v in G.vertices}
+    vertices_by_cardinality = defaultdict(set)
+    vertices_by_cardinality[0] = set(G.vertices)
+    max_cardinality = 0
+    order = []
+    for _ in range(len(G.vertices)):
+        while len(vertices_by_cardinality[max_cardinality]) == 0:
+            max_cardinality -= 1
+        u = vertices_by_cardinality[max_cardinality].pop()
+        order.append(u)
+        del cardinality[u]
+        for w in G.adj(u):
+            if w in cardinality:
+                c = cardinality[w]
+                cardinality[w] += 1
+                vertices_by_cardinality[c].remove(w)
+                vertices_by_cardinality[c+1].add(w)
+                max_cardinality = max(max_cardinality, c+1)
+    return reversed(order)
 
 
 class GraphWithAdj(Graph):
@@ -60,4 +101,17 @@ if __name__ == "__main__":
                         (4, 7),
                     ])
 
-    print(list(Lex_BFS(G)))
+    G1 = GraphWithAdj([1, 2, 3, 4, 5],
+                    [
+                        (1, 2),
+                        (1, 3),
+                        (1, 4),
+                        (1, 5),
+                        (2, 5),
+                        (3, 4),
+                        (3, 5),
+                        (4, 5),
+                    ])
+                
+
+    print(list(MCS(G)))

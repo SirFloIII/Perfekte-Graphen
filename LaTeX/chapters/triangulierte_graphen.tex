@@ -135,7 +135,7 @@ Der vorherige Satz lässt uns auf einen ersten Algorithmus zum Erkennen von tria
 Die Reihenfolge, in der man die Knoten entfernt nennt man ein perfektes Knoten-Eliminationsschema (PKE). Konkret ist eine Anordnung aller Knoten von $G$ namhaft $\sigma = [u_1, \hdots, u_n]$ genau dann ein PKE, wenn $\forall i : u_i$ ist simplektisch in $G_{\{u_i, \hdots, u_n\}}$.
 
 %Thm 4.1 Teil 2
-\begin{satz}
+\begin{satz} \label{thm:tri_PKE}
     Sei $G = (V, E)$ ein Graph. Dann ist $G$ trianguliert, genau dann wenn $G$ ein perfektes Knoten-Eliminationsschema besitzt. Insbesondere kann jeder simplektischer Knoten ein perfektes Knoten-Eliminationsschema starten.
 \end{satz}
 \begin{proof}
@@ -153,6 +153,20 @@ Tatsächlich können wir das ganze PKE von hinten aufbauen.
 
 
 Besserer Algo von Fulkerson-Gross
+
+zz
+LexBFS => L3
+
+zz? (oder nur das)
+MCS => L3
+
+zz
+L3 Condition + Trianguliert => PKE
+
+zz
+LexBFS == PKE <=> Trianguliert
+bew: "=>" \ref{thm:tri_PKE}
+"<=" Vorherigen beiden Sätze
 
 Dessen Timecomplexity
 
