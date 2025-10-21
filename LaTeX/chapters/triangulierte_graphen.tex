@@ -89,7 +89,9 @@ Trianguliert sein ist eine hereditäre Eigenschaft, i.e.: Wenn $G = (V, E)$ ein 
     Triangulierte Graphen sind nicht Dreieck-Mesh-Graphen zu verwechselen, wie man sie zum Beispiel aus der Computergrafik kennt. Der Oktaeder-Graph (siehe Abbildung \ref{fig:oktaeder}) besteht nur aus Dreiecken, ist aber nicht trianguliert.
 \end{bemerkung}
 
-Wir wollen zunächst eine Charakterisierung der Trianguliertheit über Knoten-Seperatoren beschreiben:
+\section{Perfekte Knoten-Eliminationsschemen}
+
+Der Algorithmus von Fulkerson-Gross baut fundamental auf sogenannte Perfekte Knoten-Eliminationsschemen auf. Um diese zu beschreiben benötigen wir noch ein paar Definitionen und Resultate. Wir wollen zunächst eine Charakterisierung der Trianguliertheit über Knoten-Seperatoren beschreiben:
 
 \begin{definition}\label{def:seperator}
     Für einen Graphen $G = (V, E)$ und zwei Knoten $a, b \in V$ nennen wir eine Menge $S \subset V$ einen \emph{Knoten-Seperator} oder \emph{$a$-$b$-Seperator}, wenn der induzierte Subgraph von $V \setminus S$ in zwei (oder mehr) Kompenenten zerfällt und $a$ und $b$ in verschiedenen Komponenten sind.
@@ -143,35 +145,71 @@ Die Reihenfolge, in der man die Knoten entfernt nennt man ein perfektes Knoten-E
     
     $\Leftarrow$: Sei $C$ ein Zyklus in $G$. Es ist zu zeigen, das $C$ eine Sehne hat. Sei also nach Vorraussetzung ein perfektes Knoten-Eliminationsschema gegeben. Wir nennen den Knoten in $C$ mit dem kleinsten Index im PKE $u$. Die beiden Nachbaren von $u$ im Zyklus werden erst nach $u$ im PKE enfernt und sind verbunden, da $u$ an diesem Punkt im PKE simplektisch ist. Sie bilden also eine Sehne.
 \end{proof}    
-    
+
+\section{Der Algorithmus von Fulkerson-Gross}
+
 Auf obige Weise ein PKE zu finden funktioniert zwar, ignoriert aber die Tatsache, das uns Satz \ref{thm:4.2} zwei simplektische Knoten liefert. Hier kommt die Idee von Fulkerson und Gross ins Spiel. Da es immer zwei simplektische Knoten gibt, könnten wir uns einen Knoten $u$ zu Beginn aussuchen und für den Schluss aufheben. Falls $u$ einer der beiden gefundenen simplektischen Knoten ist, entfernen wir stattdessen einfach den anderen. Desweiteren können wir uns einen Nachbaren $v$ von $u$ aussuchen, den wir uns für die vorletze Stelle im PKE behalten, da Satz \ref{thm:4.2} nicht benachbarte simplektische Knoten garantiert.
 
-Tatsächlich können wir das ganze PKE von hinten aufbauen.
+Tatsächlich können wir das ganze PKE von hinten aufbauen. Man muss nur die Knoten in der richtigen Reihenfolge auswählen und dafür gibt es mehrere Möglichkeiten. Wir werden hier zwei Varianten kennen lernen, Lexikographische Breitensuche (kurz \emph{LexBFS}) \todo{cite} und Maximale Kardinalitätssuche (kurz \emph{MCS}) \todo{also cite}.
+
+\subsection{Lexikographische Breitensuche}
 
 
 
+\begin{listing}[ht]
+\label{algo:LexBFS}
+\caption{Lexikographische Breitensuche baut für einen triangulierten Graphen ein Perfektes Knoten-Eliminationsschema}
+\begin{minted}{python3}
+def Lex_BFS(G: Graph) -> list:
+    label = {v : [] for v in G.vertices}
+    order = []
+    for i in range(len(G.vertices), 0, -1):
+        v = pick_maximal_unnumbered_vertex(label, order)
+        order.append(v)
+        for w in G.adj(v):
+            label[w].append(i)
+    return reversed(order)
+\end{minted}
+\end{listing}
 
+\todo{LexBFS => L3}
 
-Besserer Algo von Fulkerson-Gross
+\subsection{Kardinalitätssuche}
 
-zz
-LexBFS => L3
+\begin{figure}[ht]
+\label{algo:MCS}
+\centering
+\begin{minted}{python3}
+def MCS(G: Graph) -> list:
+    cardinality = {v : 0 for v in G.vertices}
+    order = []
+    for _ in range(len(G.vertices)):
+        u = max(cardinality, key=cardinality.get)
+        order.append(u)
+        del cardinality[u]
+        for w in G.adj(u):
+            if w in cardinality:
+                cardinality[w] += 1
+    return reversed(order)
+\end{minted}
+\caption{abc}
+\end{figure}
 
-zz? (oder nur das)
-MCS => L3
+\todo{MCS => L3}
 
-zz
-L3 Condition + Trianguliert => PKE
+\subsection{Korrektheitsbeweise}
 
-zz
-LexBFS == PKE <=> Trianguliert
+\todo{L3 Condition + Trianguliert => PKE}
+
+\todo{LexBFS == PKE <=> Trianguliert}
+
 bew: "=>" \ref{thm:tri_PKE}
 "<=" Vorherigen beiden Sätze
 
 Dessen Timecomplexity
 
-Triangulated Graphs are Perfect
+\todo{Triangulated Graphs are Perfect}
 
-Schneller Algo um Chomatische Zahl und maximale Cliquen zu finden
+\todo{Schneller Algo um Chomatische Zahl und maximale Cliquen zu finden}
 
 \end{document}

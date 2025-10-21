@@ -33,20 +33,11 @@ def lexographical_order(a, b):
         return a[0] > b[0]
     return lexographical_order(a[1:], b[1:])
 
-def argmax(d: dict):
-    max_key = None
-    max_value = None
-    for k, v in d.items():
-        if max_value is None or v > max_value:
-            max_key = k
-            max_value = v
-    return max_key
-
 def MCS(G: Graph) -> list:
     cardinality = {v : 0 for v in G.vertices}
     order = []
     for _ in range(len(G.vertices)):
-        u = argmax(cardinality)
+        u = max(cardinality, key=cardinality.get)
         order.append(u)
         del cardinality[u]
         for w in G.adj(u):
