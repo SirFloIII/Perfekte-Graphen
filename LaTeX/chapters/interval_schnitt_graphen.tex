@@ -4,4 +4,134 @@
 \chapter{Interval-Schnitt-Graphen}
 \label{chapter:interval-schnitt-graphen}
 
+\section{Binary Decision Diagrams}
+
+Ein \emph{Binary Decision Diagram} (kurz BDD) ist ein gerichter azyklischer Graph $D = (N, A)$ mit markierten Kanten, der Strings aus einem binären Alphabet $\Sigma := \{L, R\}$ mit einer fixierten Länge $n \in \mathbb N$ klassifiziert. Um BDDs von anderen Graphen zu unterscheiden, nennen wir die Knoten in $N$ \emph{Nodes} und die Kanten in $A$ \emph{Arcs}.
+
+Die Nodes sind in $n+1$ viele Gruppen partitioniert: $N = N_1 \cup \hdots \cup \N_{n+1}$. Die Nodes in $N_i$ nennen wir \emph{auf Level $i$} für $1 \leq i \leq n+1$. Es gibt nur eine Node in $N_1$, die wir die \emph{Wurzel} nennen. In $N_{n+1}$ gibt es nur 2 Nodes, den \emph{0-Terminal} und den \emph{1-Terminal}.
+
+Jede Node in $N_i$ für $i \leq n$ (also alle außer die beiden Terminals) hat zwei Arcs, die davon weggehen und bei einer Node in $N_{i+1} \cup \N_{n+1}$ enden (also entweder im nächsten Level oder bei einem Terminal). Die Länge von jedem Pfad von der Wurzel zu einer Node in $N_i$ ist also genau $i-1$ für $i \leq n$. Je eine der beiden Arcs ist mit $L$ und $R$ markiert. Wir nennen diese Arcs die \emph{$L$-Arc} und \emph{$R$-Arc} respektive.
+
+Um nun eine String $s = c_1 \hdots c_n$ zu klassifizieren, folgen wir von der Wurzel ausgehend für $c_i$-Arcs für $i$ von 1 bis $n$. Wenn wir letztendlich auf den 1-Terminal treffen, dann wird der String $s$ \emph{akzeptiert}. Wenn wir andernfalls auf den 0-Terminal treffen, mitunter auch schon bevor wir den ganzen Sting gelesen haben, dann wird der String \emph{verworfen}.
+
+\todo{Beispiel}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\iffalse
+\chapter*{AD sagt einer der beiden}
+
+Wenn man die Gleichung nach $x_5$ auflöst und den binomischen Lehrsatz für $x_1$ und $x_2$ anwendet bekommt man
+
+\begin{equation*}
+    x_5 = \frac{(x_1 + x_2)^2 - 2x_3 - 3}{x_3+2}
+\end{equation*}
+
+\begin{equation}
+    (x_1 + x_2)^2 = x_3x_5 + 2(x_3 + x_5) + 3
+\end{equation}
+
+Hat $4a^2 = bc + 2(b+c) + 3$ unendlich viele Lösungen?
+
+%%
+
+Der zweite Spieler hat also nur Kontrolle über welche Quadratzahl $n^2$ mit $n := x_1 + x_2$ in dem Term auftaucht, wobei der erste Spieler eine untere Schranke für $n \geq x_1$ festsetzt.
+
+Damit der erste Spieler gewinnt, muss der Term rechts eine nicht negativ und ganzzahlig sein. Damit der Term nicht negativ ist, muss der erste Spieler $x_1$ hinreichend groß und $x_3$ hinreichend klein wählen. Der zweite Spieler kann mit $x_2$ den Term nur vergrößern.
+
+Falls $n^2$ ungerade ist, dann ist der Zähler gerade und damit kann der erste Spieler gewinnen, indem er $x_3 = 0$ setzt.
+
+Falls $n^2$ gerade ist, dann ist es sogar durch 4 teilbar, da es eine Quadratzahl ist. Setze $n^2 = 4k^2$. Die entscheidene Gleichung ist nun umgeformt:
+
+\begin{equation*}
+    4k^2 - 3 = x_3x_5 + 2x_3 + 2x_5
+\end{equation*}
+
+Modulo 2 betrachtet sehen wir, dass $x_3$ und $x_5$ ungerade sein müssen. Modulo 4 betrachtet:
+\begin{align*}
+  1 &\equiv x_3x_5 + 2x_3 + 2x_5 &\mod 4 \\
+    &\equiv x_3x_5 + 2 + 2 &\mod 4 \\
+    &\equiv x_3x_5 &\mod 4
+\end{align*}
+
+Also gilt $x_3 \equiv x_5 \equiv 1 \mod 4$ oder $x_3 \equiv x_5 \equiv 3 \mod 4$.
+
+Betrachten wir die Gleichung modulo 3:
+\begin{align*}
+    k^2 &\equiv x_3x_5 + 2x_3 + 2x_5 &\mod 3
+\end{align*}
+
+Die linke Seite kann nur 0 oder 1 sein. Vollständige Überprüfung der 9 Möglichkeiten für $x_3$ und $x_5$ zeigt:
+\begin{itemize}
+    \item Wenn $k^2 \equiv 0$, dann $x_3 \equiv x_5 \equiv 0$ oder $x_3 \equiv x_5 \equiv 2$
+    \item Wenn $k^2 \equiv 1$, dann o.B.d.A\footnote{oder andersrum} $x_3 \equiv 0$ und $x_5 \equiv 2$.
+\end{itemize} 
+
+\begin{verbatim}    
+  0 1 2
+0 0 2 1
+1 2 2 2
+2 1 2 0
+\end{verbatim}
+
+
+\begin{verbatim}
+                               1 1
+           0 1 2 3 4 5 6 7 8 9 0 1
+x3 mod 4     a   b   a   b   a   b
+x5 mod 4     a   b   a   b   a   b
+k² = 0
+x3 mod 3   c   d c   d c   d c   d
+x5 mod 3   c   d c   d c   d c   d
+k² = 1
+x3 mod 3   c   d c   d c   d c   d
+x5 mod 3   d   c d   c d   c d   c
+\end{verbatim}
+
+Betrachten wir die Gleichung modulo 12:
+\begin{align*}
+    4k^2 - 3 &\equiv x_3x_5 + 2x_3 + 2x_5 &\mod 12
+\end{align*}
+
+
+
+
+Ergo sind ist $x_3$ und $x_5$ immer 3 oder 11 mod 12.
+\fi
+
 \end{document}
