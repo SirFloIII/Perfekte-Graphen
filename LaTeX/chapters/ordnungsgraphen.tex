@@ -1,7 +1,7 @@
 \documentclass[../main.tex]{subfiles}
 \begin{document}
 
-\chapter{Ordnungsgraphen}
+\chapter{Vergleichbarkeitsgraphen}
 \label{chapter:ordnungsgraphen}
 
 Ein weiteres Beispiel für perfekte Graphen sind Vergleichbarkeitsgraphen. Dies sind jene Graphen $(V, E)$, welche die Vergleichbarkeitsrelation zu einer (strikten) Halbordnung $(V, <)$ darstellen, i.e. $uv \in E \Leftrightarrow u < v \vee v < u$. Ihre Perfektheit ist verglichen\footnote{Ba Dum Tss} nicht so trivial wie die vorherigen Beispiele.
@@ -120,7 +120,7 @@ Offensichtlich ist Vergleichbarkeitsgraph zu sein ebenfalls eine hereditäre Eig
 \end{proof}
 
 \begin{korollar}
-    Sei $(V, E)$ ein Vergleichbarkeitsgraph und sei eine Orientierung $(V, E)$ gegeben. Dann kann eine minimale zulässige Färbung $h : V \to \N$, sowie eine maximale Clique in linearer Zeit, also $O(|V| + |F|)$ gefunden werden.
+    Sei $(V, E)$ ein Vergleichbarkeitsgraph und sei eine Orientierung $(V, F)$ gegeben. Dann kann eine minimale zulässige Färbung $h : V \to \N$, sowie eine maximale Clique in linearer Zeit, also $O(|V| + |F|)$ gefunden werden.
 \end{korollar}
 \begin{proof}
     

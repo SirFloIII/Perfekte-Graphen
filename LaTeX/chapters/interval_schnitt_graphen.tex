@@ -4,6 +4,106 @@
 \chapter{Interval-Schnitt-Graphen}
 \label{chapter:interval-schnitt-graphen}
 
+Stellen wir uns kurz vor, wir wären Adminstrator für eine Universität. Die ProfessorInnen sagen uns von wann bis wann sie ihre Vorlesungen halten wollen und wir müssen die Vorlesungen so auf die Hörsäale verteilen, das kein Hörsaal zu irgendeinem Zeitpunkt doppelt belegt ist. Wie viele Hörsäale brauchen wir dazu mindestens?
+
+Als Hobby-Graphentheoretiker erkennen wir sofort: das riecht doch nach einem Graphen-Färbe-Problem. Wir interpretieren die Vorlesungen als Knoten und verbinden sie durch eine Kante, wenn sie sich zeitlich überschneiden. Die Hörsäale interpretieren wir als Farben. Die \todo{fertig schreiben}
+
+\begin{definition}
+    Ein Graph $G = (V, E)$ heißt \emph{Interval-Schnitt-Graph}, wenn eine Familie von (reellen) Intervallen $(\mathcal I_v = [a_v, b_v])_{v\in V}$ existiert, für die gilt, dass $vw\in E$ genau dann wenn $\mathcal I_v \cap \mathcal I_w \neq \emptyset$. Eine solche Familie nennen wir \emph{Intervaldarstellung} von $G$.
+\end{definition}
+
+Bemerkung: Die Wahl der reellen Zahlen als Obermenge der Intervalle ist arbiträr gewählt. Solange wir uns auf endliche Graphen beschränken, ist jede unendliche Totalordung geeignet für die Definition.\footnote{Für Graphen beliebiger Kardinalität will man die Totalordnung groß und dicht genug wählen, um genug mögliche Endpunkte für alle Intervalle zu haben. Was "genug" hier genau heißt ist aber leider nicht im Scope dieser Arbeit.} Ebenso arbiträr ist die Verwendung von abgeschlossenen Intervallen. Man kann äquivalent offene, halboffene oder gar gemischte Intervalle zur Definition verwenden. 
+
+Bemerkung: Obwohl es in der Definition nicht gefordert ist, nehmen wir ohne Beschränkung der Allgemeinheit an, dass die Endpunkte der Intervalle alle verschieden sind. Durch klein genuge Verschiebungen der Endpunkte wird die Disjunktheit zweier Intervalle nicht verändert, also kann aus jeder beliebigen Intervalldarstellung eine solche gebaut werden.
+
+\begin{satz}
+    Interval-Schnitt-Graphen sind triangulierbar.
+\end{satz}
+\begin{proof}
+    Sei $G = (V, E)$ ein Interval-Schnitt-Graph und $(\mathcal I_v = [a_v, b_v])_{v\in V}$ eine Intervaldarstellung davon. Sei $C = [v_1, \hdots, v_n]$ ein Cyclus mit Länge $n>3$. Es ist also zu zeigen, das $C$ eine Sehne hat. Sei $u$ der Knoten mit $b_u = \min_{v\in C} b_v$ und analog $w$ der Knoten mit $a_w = \max_{v\in C} a_v$.
+    
+    Fall 1: $a_w \leq b_u$
+    
+    Für alle $v\in C$ gilt: $$a_v\leq a_w \leq b_u \leq b_v.$$
+    Es schneiden sich also alle Intervalle im Punkt $a_w$ und damit ist C sogar eine Clique, enthält also trivialerweise eine Sehne.
+    
+    Fall 2: $a_w > b_u$
+    
+    Die Intervalle von u und w überschneiden sich also nicht und können damit keine Nachbarn im Cyclus sein. Sei o.B.d.A. $u = v_1$ und $w=v_k$ mit $2 \neq k \neq n$. Betrachen wir die zwei Teile des Cyclus zwischen $u$ und $w$, die Pfade $[v_2, \hdots, v_{k-1}]$ und $[v_{k+1}, \hdots, v_n]$. Da die Pfade verbunden sind, ist die Vereinigung der dazugehörigen Intervalle zusammenhängend, sowie:
+    \begin{equation*}
+        \bigcup\limits_{i = 2}^{k-1} \mathcal I_{v_i} \supset [b_u, a_w] \subset \bigcup\limits_{j = k+1}^{n} \mathcal I_{v_j}
+    \end{equation*}
+    Für einen beliebigen Punkt $b_u < x < a_w$ gibt es also je (mindestens) ein Interval in den beiden Pfaden. Diese überschneiden sich in $x$ und sind damit durch eine Kante verbunden, die gesuchte Sehne.
+\end{proof}
+    
+\begin{figure}[ht]
+    \label{fig:fall2}
+    \centering
+    \begin{tikzpicture}
+        \begin{scope}[every node/.style={circle,draw,minimum size=0.8cm}]
+            % First line (3 nodes)
+            \node [fill=orange!30] (v2) at (0, 1) {$v_2$};
+            \node [fill=orange!30] (v3) at (1.5, 1) {$v_3$};
+            \node [fill=orange!30] (v4) at (3, 1) {$v_4$};
+            
+            % Second line (2 nodes, left and right)
+            \node [fill=red!30] (v1) at (-0.75, 0) {$u$};
+            \node [fill=green!30] (v5) at (3.75, 0) {$w$};
+            
+            % Third line (2 nodes)
+            \node [fill=blue!30] (v6) at (2.25, -1) {$v_6$};
+            \node [fill=blue!30] (v7) at (0.75, -1) {$v_7$};
+        \end{scope}
+
+        % Draw edges
+        \draw (v1) -- (v2) -- (v3) -- (v4) -- (v5) -- (v6) -- (v7) -- (v1);
+        \draw [dashed] (v3) -- (v7);
+    \end{tikzpicture}
+    
+    \hspace{1em}
+
+    \begin{tikzpicture}
+        % Draw intervals as horizontal lines
+            \draw[line width=4pt, color=red] (0, 0) -- (2, 0);
+            \draw[line width=4pt, color=orange] (1, 1) -- (3, 1);
+            \draw[line width=4pt, color=orange] (2.4, 0.5) -- (4.4, 0.5);
+            \draw[line width=4pt, color=orange] (3.8, 1) -- (5.8, 1);
+            \draw[line width=4pt, color=green] (5, 0) -- (7, 0);
+            \draw[line width=4pt, color=blue] (3.5, -1) -- (5.5, -1);
+            \draw[line width=4pt, color=blue] (1.8, -0.5) -- (3.8, -0.5);
+            \node[above] at (1, 0) {$u$};
+            \node[above] at (2, 1) {$v_2$};
+            \node[above] at (3.4, 0.5) {$v_3$};
+            \node[above] at (4.8, 1) {$v_4$};
+            \node[above] at (6, 0) {$w$};
+            \node[above] at (4.5, -1) {$v_6$};
+            \node[above] at (2.8, -0.5) {$v_7$};
+
+            \draw[line width=1pt] (3.1, -1.5) -- (3.1, 1.5);
+    \end{tikzpicture}
+    \caption{Illustration von Fall 2: Oben der Zyklus, unten die Intervalldarstellung davon. Die horizontale Linie repräsentiert den beliebigen Punkt $x$. An dieser Stelle überschneiden sich die Intervalle von $v_3$ und $v_7$, also gibt es eine Sehne zwischen diesen beiden Knoten.}
+\end{figure}
+
+\begin{satz}
+    Das Komplement eines Interval-Schnitt-Graphens ist ein Vergleichbarkeitsgraph.
+\end{satz}
+\begin{proof}
+    Sei G = (V, E) ein Interval-Schnitt-Graph und $(\mathcal I_v = [a_v, b_v])_{v\in V}$ eine Intervaldarstellung davon. Eine Kante $vw$ ist im Komplement von G genau dann, wenn die Intervalle $\mathcal I_v$ und $\mathcal I_w$ disjunkt sind. In diesem Fall muss also ein Interval ganz unter dem anderen liegen. Wir orientieren die Kante $vw$ denentsprechend so, dass sie vom unteren Interval zum oberen läuft. Das liefert uns die gewünschte Orientierung. Die Transititivität folgt aus der Transitivität der reellen Zahlen.
+\end{proof}
+
+\begin{satz}
+    Interval-Schnitt-Graphen sind perfekt.
+\end{satz}
+\begin{proof}
+    Sowohl triangulierbare Graphen als auch Ordnungsgraphen sind perfekt, und Perfektheit überträgt sich auf Komplemente. Interval-Schnitt-Graphen sind damit in einer gewissen Weise sogar doppelt perfekt.
+\end{proof}
+
+\todo{Definition: proper
+
+Definition: Einheits-
+
+Satz: das sind die gleichen.}
+
 \section{Binary Decision Diagrams}
 
 Ein \emph{Binary Decision Diagram} (kurz BDD) ist ein gerichter azyklischer Graph $D = (N, A)$ mit markierten Kanten, der Strings aus einem binären Alphabet $\Sigma := \{L, R\}$ mit einer fixierten Länge $n \in \mathbb N$ klassifiziert. Um BDDs von anderen Graphen zu unterscheiden, nennen wir die Knoten in $N$ \emph{Nodes} und die Kanten in $A$ \emph{Arcs}.
