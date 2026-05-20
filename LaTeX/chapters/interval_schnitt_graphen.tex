@@ -234,4 +234,88 @@ Betrachten wir die Gleichung modulo 12:
 Ergo sind ist $x_3$ und $x_5$ immer 3 oder 11 mod 12.
 \fi
 
+\iffalse
+\chapter{Kartenrätsel}
+
+\section{Babymode}
+
+Angenommen wir haben nur eine Karte pro Farbe. Die Wahrscheinlichkeit, dass die blaue Karte in der Hand ist, ist $\frac{k}{n}$. Ist dies der Fall, dann sind für die rote Karte $k-1$ Plätze in der Hand und $n-1$ Plätze im ganzen Deck übrig, also ist die Wahrscheinlichkeit für die rote Karte $\frac{k-1}{n-1}$. Analog für die grüne Karte.
+
+\begin{equation*}
+    P(X) = \blue{\frac{k}{n}} \cdot \red{\frac{k-1}{n-1}} \cdot \green{\frac{k-2}{n-2}}
+\end{equation*}
+
+\section{Easymode}
+
+Ok, jetzt mit zwei Karten pro Farbe. Wir nummerieren die Farbkarten jeweils durch, also haben eine 1-Blau und eine 2-Blau, und so weiter. Die Wahrscheinlichkeit, dass die 1-Blau in der Hand ist, ist wieder $\frac{k}{n}$. Wenn nicht, betrachten wir die 2-Blau. Die Wahrscheinlichkeit, das die 2-Blau in der Hand ist und die 1-Blau nicht (das fordern wir, damit wir nicht doppelt zählen) ist $\frac{n-k}{n}\cdot\frac{k}{n-1}$. Diese Fälle sind exklusiv, also können wir die Wahrscheinlichkeiten einfach addieren.
+
+Man beachte, das wir nur in beiden Fällen nur einen Spot auf der Hand für eine blaue Karte reserviert haben. Im ersten Fall wird die 2-Blau gar nicht erwähnt und verhält sich dementsprechend genau wie eine weiße Karte, und im zweiten Fall ist die 1-Blau explizit nicht in der Hand.
+
+Fuuuuuuuuuuuuuuuuuuuuack, das heißt, die roten Karten sind leicht wahrscheinlicher auf der Hand im zweiten Fall, weil sich da die 1-Blau nicht wie eine weiße Karte verhält.
+
+Fuuuuuuuck.
+
+Anyway.
+
+Ok, das was ich aufschreiben wollte ist eine untere Schranke für die echte Wahrscheinlichkeit.
+
+\subsection{Easymode slightly easier}
+
+Ok, fuck grün, was wenn nur blau und rot. So, die Wahrscheinlichkeit im ersten Fall ist relativ ez, das ist der Term denn ich vorher aufschreiben wollte. Man beachte die rote Fallunterscheidung analog zur blauen.
+
+\begin{equation*}
+    P(X_\blue 1) = \blue{\frac{k}{n}} \cdot \left (\red{\underbrace{\frac{k-1}{n-1}}_\text{1-Rot in der Hand} + \underbrace{\frac{n-k-1}{n-1} \cdot \frac{k-1}{n-2}}_\text{1-Rot nicht, 2-Rot in der Hand}}\right )
+\end{equation*}
+
+So, jetzt der spannende Fall, wir wissen die 1-Blau ist nicht in der Hand. Achso eigentlich ist es eh nicht so schwer, sie nimmt einen Platz im Deck, aber nicht in der Hand weg, also werden alle passenden $n-1$ Terme durch $n-2$ usw. ersetzt:
+
+\begin{equation*}
+    P(X_\blue 2) = \blue{\frac{n-k}{n}\cdot\frac{k}{n-1}} \cdot \left (\red{\underbrace{\frac{k-1}{n-2}}_\text{1-Rot in der Hand} + \underbrace{\frac{n-k-1}{n-2} \cdot \frac{k-1}{n-3}}_\text{1-Rot nicht, 2-Rot in der Hand}}\right )
+\end{equation*}
+
+Wie gesagt sind die beiden blauen Fälle exklusiv, also kann man die Wahrseinlichkeiten einfach addieren und Easymode slightly easier ist gelöst:
+
+\begin{equation*}
+    P(X) = P(X_\blue 1) + P(X_\blue 2)
+\end{equation*}
+
+\subsection{Back to Easymode}
+
+So jetzt wieder mit grünen Karten auch. Was hat uns der letzte Teil gelehrt? Wir müssen weiterhin tracken, ob wir im blauen Fall 1 oder 2 und auch im roten Fall 1 oder 2 sind, und immer die Zahl im Nenner anpassen, jenachdem wieviele Stellen im Deck noch nicht determiniert sind.
+
+So kommen wir jetzt auf 4 Fälle insgesamt:
+
+\begin{align*}
+     P(X_{\blue 1, \red 1}) &= \blue{\frac{k}{n}} \cdot \red{\frac{k-1}{n-1}} \cdot \left( \green{\underbrace{\frac{k-2}{n-2}}_\text{1-Grün in der Hand} + \underbrace{\frac{n-k-2}{n-2} \cdot \frac{k-2}{n-3}}_\text{1-Grün nicht, 2-Grün in der Hand}}\right) \\
+     P(X_{\blue 2, \red 1}) &= \blue{\frac{n-k}{n}\cdot\frac{k}{n-1}} \cdot \red{\frac{k-1}{n-2}} \cdot \left( \green{\frac{k-2}{n-3} + \frac{n-k-2}{n-3} \cdot \frac{k-2}{n-4}}\right) \\
+     P(X_{\blue 1, \red 2}) &= \blue{\frac{k}{n}} \cdot \red{\frac{n-k-1}{n-1} \cdot \frac{k-1}{n-2}} \cdot \left( \green{\frac{k-2}{n-3} + \frac{n-k-2}{n-3} \cdot \frac{k-2}{n-4}}\right) \\
+     P(X_{\blue 2, \red 2}) &= \blue{\frac{n-k}{n}\cdot\frac{k}{n-1}} \cdot \red{\frac{n-k-1}{n-2} \cdot \frac{k-1}{n-3}} \cdot \left( \green{\frac{k-2}{n-4} + \frac{n-k-2}{n-4} \cdot \frac{k-2}{n-5}}\right)
+\end{align*}
+
+Ok, cool, das war viel Copy und Paste Arbeit, aber damit haben wir mal den Easymode gelöst, wenn wir noch ein bissi addieren.
+
+Viel spannender ist aber das Pattern, das sich da ergibt, wenn man die Brüche alle zusammenfasst. Spalten wir kurz mal den grünen Fall jeweils auch noch auf in $X_{\blue i, \red j, \green l}$, für $i, j, l$ gleich 1 oder 2.
+
+Mit der fallenden Faktoriellen ($x^{\underline{i}} := \frac{n!}{(n-i)!}$) kann man die Wahrscheinlichkeit einfach hinschreiben:
+
+\begin{equation*}
+    P(X_{\blue i, \red j, \green l}) = \frac{k^{\underline{3}} \cdot (n-k)^{\underline{i+j+k-3}}}{n^{\underline{i+j+l}}}
+\end{equation*}
+
+Die $3$ in der Formel ist natürlich komplett arbiträr die Anzahl der Farben, also mit Induktion\texttrademark ist der Easymode sogar für beliebige Anzahlen an Farben gelöst.
+
+Man kann es auch ez\texttrademark auf mehr Karten pro Farbe (mit eventuell versichenden Anzahlen je Farbe sogar) verallgemeinern, indem man $i, j, l$ etc. über mehr Zahlen laufen lässt. Sei $c$ die Anzahl der Farben, $f$ ein Multiindex für den Fall und $s$ die Summe von $f$.
+
+\begin{equation*}
+    P(X_f) = \frac{k^{\underline{c}} \cdot (n-k)^{\underline{s-c}}}{n^{\underline{s}}}
+\end{equation*}
+
+\begin{proof}
+    Übungsaufgabe.
+\end{proof}
+
+Letztendlich muss man jetzt nur mehr aufsummieren, da nach Konstruktion die Fälle ja exklusiv gemacht sind. Ist halt ne lustige Summe über alle Multiindizes, wobei jeder einzelne Index von 1 bis Anzahl der Karten dieser Farbe läuft.
+
+\fi
+
 \end{document}
