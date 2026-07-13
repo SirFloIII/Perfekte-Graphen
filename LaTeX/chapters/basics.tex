@@ -34,15 +34,41 @@ Nov 2002: Die oben et al. finden einen polynomiellen Algorithmus, um perfekte Gr
 
 Def: die typischen Annahmen für den Kontext (simple, undirected, endlich)
 
-Def Chromatic Number
+\section{Die Chromatische Zahl}
 
-Rekursives Schema zum berechnen der chromatischen Zahl via Chromatic Polynom
+\begin{definition}
+    Sei $G = (V, E)$ ein Graph. Eine (surjektive) Funktion $c: V \to C \subset \mathbb N$ heißt \emph{Färbung}\footnote{Streng genommen ist dies eine Knotenfärbung. In der weiteren Graphentheorie betrachtet man auch Kantenfärbungen, diese kommen aber in dieser Arbeit nicht vor.} von $G$, wobei wir $C$ als die Menge der \emph{Farben} bezeichnen. Die Färbung heißt \emph{zulässig} (oder \emph{gültig}), wenn keine zwei benachbarten Knoten die gleiche Farbe haben, i.e. $\forall uv \in E: c(u) \neq c(v)$.
+\end{definition}
 
-ergo $O(2^{|V|})$
+Offensichtlich ist irgendwelche zulässige Färbungen finden nicht so schwer. Als Extrembeispiel kann man jedem Knoten eine eigene Farbe zuordnen. Die wahre Herausforderung ist, eine zulässige Färbung zu finden, die möglichst wenige Farben verwendet.
 
-NP-Hardness via Karp's 21 NP-complete problems
+\begin{definition}
+    Sei $G = (V, E)$ ein Graph. Die \emph{Chromatische Zahl} $\chi(G) \in \mathbb N$ ist die minimale Anzahl von Farben in einer zulässigen Färbung von $G$.
+    \begin{equation}
+        \chi(G) := \min\limits_{c: V \to C zulässig} |C|
+    \end{equation}
+\end{definition}
 
-Fun Fact: Sudoku ist ein Graph Coloring Problem
+Im Allgemeinen ist die chromatische Zahl eines Graphens finden NP-schwer\todo{\cite[Karp]}. Eine Möglichkeit, dies denoch zu tun ist mit dem Chromatischen Polynom \todo{cite this}. Der Aufwand dafür ist aber exponentiel, konkret $O(2^{|E|})$. Für bestimmte Klassen von Graphen gibt es aber polynomielle, also wesentlich schnellere Methoden, die chromatische Zahl zu berechnen. Diese werden wir in den späteren Kapiteln dieser Arbeit kennenlernen.
+
+\begin{satz}
+    Sei $G = (V, E)$ ein Graph. Die Anzahl der zulässigen Färbungen mit $\lambda$ Farben $\Chi(G, \lambda)$ nennen wir \emph{chromatisches Polynom}. $\Chi(G, \lambda)$ ist tatsächlich ein Polynom und erfüllt die Rekursionsgleichung für jede Kante $e \in E$:
+    \begin{equation}
+        \Chi(G, \lambda) = \Chi(G - e, \lambda) - \Chi(G/e, \lambda)
+    \end{equation}
+    wobei
+    \begin{itemize}
+        \item $G - e := (V, E \setminus \{e\})$ ist der Graph ohne der Kante $e$.
+        \item $G/e$ ist die \emph{Kontraktion} der Kante $e$. Das heißt die Knoten $u, v$ von $e$ werden durch einen einzelnen Knoten $w$ ersetzt und alle anderen Kanten, die von $u$ und $v$ ausgehen werden stattdessen mit $w$ verbunden.
+    \end{itemize}
+\end{satz}
+\begin{proof}
+    \todo{oder auch nur zitieren?}
+\end{proof}
+
+Das wohl bekannteste Graph-Färbe-Problem, wenn auch nicht in dieser Formulierung, ist das beliebte Zahlenrätsel Sudoku. Ziel von Sudoku ist es, ein $9 \times 9$-Feld mit den Ziffern 1 bis 9 zubefüllen, sodass in keiner Zeile, Spalte und keinem Kästchen eine Ziffer mehrmals vorkommt. Wir identifizieren die Ziffern mit neun Farben und die 81 Felder als Knoten in einem Graphen. Zwischen je 2 Knoten in gleicher Zeile, Spalte und Kästchen fügen wir eine Kante hinzu. Zusätzlich fügen wir Kanten hinzu, die verschiedene gegebene Ziffern miteinander verbindet. Eine zulässige Färbung entspricht nun einer Lösung des Sudokus.
+
+\section{Die Cliquen-Zahl}
 
 Def Clique
 
@@ -119,7 +145,7 @@ Die Chromatische Zahl und die Cliquen-Zahl kann beliebig weit auseinander liegen
     \end{itemize}
     Damit ist $\omega(M_n) = 2$ gezeigt.
 
-    Z.z. $\chi(M_n) \geq n$: Angenommen es gibt ein Coloring $c$ mit $n-1$ Farben, o.B.d.A. mit $c(w) = n-1$. Da $w$ mit allen Knoten $v_i$ verbunden ist, gilt $c(v_i) \neq n-1$. Wir definieren eine neue Färbung $c'$ von $M_{n-1}$ mit $n-2$ Farben.
+    Z.z. $\chi(M_n) \geq n$: Angenommen es gibt eine zulässige Färbung $c$ mit $n-1$ Farben, o.B.d.A. mit $c(w) = n-1$. Da $w$ mit allen Knoten $v_i$ verbunden ist, gilt $c(v_i) \neq n-1$. Wir definieren eine neue Färbung $c'$ von $M_{n-1}$ mit $n-2$ Farben.
     \begin{align*}
         c' : M_{n-1} &\to \N_{\leq n-2} \\
         u_i &\mapsto \begin{cases}
@@ -169,7 +195,7 @@ Betrachten wir zunächst einige Beispiele für Klassen von perfekten Graphen. Je
     Insbesondere ist $G$ perfekt genau dann wenn $\overline G$ perfekt ist.
 \end{satz}
 \begin{proof}
-    (\ref{eq:P1}) $\Rightarrow$ (\ref{eq:P3}): Sei $A \subset V$ beliebig. Angenommen wir färben $G_A$ mit $\omega(G_A)$ Farben. Jede Farbe kann von höchstens $\omega(\overline{G_A})$ vielen Knoten angenommen werden, da gleichgefärbte Knoten eine Clique im Komplement bilden. Über alle Farben aufsummiert ergibt sich $\omega(G_A) \cdot \omega(\overline{G_A}) \geq |A|$.
+    (\ref{eq:P1}) $\Rightarrow$ (\ref{eq:P3}): Sei $A \subset V$ beliebig. Angenommen wir färben $G_A$ mit $\omega(G_A)$ Farben. Jede Farbe kann von höchstens $\omega(\overline{G_A})$ vielen Knoten angenommen werden, da gleichgefärbte Knoten eine Clique im Komplement $\overline{G_A}$ bilden. Über alle Farben aufsummiert ergibt sich $\omega(G_A) \cdot \omega(\overline{G_A}) \geq |A|$.
 
     (\ref{eq:P3}) $\Rightarrow$ (\ref{eq:P1}): \todo{Finish Proof}
 \end{proof}
