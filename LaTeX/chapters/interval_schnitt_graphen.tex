@@ -4,9 +4,9 @@
 \chapter{Interval-Schnitt-Graphen}
 \label{chapter:interval-schnitt-graphen}
 
-Stellen wir uns kurz vor, wir wären Adminstrator für eine Universität. Die ProfessorInnen sagen uns von wann bis wann sie ihre Vorlesungen halten wollen und wir müssen die Vorlesungen so auf die Hörsäale verteilen, das kein Hörsaal zu irgendeinem Zeitpunkt doppelt belegt ist. Wie viele Hörsäale brauchen wir dazu mindestens?
+Als einführendes Beispiel stellen wir uns kurz vor, wir wären AdminstratorIn für eine Universität. Die ProfessorInnen sagen uns von wann bis wann sie ihre Vorlesungen halten wollen und wir müssen die Vorlesungen so auf die Hörsäale verteilen, das kein Hörsaal zu irgendeinem Zeitpunkt doppelt belegt ist. Wie viele Hörsäale brauchen wir dazu mindestens?
 
-Als Hobby-Graphentheoretiker erkennen wir sofort: das riecht doch nach einem Graphen-Färbe-Problem. Wir interpretieren die Vorlesungen als Knoten und verbinden sie durch eine Kante, wenn sie sich zeitlich überschneiden. Die Hörsäale interpretieren wir als Farben. Die \todo{fertig schreiben}
+Als Hobby-Graphentheoretiker erkennen wir sofort: das riecht doch nach einem Graphen-Färbe-Problem. Wir interpretieren die Vorlesungen als Knoten und verbinden sie durch eine Kante, wenn sie sich zeitlich überschneiden. Die Hörsäale interpretieren wir als Farben. Eine zulässige Färbung entspricht dann einer Hörsaalzuweisung ohne Überschneidungen. Die Indentifikation von Knoten mit Zeitintervallen liefert uns in natürlicher Weise den Begriff der Interval-Schnitt-Graphen. Da, wie wir später beweisen werden, Interval-Schnitt-Graphen perfekt sind, ist die Anzahl der nötigen Hörsäale, i.e. der chromatischen Zahl gleich der Anzahl der maximalen gleichzeitig stattfindenden Vorlesungen, i.e. der Cliquen-Zahl.
 
 \begin{definition}
     Ein Graph $G = (V, E)$ heißt \emph{Interval-Schnitt-Graph}, wenn eine Familie von (reellen) Intervallen $(\mathcal I_v = [a_v, b_v])_{v\in V}$ existiert, für die gilt, dass $vw\in E$ genau dann wenn $\mathcal I_v \cap \mathcal I_w \neq \emptyset$. Eine solche Familie nennen wir \emph{Intervaldarstellung} von $G$.
@@ -108,9 +108,9 @@ Satz: das sind die gleichen.}
 
 Ein \emph{Binary Decision Diagram} (kurz BDD) ist ein gerichter azyklischer Graph $D = (N, A)$ mit markierten Kanten, der Strings aus einem binären Alphabet $\Sigma := \{L, R\}$ mit einer fixierten Länge $n \in \mathbb N$ klassifiziert. Um BDDs von anderen Graphen zu unterscheiden, nennen wir die Knoten in $N$ \emph{Nodes} und die Kanten in $A$ \emph{Arcs}.
 
-Die Nodes sind in $n+1$ viele Gruppen partitioniert: $N = N_1 \cup \hdots \cup \N_{n+1}$. Die Nodes in $N_i$ nennen wir \emph{auf Level $i$} für $1 \leq i \leq n+1$. Es gibt nur eine Node in $N_1$, die wir die \emph{Wurzel} nennen. In $N_{n+1}$ gibt es nur 2 Nodes, den \emph{0-Terminal} und den \emph{1-Terminal}.
+Die Nodes sind in $n+1$ viele Gruppen partitioniert: $N = N_1 \cup \hdots \cup N_{n+1}$. Die Nodes in $N_i$ nennen wir \emph{auf Level $i$} für $1 \leq i \leq n+1$. Es gibt nur eine Node in $N_1$, die wir die \emph{Wurzel} nennen. In $N_{n+1}$ gibt es nur 2 Nodes, den \emph{0-Terminal} und den \emph{1-Terminal}.
 
-Jede Node in $N_i$ für $i \leq n$ (also alle außer die beiden Terminals) hat zwei Arcs, die davon weggehen und bei einer Node in $N_{i+1} \cup \N_{n+1}$ enden (also entweder im nächsten Level oder bei einem Terminal). Die Länge von jedem Pfad von der Wurzel zu einer Node in $N_i$ ist also genau $i-1$ für $i \leq n$. Je eine der beiden Arcs ist mit $L$ und $R$ markiert. Wir nennen diese Arcs die \emph{$L$-Arc} und \emph{$R$-Arc} respektive.
+Jede Node in $N_i$ für $i \leq n$ (also alle außer die beiden Terminals) hat zwei Arcs, die davon weggehen und bei einer Node in $N_{i+1} \cup N_{n+1}$ enden (also entweder im nächsten Level oder bei einem Terminal). Die Länge von jedem Pfad von der Wurzel zu einer Node in $N_i$ ist also genau $i-1$ für $i \leq n$. Je eine der beiden Arcs ist mit $L$ und $R$ markiert. Wir nennen diese Arcs die \emph{$L$-Arc} und \emph{$R$-Arc} respektive.
 
 Um nun eine String $s = c_1 \hdots c_n$ zu klassifizieren, folgen wir von der Wurzel ausgehend für $c_i$-Arcs für $i$ von 1 bis $n$. Wenn wir letztendlich auf den 1-Terminal treffen, dann wird der String $s$ \emph{akzeptiert}. Wenn wir andernfalls auf den 0-Terminal treffen, mitunter auch schon bevor wir den ganzen Sting gelesen haben, dann wird der String \emph{verworfen}.
 

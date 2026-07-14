@@ -47,18 +47,18 @@ Def: die typischen Annahmen für den Kontext (simple, undirected, endlich)
 Offensichtlich ist irgendwelche zulässige Färbungen finden nicht so schwer. Als Extrembeispiel kann man jedem Knoten eine eigene Farbe zuordnen. Die wahre Herausforderung ist, eine zulässige Färbung zu finden, die möglichst wenige Farben verwendet.
 
 \begin{definition}
-    Sei $G = (V, E)$ ein Graph. Die \emph{Chromatische Zahl} $\Chi(G) \in \mathbb N$ ist die minimale Anzahl von Farben in einer zulässigen Färbung von $G$.
+    Sei $G = (V, E)$ ein Graph. Die \emph{Chromatische Zahl} $\chi(G) \in \mathbb N$ ist die minimale Anzahl von Farben in einer zulässigen Färbung von $G$.
     \begin{equation}
-        \Chi(G) := \min\limits_{c: V \to C zulässig} |C|
+        \chi(G) := \min\limits_{c: V \to C \text{zulässig}} |C|
     \end{equation}
 \end{definition}
 
-Im Allgemeinen ist die chromatische Zahl eines Graphens finden NP-schwer\todo{\cite[Karp]}. Eine Möglichkeit, dies denoch zu tun ist mit dem Chromatischen Polynom \todo{cite this}. Der Aufwand dafür ist aber exponentiel, konkret $O(2^{|E|})$. Für bestimmte Klassen von Graphen gibt es aber polynomielle, also wesentlich schnellere Methoden, die chromatische Zahl zu berechnen. Diese werden wir in den späteren Kapiteln dieser Arbeit kennenlernen.
+Im Allgemeinen ist die chromatische Zahl eines Graphens finden NP-schwer \cite{Karp1972}. Eine Möglichkeit, dies denoch zu tun ist mit dem Chromatischen Polynom \todo{cite this}. Der Aufwand dafür ist aber exponentiel, konkret $O(2^{|E|})$. Für bestimmte Klassen von Graphen gibt es aber polynomielle, also wesentlich schnellere Methoden, die chromatische Zahl zu berechnen. Diese werden wir in den späteren Kapiteln dieser Arbeit kennenlernen.
 
 \begin{satz}
-    Sei $G = (V, E)$ ein Graph. Die Anzahl der zulässigen Färbungen mit $\lambda$ Farben $\Chi(G, \lambda)$ nennen wir \emph{chromatisches Polynom}. $\Chi(G, \lambda)$ ist tatsächlich ein Polynom und erfüllt die Rekursionsgleichung für jede Kante $e \in E$:
+    Sei $G = (V, E)$ ein Graph. Die Anzahl der zulässigen Färbungen mit $\lambda$ Farben $\chi(G, \lambda)$ nennen wir \emph{chromatisches Polynom}. $\chi(G, \lambda)$ ist tatsächlich ein Polynom und erfüllt die Rekursionsgleichung für jede Kante $e \in E$:
     \begin{equation}
-        \Chi(G, \lambda) = \Chi(G - e, \lambda) - \Chi(G/e, \lambda)
+        \chi(G, \lambda) = \chi(G - e, \lambda) - \chi(G/e, \lambda)
     \end{equation}
     wobei
     \begin{itemize}
@@ -78,15 +78,15 @@ Das wohl bekannteste Graph-Färbe-Problem, wenn auch nicht in dieser Formulierun
     Sei $G = (V, E)$ ein Graph. Eine Knotenmenge $A \subset V$ heißt \emph{Clique} genau dann wenn alle Knoten in $A$ untereinander verbunden sind. Die Größe der größten Clique von $G$ nennen wir \emph{Cliquenzahl}, bezeichnet mit $\Omega{G}$.
 \end{definition}
 
-Die Suche nach der Cliquenzahl ist im allgemeinen ebenfalls NP-schwer\todo{\cite[Karp]}, aber ähnlich wie bei der chromatischen Zahl werden wir für unsere speziellen Klassen effiziente Algoritmen für das Cliquenproblem kennen lernen.
+Die Suche nach der Cliquenzahl ist im allgemeinen ebenfalls NP-schwer \cite{Karp1972}, aber ähnlich wie bei der chromatischen Zahl werden wir für unsere speziellen Klassen effiziente Algoritmen für das Cliquenproblem kennen lernen.
 
 Zwischen der chromatischen Zahl und der Cliquen-Zahl kann man folgende grundsätzliche Abschätzung tätigen:
 
 \begin{satz}
-    Sei $G = (V, E)$ ein Graph. Dann gilt $\Chi(G) \geq \Omega(G)$.
+    Sei $G = (V, E)$ ein Graph. Dann gilt $\chi(G) \geq \Omega(G)$.
 \end{satz}
 \begin{proof}
-    Sei $A$ die größte Klique von $G$ und $c: V \to C$ eine minimale zulässige Färbung von G. Da die Knoten von $A$ alle untereinander verbunden sind, müssen sie von $c$ verschiedene Farben zugewiesen bekommen. Damit folgt $\Omega(G) = |A| \leq |C| = \Chi(G)$.
+    Sei $A$ die größte Klique von $G$ und $c: V \to C$ eine minimale zulässige Färbung von G. Da die Knoten von $A$ alle untereinander verbunden sind, müssen sie von $c$ verschiedene Farben zugewiesen bekommen. Damit folgt $\Omega(G) = |A| \leq |C| = \chi(G)$.
 \end{proof}
 
 In natürlicher Weise stellt sich bei einer Ungleichung immer die Fragen: Wann ist die Ungleichung scharf? Die Antwort darauf führt zum zentralen Begriff dieser Arbeit, den perfekten Graphen. In die andere Richtung kann die Chromatische Zahl und die Cliquen-Zahl beliebig weit auseinander liegen. Mit der Konstruktion von Jan Mycielski \cite{Mycielski1955} kann man aus einem Graph einen weiteren konstruieren, sodass die Cliquen-Zahl gleich bleibt, aber die chromatische Zahl um 1 steigt.
