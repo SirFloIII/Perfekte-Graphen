@@ -7,11 +7,11 @@
 \section{Geschichte}
 \label{section:geschichte}
 
-1960: Claude Berge
+x 1960: Claude Berge
 
-1961: Claude Berge formuliert die Schwache und die Starke Perfekter Graph Vermutung (WPGC und SPGC)
+x 1961: Claude Berge formuliert die Schwache und die Starke Perfekter Graph Vermutung (WPGC und SPGC)
 
-1972: László Lovász beweist die WPGC
+x 1972: László Lovász beweist die WPGC
 
 1980: 1st Edition vom Buch
 
@@ -28,23 +28,45 @@ Nov 2002: Die oben et al. finden einen polynomiellen Algorithmus, um perfekte Gr
 \section{Grundlegende Definitionen}
 \label{section:definitionen}
 
+\todo{text: jetzt kommen triviale basics}
+
 \begin{definition}
-    Ein Tupel $G = (V, E)$ ist ein \emph{Graph}, wenn
+    Ein Tupel $G = (V, E)$ ist ein (ungerichteter)\footnote{In dieser Arbeit ist mit \emph{Graph} immer ein ungerichteter Graph gemeint. Gerichtete Graphen werden als solche bezeichnet.} \emph{Graph}, wenn
     \begin{enumerate}
-        \item $V$ ist eine Menge, genannt die \emph{Knotenmenge}. Die Elemente nennen wir \emph{Knoten}.
+        \item $V$ ist eine endliche Menge, genannt die \emph{Knotenmenge} von $G$. Die Elemente nennen wir \emph{Knoten}.
         \item $E \subset \left\{\left\{u, v\right\} | u \neq v \in V\right\}$, genannt die \emph{Kantenmenge}. Für eine \emph{Kante} $\left\{u, v\right\}$ schreiben wir kurz $uv$.
     \end{enumerate}
 \end{definition}
 
-Def: die typischen Annahmen für den Kontext (simple, undirected, endlich)
+
+
+\todo{Komplement $\overline G$, KN und NN, CN} 
+
+\begin{definition}
+    Sei $G = (V, E)$ ein Graph. Ein \emph{Teilgraph} von $G$ ist einen Graph $H = (A, E')$ mit $A \subset V$ und $E' \subset E$. Für eine Knotenmenge $A \subset V$ ist der Teilgraph von $G$, der alle Kanten von $E$ enthält, deren Knoten in $A$ sind der \emph{induzierte Teilgraph}, i.e.:
+    \begin{equation*}
+        G_A := (A, \{(uv \in E | u, v \in A\})
+    \end{equation*}
+\end{definition}
+
+Der Begriff des induzierten Teilgraphen unterscheidet sich vom allgemeinen Teilgraphen darin, dass bei einem allgeimeinen Teilgraphen auch Kanten weggelassen werden können, deren Knoten allerdings nicht weggelassen werden.
+
+\begin{definition}
+    Sei $G = (V, E)$ ein Graph. Das \emph{Komplement} von $G$ ist jener Graph auf $V$, der genau die Kanten enthält, die $G$ nicht enthält, i.e.:
+    \begin{equation*}
+        \overline G := (V, \{uv | uv \neq E \wedge u \neq v \in V\})
+    \end{equation*}
+\end{definition}
+
+Offensichtlich gilt $\overline{\overline G} = G$.
 
 \section{Die Chromatische Zahl}
 
 \begin{definition}
-    Sei $G = (V, E)$ ein Graph. Eine (surjektive) Funktion $c: V \to C \subset \mathbb N$ heißt \emph{Färbung}\footnote{Streng genommen ist dies eine Knotenfärbung. In der weiteren Graphentheorie betrachtet man auch Kantenfärbungen, diese kommen aber in dieser Arbeit nicht vor.} von $G$, wobei wir $C$ als die Menge der \emph{Farben} bezeichnen. Die Färbung heißt \emph{zulässig} (oder \emph{gültig}), wenn keine zwei benachbarten Knoten die gleiche Farbe haben, i.e. $\forall uv \in E: c(u) \neq c(v)$.
+    Sei $G = (V, E)$ ein Graph. Eine (surjektive) Funktion $c: V \to C \subset \mathbb N$ heißt \emph{Färbung}\footnote{Streng genommen ist dies eine Knotenfärbung. In der weiteren Graphentheorie betrachtet man auch Kantenfärbungen, diese kommen in dieser Arbeit nicht vor, weshalb Färbung synoym für Knotenfärbung verwendet wird.} von $G$, wobei wir $C$ als die Menge der \emph{Farben} bezeichnen. Die Färbung heißt \emph{zulässig} (oder \emph{gültig}), wenn keine zwei benachbarten Knoten die gleiche Farbe haben, i.e. $\forall uv \in E: c(u) \neq c(v)$.
 \end{definition}
 
-Offensichtlich ist irgendwelche zulässige Färbungen finden nicht so schwer. Als Extrembeispiel kann man jedem Knoten eine eigene Farbe zuordnen. Die wahre Herausforderung ist, eine zulässige Färbung zu finden, die möglichst wenige Farben verwendet.
+Es stellt offensichtlich keine große Herausforderung dar, eine beliebige zulässige Färbung für einen gegeben Graphen zu finden. Als Extrembeispiel kann man jedem Knoten eine eigene Farbe zuordnen. Die wahre Herausforderung ist, eine zulässige Färbung zu finden, die möglichst wenige Farben verwendet.
 
 \begin{definition}
     Sei $G = (V, E)$ ein Graph. Die \emph{Chromatische Zahl} $\chi(G) \in \mathbb N$ ist die minimale Anzahl von Farben in einer zulässigen Färbung von $G$.
@@ -53,10 +75,10 @@ Offensichtlich ist irgendwelche zulässige Färbungen finden nicht so schwer. Al
     \end{equation}
 \end{definition}
 
-Im Allgemeinen ist die chromatische Zahl eines Graphens finden NP-schwer \cite{Karp1972}. Eine Möglichkeit, dies denoch zu tun ist mit dem Chromatischen Polynom \todo{cite this}. Der Aufwand dafür ist aber exponentiel, konkret $O(2^{|E|})$. Für bestimmte Klassen von Graphen gibt es aber polynomielle, also wesentlich schnellere Methoden, die chromatische Zahl zu berechnen. Diese werden wir in den späteren Kapiteln dieser Arbeit kennenlernen.
+Im Allgemeinen ist die Berechnung der chromatische Zahl eines Graphens NP-schwer \cite{Karp1972}. Eine Möglichkeit, dies denoch zu tun ist mittels des chromatischen Polynoms \todo{cite this}. Der Aufwand dafür ist aber exponentiell, konkret $O(2^{|E|})$. Für bestimmte Klassen von Graphen gibt es aber polynomielle, also wesentlich schnellere, Methoden, die chromatische Zahl zu berechnen. Diese werden wir in den späteren Kapiteln dieser Arbeit kennenlernen.
 
 \begin{satz}
-    Sei $G = (V, E)$ ein Graph. Die Anzahl der zulässigen Färbungen mit $\lambda$ Farben $\chi(G, \lambda)$ nennen wir \emph{chromatisches Polynom}. $\chi(G, \lambda)$ ist tatsächlich ein Polynom und erfüllt die Rekursionsgleichung für jede Kante $e \in E$:
+    Sei $G = (V, E)$ ein Graph. Die Anzahl der zulässigen Färbungen mit $\lambda \in \mathbb N$ Farben $\chi(G, \lambda)$ nennen wir \emph{chromatisches Polynom}. $\chi(G, \lambda)$ ist tatsächlich ein Polynom und erfüllt die Rekursionsgleichung für jede Kante $e \in E$:
     \begin{equation}
         \chi(G, \lambda) = \chi(G - e, \lambda) - \chi(G/e, \lambda)
     \end{equation}
@@ -65,12 +87,13 @@ Im Allgemeinen ist die chromatische Zahl eines Graphens finden NP-schwer \cite{K
         \item $G - e := (V, E \setminus \{e\})$ ist der Graph ohne der Kante $e$.
         \item $G/e$ ist die \emph{Kontraktion} der Kante $e$. Das heißt die Knoten $u, v$ von $e$ werden durch einen einzelnen Knoten $w$ ersetzt und alle anderen Kanten, die von $u$ und $v$ ausgehen werden stattdessen mit $w$ verbunden.
     \end{itemize}
+    Für Graphen ohne Kanten $G = (V, \emptyset)$ gilt $\chi(G, \lambda) = \lambda^{\|V\|}$.
 \end{satz}
 \begin{proof}
-    \todo{oder auch nur zitieren?}
+    \todo{zitieren}
 \end{proof}
 
-Das wohl bekannteste Graph-Färbe-Problem, wenn auch nicht in dieser Formulierung, ist das beliebte Zahlenrätsel Sudoku. Ziel von Sudoku ist es, ein $9 \times 9$-Feld mit den Ziffern 1 bis 9 zubefüllen, sodass in keiner Zeile, Spalte und keinem Kästchen eine Ziffer mehrmals vorkommt. Wir identifizieren die Ziffern mit neun Farben und die 81 Felder als Knoten in einem Graphen. Zwischen je 2 Knoten in gleicher Zeile, Spalte und Kästchen fügen wir eine Kante hinzu. Zusätzlich fügen wir Kanten hinzu, die verschiedene gegebene Ziffern miteinander verbindet. Eine zulässige Färbung entspricht nun einer Lösung des Sudokus.
+Das wohl bekannteste Graph-Färbe-Problem, wenn auch nicht in dieser Formulierung, ist das beliebte Zahlenrätsel Sudoku. Ziel von Sudoku ist es, ein $9 \times 9$-Feld mit den Ziffern 1 bis 9 zu befüllen, sodass in keiner Zeile, Spalte und keinem Kästchen eine Ziffer mehrmals vorkommt. Wir identifizieren die Ziffern mit neun Farben und die 81 Felder als Knoten in einem Graphen. Zwischen je 2 Knoten in gleicher Zeile, Spalte und Kästchen fügen wir eine Kante hinzu. Zusätzlich fügen wir Kanten hinzu, die jede gegebene Ziffer mit jeder anderen gegebenen Ziffer von unterschiedlichem Wert verbinden. Eine zulässige Färbung entspricht nun einer Lösung des Sudokus.
 
 \section{Die Cliquen-Zahl}
 
@@ -78,7 +101,7 @@ Das wohl bekannteste Graph-Färbe-Problem, wenn auch nicht in dieser Formulierun
     Sei $G = (V, E)$ ein Graph. Eine Knotenmenge $A \subset V$ heißt \emph{Clique} genau dann wenn alle Knoten in $A$ untereinander verbunden sind. Die Größe der größten Clique von $G$ nennen wir \emph{Cliquenzahl}, bezeichnet mit $\Omega{G}$.
 \end{definition}
 
-Die Suche nach der Cliquenzahl ist im allgemeinen ebenfalls NP-schwer \cite{Karp1972}, aber ähnlich wie bei der chromatischen Zahl werden wir für unsere speziellen Klassen effiziente Algoritmen für das Cliquenproblem kennen lernen.
+Die Suche nach der Cliquenzahl ist im allgemeinen ebenfalls NP-schwer \cite{Karp1972}, aber ähnlich wie bei der chromatischen Zahl werden wir für unsere speziellen Klassen effiziente Algorithmen für das Cliquenproblem kennen lernen.
 
 Zwischen der chromatischen Zahl und der Cliquen-Zahl kann man folgende grundsätzliche Abschätzung tätigen:
 
@@ -86,10 +109,10 @@ Zwischen der chromatischen Zahl und der Cliquen-Zahl kann man folgende grundsät
     Sei $G = (V, E)$ ein Graph. Dann gilt $\chi(G) \geq \Omega(G)$.
 \end{satz}
 \begin{proof}
-    Sei $A$ die größte Klique von $G$ und $c: V \to C$ eine minimale zulässige Färbung von G. Da die Knoten von $A$ alle untereinander verbunden sind, müssen sie von $c$ verschiedene Farben zugewiesen bekommen. Damit folgt $\Omega(G) = |A| \leq |C| = \chi(G)$.
+    Sei $A$ die größte Clique von $G$ und $c: V \to C$ eine minimale zulässige Färbung von G. Da die Knoten von $A$ alle untereinander verbunden sind, müssen sie von $c$ verschiedene Farben zugewiesen bekommen. Damit folgt $\Omega(G) = |A| \leq |C| = \chi(G)$.
 \end{proof}
 
-In natürlicher Weise stellt sich bei einer Ungleichung immer die Fragen: Wann ist die Ungleichung scharf? Die Antwort darauf führt zum zentralen Begriff dieser Arbeit, den perfekten Graphen. In die andere Richtung kann die Chromatische Zahl und die Cliquen-Zahl beliebig weit auseinander liegen. Mit der Konstruktion von Jan Mycielski \cite{Mycielski1955} kann man aus einem Graph einen weiteren konstruieren, sodass die Cliquen-Zahl gleich bleibt, aber die chromatische Zahl um 1 steigt.
+In natürlicher Weise stellt sich bei einer Ungleichung immer die Fragen: Wann ist die Ungleichung scharf? Die Antwort darauf führt zum zentralen Begriff dieser Arbeit, den perfekten Graphen. In die andere Richtung kann die chromatische Zahl und die Cliquen-Zahl beliebig weit auseinander liegen. Mit der Konstruktion von Jan Mycielski \cite{Mycielski1955} kann man aus einem Graph einen weiteren konstruieren, sodass die Cliquen-Zahl gleich bleibt, aber die chromatische Zahl um 1 steigt.
 
 \begin{satz}
     Für alle $n \in \N, n \geq 2$ existiert ein Graph $M_n$ mit $\chi(M_n) = n$ und $\omega(M_n) = 2$.
@@ -188,18 +211,28 @@ Die so konstruierten Graphen werden \emph{Myceilski-Graphen} genannt. In Abbildu
 
 \section{Perfekte Graphen}
 
-Def Perfekter Graph
+Kommen wir zurück auf die zuvor gestellte Frage. Wann ist die Ungleichung zwischen der chromatischen Zahl und der Cliquenzahl scharf und welche Schlüsse lassen sich daraus ziehen?
+Eben diese Frage stellte sich Claude Berge bereits Anfang der 1960er Jahre.
+Im Zuge dessen definiert Berge den perfekten Graphen.
+
+\begin{definition}
+    Sei $G = (V, E)$ ein Graph. $G$ ist ein \emph{perfekter Graph}, wenn für alle induzierten Teilgraphen $G_A$ für $A \subset V$ gilt, dass $\chi(G_A) = \Omega(G_A)$.
+\end{definition}
 
 %Reduktionsschema bzw. Induktion nach Knotenanzahl:
     %Eine typische Beweisidee: Wir sehen, die gefragte Aussage gilt trivialerweise für den Ein-Knoten-Graph, und nehmen an, das die Aussage schon für alle kleineren Graphen gezeigt ist. Dann wählen wir geschickt einen Knoten oder eine Teilmenge der Knoten aus, die wir aus dem Graphen entfernen. Der übrige Graph erfüllt die Aussage und das wieder hinzufügen der weggenommenen Knoten ist verträglich mit der Aussage. qed
 
-Betrachten wir zunächst einige Beispiele für Klassen von perfekten Graphen. Jede der in dieser Arbeit betrachteten Klassen ist \emph{hereditär}. Das bedeutet: Wenn ein Graph aus der Klasse ist, dann sind auch alle induzierten Teilgraphen davon aus der Klasse. Das macht es leicht, die Perfektheit zu zeigen, da nur noch die perfekte Gleichung für einen gegebenen Graphen $G = (V, E)$ selbst gezeigt werden muss, und die perfekte Gleichung für alle induzierten Teilgraphen $G_A$ für $A \subset V$ ist damit automatisch mitgezeigt.
+Betrachten wir zunächst einige Beispiele für Klassen von perfekten Graphen. Jede der in dieser Arbeit betrachteten Klassen ist \emph{hereditär}. Hereditär bedeutet: Wenn ein Graph $G  = (V, E)$ in einer Klasse $\Psi$ ist, dann sind auch alle induzierten Teilgraphen $G_A$ davon in der Klasse $\Psi$. Das macht es leicht, die Perfektheit von $G$ zu zeigen, da nur noch $\chi(G) =  \Omega(G)$ für $G$ selbst gezeigt werden muss und (mit Induduktion nach Knotenanzahl) $\chi(G_A) = \Omega(G_A)$ für alle induzierten Teilgraphen $G_A$ für $A \subset V$ damit automatisch mitgezeigt wird.
 
 \begin{itemize}
-    \item Vollständige Graphen: Ein Graph $G = (V, E)$ heißt \emph{vollständig}, wenn je zwei Knoten durch eine Kante verbunden sind. Offensichtlich gehören damit alle Knoten zur größten Klique von $G$ und $\omega(G) = |V|$. Jeder Knoten muss in einer zulässigen Färbung eine eigene Farbe bekommen und damit gilt $\chi(G) = |V|$. Ergo, vollständige Graphen sind perfekt.
-    \item Leere Graphen: Ein Graph $G = (V, E)$ heißt \emph{leer}, wenn er keine Kanten enthält, i.e. $E = \emptyset$. Für eine zulässige Färbung kann jeder Knoten mit der gleichen Farbe eingefärbt werden und es gibt keine Kliquen außer einzelne Knoten. Damit gilt $\chi(G) = 1 = \omega(G)$, also sind leere Graphen perfekt.
-    \item Bipartite Graphen: Ein Graph $G = (V, E)$ heißt \emph{bipartit}, wenn es zwei disjunkte Mengen $A, B \subset V$ gibt, für die gilt $A \dot\cup B = V$ und $G_A, G_B$ sind leer. Alle Kanten laufen also zwischen $A$ und $B$. Wenn es keine Kante gibt, dann ist $G$ leer und damit ist schon gezeigt, das $G$ perfekt ist. Andernfalls, sei $ab \in E$ mit $a \in A$ und $b \in B$. Sei $c \in V$ ein beliebiger dritter Knoten. Falls $c \in A$, dann $ac \notin E$. Andernfalls $c \in B$ und $bc \notin E$. In jedem Fall ist $\{a, b, c\}$ keine Klique und damit (weil $ab$ und $c$ beliebig waren) $\{a, b\} \subset V$ bereits eine maximale Klique. Um eine zulässige Färbung zu erhalten, können wir alle Knoten aus $A$ apfelgrün und alle Knoten aus $B$ blau färben. Also gilt $\chi(G) = 2 = \omega(G)$, also sind bipartite Graphen perfekt.
+    \item Vollständige Graphen: Ein Graph $G = (V, E)$ heißt \emph{vollständig}, wenn je zwei Knoten durch eine Kante verbunden sind. Offensichtlich gehören damit alle Knoten zur größten Clique von $G$ und $\omega(G) = |V|$. Jedem Knoten ist in einer zulässigen Färbung eine eigene Farbe zuzuordnen. Damit gilt $\chi(G) = |V|$. Ergo, vollständige Graphen sind perfekt.
+    \item Leere Graphen: Ein Graph $G = (V, E)$ heißt \emph{leer}, wenn er keine Kanten enthält, i.e. $E = \emptyset$. Für eine zulässige Färbung kann jeder Knoten mit der gleichen Farbe eingefärbt werden und es gibt keine Cliquen außer einzelner Knoten. Damit gilt $\chi(G) = 1 = \omega(G)$, also sind leere Graphen perfekt.
+    \item Bipartite Graphen: Ein Graph $G = (V, E)$ heißt \emph{bipartit}, wenn es zwei disjunkte Mengen $A, B \subset V$ gibt, für die gilt: $A \dot\cup B = V$ und $G_A, G_B$ sind leer. Alle Kanten laufen also zwischen $A$ und $B$. Wenn es keine Kante gibt, dann ist $G$ leer und damit ist schon gezeigt, das $G$ perfekt ist. Andernfalls, sei $uv \in E$ mit $u \in A$ und $v \in B$. Sei $w \in V$ ein beliebiger dritter Knoten. Falls $w \in A$, dann $uw \notin E$. Andernfalls $w \in B$ und $vw \notin E$. In jedem Fall ist $\{u, v, w\}$ keine Clique und damit (weil $uv$ und $w$ beliebig waren) $\{u, v\} \subset V$ bereits eine maximale Clique. Um eine zulässige Färbung zu erhalten, können wir alle Knoten aus $A$ apfelgrün und alle Knoten aus $B$ blau färben. Also gilt $\chi(G) = 2 = \omega(G)$, also sind bipartite Graphen perfekt.
 \end{itemize}
+
+Neben der chromatischen und der Cliquen-Zahl gibt es in diesem Zusammenhang auch noch die Stable-Set-Zahl $\alpha(G)$ und die Cliquen-Cover-Zahl $\kappa(G)$. Die Stable-Set-Zahl ist die Mächtigkeit der größten stabilen Menge, also der größten Knotenmenge bei der sich keine Kante des Graphen innerhalb der Menge befindet. Es gilt $\alpha(G) = \Omega(\overline G)$. Ein Cliquen-Cover ist eine Menge von Cliquen in $G$, deren Vereinigung ganz $V$ ist. Die Cliquen-Cover-Zahl ist die Mächtigkeit des kleinsten Cliquen-Covers von $G$. Analog gilt $\kappa(G) = \chi(\overline G)$.
+
+In den Anfängen der Theorie der perfekten Graphen wurden viele Resultate doppelt bewiesen, einmal für $\chi(G)$ und $\Omega(G)$, und einmal für $\alpha(G)$ und $\kappa(G)$. Diese Parallelen zwischen gegebenen Graphen $G$ und seinem Komplement $\overline G$ ließen Berge relativ schnell im Jahr 1961 die Vermutung aufstellen, dass die Perfektheit von $G$ und $\overline G$ äquivalent sind. 1972 wurde dies von László Lovász bewiesen und ist heutzutage als der schwache Perfekte-Graphen-Satz (WPGT) bekannt.
 
 \begin{satz}
     \label{thm:wpgt}
@@ -217,9 +250,9 @@ Betrachten wir zunächst einige Beispiele für Klassen von perfekten Graphen. Je
     (\ref{eq:P3}) $\Rightarrow$ (\ref{eq:P1}): \todo{Finish Proof}
 \end{proof}
 
-Die zylischen Graphen $C_n$ für $n \in \N, n > 3, n$ ungerade sind keine perfekten Graphen, da $\chi(C_n) = 3 \neq 2 = \omega(C_n)$. Da all deren induzierte Teilgraphen perfekt sind, stellen diese Graphen (auch \emph{ungerade Löcher} genannt) und deren Komplemente (\emph{ungerade Anti-Löcher}) in gewisserweise minimale Gegenbeispiele für die Perfektheit dar. Es stellt sich in natürlicher Weise die Frage: Gibt es noch andere Graphen, die nicht perfekt sind, aber alle echten induzierten Teilgraphen perfekt sind?
+Die zyklischen Graphen $C_n$ für $n \in \N, n > 3, n$ ungerade sind keine perfekten Graphen, da $\chi(C_n) = 3 \neq 2 = \omega(C_n)$. Da all deren induzierte Teilgraphen perfekt sind, stellen diese Graphen (auch \emph{ungerade Löcher} genannt) und deren Komplemente (\emph{ungerade Anti-Löcher}) in gewisserweise minimale Gegenbeispiele für die Perfektheit dar. Es stellt sich in natürlicher Weise die Frage: Gibt es noch andere Graphen, die nicht perfekt sind, aber deren echte induzierte Teilgraphen alle perfekt sind?
 
-Bereits im März 1960 stellt Claude Berge diese Frage und vermutet, dass dies alle sind.\cite{das_Buch} Er behielt damit Recht, den Beweis lieferten Maria Chudnovsky, Neil Robertson, Paul Seymour und Robin Thomas\cite{chudnovsky2002strongperfectgraphtheorem} erst viel später im Jahr 2002.
+Bereits im März 1960 stellt Claude Berge diese Frage und vermutete, dass die oben genannten alle sind.\cite{das_Buch} Er behielt damit Recht, den Beweis lieferten Maria Chudnovsky, Neil Robertson, Paul Seymour und Robin Thomas\cite{chudnovsky2002strongperfectgraphtheorem} erst viel später im Jahr 2002.
 
 Dieses Resultat führt zu einer \emph{forbidden minor}-Charakterisierung der Perfektheit, ähnlich zu planaren Graphen mit $K_5$ und $K_{3,3}$:
 
@@ -228,12 +261,10 @@ Dieses Resultat führt zu einer \emph{forbidden minor}-Charakterisierung der Per
     Der starke Perfekte-Graphen-Satz: Ein Graph $G = (V, E)$ ist genau dann perfekt, wenn $G$ keinen induzierten Teilgraphen isomorph zu $C_n$ oder $\overline{C_n}$ für $n \in \N, n > 3, n$ ungerade hat.
 \end{satz}
 
-
-\todo{
-Ausblick:
-    Wir schauen uns spezielle Klassen von perfekten Graphen und Algorithmen darauf an.
-        - Triangulated Graphs
-        - ...
-}
+\todo
+In den folgenden Kapiteln betrachten spezielle Klassen von perfekten Graphen, sowie Algorithmen auf eben diesen Graphen.
+- Ordungsgraphen
+- Triangulierbare Graphen
+- Intervall-Schnitt-Graphen
 
 \end{document}
