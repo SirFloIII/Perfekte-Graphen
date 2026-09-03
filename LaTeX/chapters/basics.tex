@@ -40,7 +40,7 @@ Nov 2002: Die oben et al. finden einen polynomiellen Algorithmus, um perfekte Gr
 
 
 
-\todo{Komplement $\overline G$, KN und NN, CN} 
+\todo{$K_n$ und $K_{n,m}$, $C_n$} 
 
 \begin{definition}
     Sei $G = (V, E)$ ein Graph. Ein \emph{Teilgraph} von $G$ ist einen Graph $H = (A, E')$ mit $A \subset V$ und $E' \subset E$. Für eine Knotenmenge $A \subset V$ ist der Teilgraph von $G$, der alle Kanten von $E$ enthält, deren Knoten in $A$ sind der \emph{induzierte Teilgraph}, i.e.:
@@ -54,7 +54,7 @@ Der Begriff des induzierten Teilgraphen unterscheidet sich vom allgemeinen Teilg
 \begin{definition}
     Sei $G = (V, E)$ ein Graph. Das \emph{Komplement} von $G$ ist jener Graph auf $V$, der genau die Kanten enthält, die $G$ nicht enthält, i.e.:
     \begin{equation*}
-        \overline G := (V, \{uv | uv \neq E \wedge u \neq v \in V\})
+        \overline G := (V, \{uv | uv \notin E \wedge u \neq v \in V\})
     \end{equation*}
 \end{definition}
 
@@ -87,7 +87,7 @@ Im Allgemeinen ist die Berechnung der chromatische Zahl eines Graphens NP-schwer
         \item $G - e := (V, E \setminus \{e\})$ ist der Graph ohne der Kante $e$.
         \item $G/e$ ist die \emph{Kontraktion} der Kante $e$. Das heißt die Knoten $u, v$ von $e$ werden durch einen einzelnen Knoten $w$ ersetzt und alle anderen Kanten, die von $u$ und $v$ ausgehen werden stattdessen mit $w$ verbunden.
     \end{itemize}
-    Für Graphen ohne Kanten $G = (V, \emptyset)$ gilt $\chi(G, \lambda) = \lambda^{\|V\|}$.
+    Für Graphen ohne Kanten $G = (V, \emptyset)$ gilt $\chi(G, \lambda) = \lambda^{|V|}$.
 \end{satz}
 \begin{proof}
     \todo{zitieren}
@@ -117,12 +117,14 @@ In natürlicher Weise stellt sich bei einer Ungleichung immer die Fragen: Wann i
 \begin{satz}
     Für alle $n \in \N, n \geq 2$ existiert ein Graph $M_n$ mit $\chi(M_n) = n$ und $\omega(M_n) = 2$.
 \end{satz}
+\iffalse
 \begin{figure}[ht]
     \label{fig:joke}
     \centering
     \includegraphics[width=0.5\textwidth,trim={0 7cm 0 26.5cm},clip]{figures/joke.jpg}
     \caption{Ein vom Myceilskigraphen $M_4$ inspiriertes Bondagemuster. Der Knoten $w$ ist der große mittige Knoten. \todo{remove this lol}}
 \end{figure}
+\fi
 \begin{figure}[ht]
     \label{fig:myceilski}
     \centering
@@ -171,8 +173,9 @@ In natürlicher Weise stellt sich bei einer Ungleichung immer die Fragen: Wann i
     \caption{Die ersten drei Myceilski-Graphen: $M_2 = K_2, M_3 = C_5, M_4$}
 \end{figure}
 \begin{proof}
-    per Induktion: für $n = 2$ erfüllt der Graph $M_2 := K_2$ mit 2 Knoten und einer Kante das gewünschte.
-    für $n > 2$ sei also $M_{n-1}$ (mit $m$ Knoten) gegeben und seien $u_1, \hdots, u_m$ die Knoten von $M_{n-1}$. Wir definieren zuerst $M_n$ und zeigen dann, dass $M_n$ die gewünschten Eigenschaften hat.
+    Per Induktion: für $n = 2$ erfüllt der Graph $M_2 := K_2$ mit 2 Knoten und einer Kante das gewünschte.
+
+    Für $n > 2$ sei also $M_{n-1}$ (mit $m$ Knoten) gegeben und seien $u_1, \hdots, u_m$ die Knoten von $M_{n-1}$. Wir definieren zuerst $M_n$ und zeigen dann, dass $M_n$ die gewünschten Eigenschaften hat.
 
     $M_n$ soll $M_{n-1}$ als Teilgraphen enthalten, sowie $m+1$ extra Knoten: einen Knoten $v_i$ pro Knoten $u_i$ sowie einen Extraknoten $w$. Für jede Kante $u_iu_j$ in $M_{n-1}$ gibt es drei Kanten in $M_n$: Die originale Kante $u_iu_j$ selbst sowie $u_iv_j$ und $v_iu_j$. Des weiteren sind gibt es zu jedem neuen Knoten $v_i$ die Kante $v_iw$. Das sind alle\footnote{Au$\star$ intensifies} Kanten.
     

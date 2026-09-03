@@ -4,7 +4,7 @@
 \chapter{Triangulierte Graphen}
 \label{chapter:trigulated}
 
-Triangulierte Graphen waren eine der ersten Klassen, die als perfekt erkannt wurden. Sie erlauben die Bestimmung der Kliquenzahl und Chromatischen Zahl sowie die Erkennung in linearer Zeit. In diesem Kapitel werden wir den Algorithmus von Fulkerson und Gross kennenlernen, der in verschiedenen Varianten die all diese Resultate liefert.
+Triangulierte Graphen waren eine der ersten Klassen, die als perfekt erkannt wurden. Sie erlauben die Bestimmung der Kliquenzahl und Chromatischen Zahl sowie die Erkennung in linearer Zeit. In diesem Kapitel werden wir den Algorithmus von Fulkerson und Gross kennenlernen, der in verschiedenen Varianten all diese Resultate liefert.
 
 \begin{definition}
     Ein Graph heißt \emph{trianguliert}, wenn jeder Zyklus im Graphen mit Länge $\geq 4$ eine Sehne \emph{(Chord)} besitzt. Eine Sehne eines Zykluses ist eine Kante, die zwei im Zyklus nicht aufeinanderfolgende Knoten verbindet.
@@ -129,7 +129,7 @@ Der Algorithmus von Fulkerson-Gross baut fundamental auf sogenannte Perfekte Kno
     
     Induktionsanfang: Ein einzelner Knoten ist als Graph gesehen vollständig.
     
-    Induktionsschritt: Sei also $G$ nicht vollständig, also existieren zwei nicht benachbarte Knoten $a$ und $b$. Sei $S$ ein minimaler Knoten-Seperator für $a$ und $b$. Die Komponenten von $G_{V \setminus S}$, die $a$ und $b$ enthalten nennen wir jeweils $G_A$ und $G_B$. Nun nutzen wir die Induktionsvorraussetzung auf $G_{A \cup S}$: Entweder $A \cup S$ ist vollständig, dann ist jeder Knoten in $A$ simplektisch, oder es exitieren zwei simplektische nicht benachbarte Knoten in $A \cup S$ und es können nicht beide in $S$ sein, da $S$ laut Lemma [[[vorher]]] vollständig ist. In jedem Fall existiert ein simplektischer Knoten in $A$ und analog in $B$ auch. Diese sind nicht benachbart, da $A$ und $B$ getrennte Kompnenten sind.
+    Induktionsschritt: Sei also $G$ nicht vollständig, also existieren zwei nicht benachbarte Knoten $a$ und $b$. Sei $S$ ein minimaler Knoten-Seperator für $a$ und $b$. Die Komponenten von $G_{V \setminus S}$, die $a$ und $b$ enthalten nennen wir jeweils $G_A$ und $G_B$. Nun nutzen wir die Induktionsvorraussetzung auf $G_{A \cup S}$: Entweder $A \cup S$ ist vollständig, dann ist jeder Knoten in $A$ simplektisch, oder es exitieren zwei simplektische nicht benachbarte Knoten in $A \cup S$ und es können nicht beide in $S$ sein, da $S$ laut Satz \ref{thm:triangulated--completeSeperator} vollständig ist. In jedem Fall existiert ein simplektischer Knoten in $A$ und analog in $B$ auch. Diese sind nicht benachbart, da $A$ und $B$ getrennte Kompnenten sind.
 \end{proof}
     
 Der vorherige Satz lässt uns auf einen ersten Algorithmus zum Erkennen von triangulierten Graphen schließen: Man suche nach simplektischen Knoten und entferne diese iterativ. Wenn immer simplektische Knoten gefunden werden können, bis der Graph leer ist, dann ist der Graph trianguliert. Wenn in einem Schritt kein simplektischer Knoten gefunden werden kann, dann ist der Graph nicht trianguliert.
