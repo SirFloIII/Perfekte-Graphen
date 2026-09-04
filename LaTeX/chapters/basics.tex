@@ -4,17 +4,15 @@
 \chapter{Einleitung}
 \label{chapter:grundlagen}
 
-Das Graphenfärbungsproblem ist im Allgemeinen NP-schwer. Nicht aber für alle Klassen von Graphen. In den frühen 1960er Jahren definiert Claude Berge die perfekten Graphen. In weiterer Folge wurden viele Graphen-Klassen als perfekt erkannt. Neben dem bereits genannten Graphenfärbungsproblem gibt es viele graphentheoretische Probleme die für allgemeine Graphen NP-schwer, für perfekte Graphen aber effizient lößbar sind.
+Das Graphenfärbungsproblem ist im Allgemeinen NP-schwer. Nicht aber für alle Klassen von Graphen. In den frühen 1960er Jahren definiert Claude Berge die perfekten Graphen. In weiterer Folge wurden viele Graphen-Klassen als perfekt erkannt. Neben dem bereits genannten Graphenfärbungsproblem gibt es weiter graphentheoretische Probleme die für allgemeine Graphen NP-schwer, für perfekte Graphen aber effizient lösbar sind.
 In dieser Arbeit beschäftigen wir uns mit einigen davon und lernen zu den jeweiligen Klassen effiziente Algorithmen zum Erkennen, Färben und Aufzählen kennen. 
 
-Zuerst werden wir in Kapitel \ref{chapter:grundlagen} die grundlegen Begriffe definieren, dann ein paar simple Beispiele und Gegenbeispiele für perfekte Graphen kennenlernen. Anschließend kommen wir zum schwachen und starken Perfekten-Graphen-Satz.
+Zuerst werden wir in Kapitel \ref{chapter:grundlagen} die grundlegenden Begriffe definieren, dann ein paar simple Beispiele und Gegenbeispiele für perfekte Graphen kennenlernen. Anschließend kommen wir zum schwachen und starken Perfekten-Graphen-Satz.
 
 In den darauffolgenen Kapiteln widmen wir uns je einer Klasse von perfekten Graphen: den Vergleichbarkeitsgraphen, den triangulierten Graphen und den Intervall-Graphen.
 
 \section{Grundlegende Definitionen}
 \label{section:definitionen}
-
-\todo{text: jetzt kommen triviale basics}
 
 \begin{definition}
     Ein Tupel $G = (V, E)$ ist ein (ungerichteter)\footnote{In dieser Arbeit ist mit \emph{Graph} immer ein ungerichteter Graph gemeint. Gerichtete Graphen werden als solche bezeichnet.} \emph{Graph}, wenn
@@ -254,7 +252,7 @@ Dieses Resultat führt zu einer \emph{forbidden minor}-Charakterisierung der Per
     Der starke Perfekte-Graphen-Satz: Ein Graph $G = (V, E)$ ist genau dann perfekt, wenn $G$ keinen induzierten Teilgraphen isomorph zu $C_n$ oder $\overline{C_n}$ für $n \in \N, n > 3, n$ ungerade hat.
 \end{satz}
 
-\todo{$O((|V|+|E|)^9)$ für erkennen von perfekten Graphen}
+Wenig später liefern Chudnovsky et al. einen Algorithmus, um perfekte Graphen in polynomieller Zeit, genauer $O(|V|^9)$, zu erkennen. Zuvor war nicht klar, ob die Erkennung von perfekten Graphen nicht sogar womöglicherweise NP-schwer ist.\cite{recognizing_berge}
 
 In Kapitel \ref{chapter:grundlagen} haben wir bereits mehrere Klassen perfekter Graphen kennengelernt.
 In den folgenden Kapiteln betrachten wir drei weitere Klassen, deren Perfektheit weniger trivial zu erkennen ist. Wir lernen außerdem jeweils Algorithmen dazu kennen.
