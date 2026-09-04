@@ -1,29 +1,15 @@
 \documentclass[../main.tex]{subfiles}
 \begin{document}
 
-\chapter{Grundlagen}
+\chapter{Einleitung}
 \label{chapter:grundlagen}
 
-\section{Geschichte}
-\label{section:geschichte}
+Das Graphenfärbungsproblem ist im Allgemeinen NP-schwer. Nicht aber für alle Klassen von Graphen. In den frühen 1960er Jahren definiert Claude Berge die perfekten Graphen. In weiterer Folge wurden viele Graphen-Klassen als perfekt erkannt. Neben dem bereits genannten Graphenfärbungsproblem gibt es viele graphentheoretische Probleme die für allgemeine Graphen NP-schwer, für perfekte Graphen aber effizient lößbar sind.
+In dieser Arbeit beschäftigen wir uns mit einigen davon und lernen zu den jeweiligen Klassen effiziente Algorithmen zum Erkennen, Färben und Aufzählen kennen. 
 
-x 1960: Claude Berge
+Zuerst werden wir in Kapitel \ref{chapter:grundlagen} die grundlegen Begriffe definieren, dann ein paar simple Beispiele und Gegenbeispiele für perfekte Graphen kennenlernen. Anschließend kommen wir zum schwachen und starken Perfekten-Graphen-Satz.
 
-x 1961: Claude Berge formuliert die Schwache und die Starke Perfekter Graph Vermutung (WPGC und SPGC)
-
-x 1972: László Lovász beweist die WPGC
-
-1980: 1st Edition vom Buch
-
-Mai 2002: Maria Chudnovsky, Neil Robertson, Paul Seymore und Robin Thomas beweisen die SPGC.
-
-Juni 2002: Claude Berge stirbt.
-
-Nov 2002: Die oben et al. finden einen polynomiellen Algorithmus, um perfekte Graphen zu erkennen.
-
-2004: 2nd Edition vom Buch\cite{das_Buch}
-
-2023: Jun Kawahara et al. releasen ihr Paper über die effiziente Enumeration.
+In den darauffolgenen Kapiteln widmen wir uns je einer Klasse von perfekten Graphen: den Vergleichbarkeitsgraphen, den triangulierten Graphen und den Intervall-Graphen.
 
 \section{Grundlegende Definitionen}
 \label{section:definitionen}
@@ -38,9 +24,9 @@ Nov 2002: Die oben et al. finden einen polynomiellen Algorithmus, um perfekte Gr
     \end{enumerate}
 \end{definition}
 
-
-
-\todo{$K_n$ und $K_{n,m}$, $C_n$} 
+\begin{definition}
+    Sei $G = (V, E)$ ein Graph. Ein \emph{Pfad} ist eine Folge $[u_0, \hdots, u_n]$ von Knoten in $G$, wo aufeinanderfolgende Knoten mit Kanten verbunden sind, i.e.: $u_iu_{i+1} \in E \forall i \in \N_{<n}$. Ein \emph{Zyklus} ist ein Pfad, bei dem der erste und letzte Knoten $u_0 = u_n$ ist.
+\end{definition}
 
 \begin{definition}
     Sei $G = (V, E)$ ein Graph. Ein \emph{Teilgraph} von $G$ ist einen Graph $H = (A, E')$ mit $A \subset V$ und $E' \subset E$. Für eine Knotenmenge $A \subset V$ ist der Teilgraph von $G$, der alle Kanten von $E$ enthält, deren Knoten in $A$ sind der \emph{induzierte Teilgraph}, i.e.:
@@ -253,21 +239,30 @@ In den Anfängen der Theorie der perfekten Graphen wurden viele Resultate doppel
     (\ref{eq:P3}) $\Rightarrow$ (\ref{eq:P1}): \todo{Finish Proof}
 \end{proof}
 
+Den Graph mit $n$ Knoten, bestehend aus einem einzelnen Zyklus $[u_0, \hdots, u_n]$, nennt man passenderweise \emph{zyklischen Graph} und wird als $C_n$ geschrieben.
+
+\todo{graphics}
+
 Die zyklischen Graphen $C_n$ für $n \in \N, n > 3, n$ ungerade sind keine perfekten Graphen, da $\chi(C_n) = 3 \neq 2 = \omega(C_n)$. Da all deren induzierte Teilgraphen perfekt sind, stellen diese Graphen (auch \emph{ungerade Löcher} genannt) und deren Komplemente (\emph{ungerade Anti-Löcher}) in gewisserweise minimale Gegenbeispiele für die Perfektheit dar. Es stellt sich in natürlicher Weise die Frage: Gibt es noch andere Graphen, die nicht perfekt sind, aber deren echte induzierte Teilgraphen alle perfekt sind?
 
-Bereits im März 1960 stellt Claude Berge diese Frage und vermutete, dass die oben genannten alle sind.\cite{das_Buch} Er behielt damit Recht, den Beweis lieferten Maria Chudnovsky, Neil Robertson, Paul Seymour und Robin Thomas\cite{chudnovsky2002strongperfectgraphtheorem} erst viel später im Jahr 2002.
+Bereits im März 1960 stellt Claude Berge diese Frage und vermutete, dass die oben genannten alle sind.\cite{das_Buch} Er behielt damit Recht, den Beweis lieferten Maria Chudnovsky, Neil Robertson, Paul Seymour und Robin Thomas\cite{chudnovsky2002strongperfectgraphtheorem} erst viel später im Jahr 2002. Ein paar Monate später verstarb Claude Berge.\todo{cite?}
 
-Dieses Resultat führt zu einer \emph{forbidden minor}-Charakterisierung der Perfektheit, ähnlich zu planaren Graphen mit $K_5$ und $K_{3,3}$:
+Dieses Resultat führt zu einer \emph{forbidden minor}-Charakterisierung der Perfektheit, ähnlich zu planaren Graphen mit $K_5$ und $K_{3,3}$:\footnote{$K_n$ ist der vollständige Graph mit $n$ Knoten und $K_{n,m}$ ist der vollständig bipartite Graph mit je $n$ und $m$ Knoten in den beiden Komponenten.}
 
 \begin{satz}
     \label{thm:spgt}
     Der starke Perfekte-Graphen-Satz: Ein Graph $G = (V, E)$ ist genau dann perfekt, wenn $G$ keinen induzierten Teilgraphen isomorph zu $C_n$ oder $\overline{C_n}$ für $n \in \N, n > 3, n$ ungerade hat.
 \end{satz}
 
-\todo
-In den folgenden Kapiteln betrachten spezielle Klassen von perfekten Graphen, sowie Algorithmen auf eben diesen Graphen.
-- Ordungsgraphen
-- Triangulierbare Graphen
-- Intervall-Schnitt-Graphen
+\todo{$O((|V|+|E|)^9)$ für erkennen von perfekten Graphen}
+
+In Kapitel \ref{chapter:grundlagen} haben wir bereits mehrere Klassen perfekter Graphen kennengelernt.
+In den folgenden Kapiteln betrachten wir drei weitere Klassen, deren Perfektheit weniger trivial zu erkennen ist. Wir lernen außerdem jeweils Algorithmen dazu kennen.
+\begin{itemize}
+\item Vergleichbarkeitsgraphen: Färbung und Cliquen-Findung in linearer Zeit
+\item Triangulierte Graphen: Erkennung in linearer Zeit
+\item Intervall-Graphen: Effiziente Aufzählung aller \todo{proper} Intervall-Graphen mit $n \in \N$ Knoten
+\end{itemize}
+
 
 \end{document}
