@@ -1,3 +1,8 @@
+Wie würd ich "proper" Intervallgraph auf deutsch sagen?
+
+
+-----------------------------------
+
 Komplexitätstheorie:
 Soll ich den Spass mit Laufzeitanalyse, P und NP, NP-Hardness usw. als bekannt annehmen oder in einem (Unter)-Kapitel ausführen?
     + Es kommt im Mathebacc nur ein bissi in Panholzer III vor.
