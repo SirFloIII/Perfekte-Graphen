@@ -150,7 +150,7 @@ Die Reihenfolge, in der man die Knoten entfernt nennt man ein perfektes Knoten-E
 
 Auf obige Weise ein PKE zu finden funktioniert zwar, ignoriert aber die Tatsache, das uns Satz \ref{thm:4.2} zwei simplektische Knoten liefert. Hier kommt die Idee von Fulkerson und Gross ins Spiel. Da es immer zwei simplektische Knoten gibt, könnten wir uns einen Knoten $u$ zu Beginn aussuchen und für den Schluss aufheben. Falls $u$ einer der beiden gefundenen simplektischen Knoten ist, entfernen wir stattdessen einfach den anderen. Desweiteren können wir uns einen Nachbaren $v$ von $u$ aussuchen, den wir uns für die vorletze Stelle im PKE behalten, da Satz \ref{thm:4.2} nicht benachbarte simplektische Knoten garantiert.
 
-Tatsächlich können wir das ganze PKE von hinten aufbauen. Man muss nur die Knoten in der richtigen Reihenfolge auswählen und dafür gibt es mehrere Möglichkeiten. Wir werden hier zwei Varianten kennen lernen, Lexikographische Breitensuche (kurz \emph{LexBFS}) \todo{cite} und Maximale Kardinalitätssuche (kurz \emph{MCS}) \todo{also cite}.
+Tatsächlich können wir das ganze PKE von hinten aufbauen. Man muss nur die Knoten in der richtigen Reihenfolge auswählen und dafür gibt es mehrere Möglichkeiten. Wir werden hier zwei Varianten (\todo{oder vielleicht doch nur LexBFS?}) kennen lernen, Lexikographische Breitensuche (kurz \emph{LexBFS}) \todo{cite} und Maximale Kardinalitätssuche (kurz \emph{MCS}) \todo{also cite}.
 
 \subsection{Lexikographische Breitensuche}
 
@@ -160,7 +160,7 @@ Tatsächlich können wir das ganze PKE von hinten aufbauen. Man muss nur die Kno
 \label{algo:LexBFS}
 \caption{Lexikographische Breitensuche baut für einen triangulierten Graphen ein Perfektes Knoten-Eliminationsschema}
 \begin{minted}{python3}
-def Lex_BFS(G: Graph) -> list:
+def Lex_BFS(G: Graph) -> list[Vertex]:
     label = {v : [] for v in G.vertices}
     order = []
     for i in range(len(G.vertices), 0, -1):
@@ -172,15 +172,15 @@ def Lex_BFS(G: Graph) -> list:
 \end{minted}
 \end{listing}
 
-\todo{LexBFS => L3}
+\todo{LexBFS $\Rightarrow$ L3}
 
 \subsection{Kardinalitätssuche}
 
-\begin{figure}[ht]
+\begin{listing}[ht]
 \label{algo:MCS}
-\centering
+\caption{Maximale Kardinalitätssuche baut ebenfalls für einen triangulierten Graphen ein Perfektes Knoten-Eliminationsschema}
 \begin{minted}{python3}
-def MCS(G: Graph) -> list:
+def MCS(G: Graph) -> list[Vertex]:
     cardinality = {v : 0 for v in G.vertices}
     order = []
     for _ in range(len(G.vertices)):
@@ -192,24 +192,28 @@ def MCS(G: Graph) -> list:
                 cardinality[w] += 1
     return reversed(order)
 \end{minted}
-\caption{abc}
-\end{figure}
+\end{listing}
 
-\todo{MCS => L3}
+\todo{MCS $\Rightarrow$ L3}
 
 \subsection{Korrektheitsbeweise}
 
-\todo{L3 Condition + Trianguliert => PKE}
+\todo{LexBFS macht PKE $\Leftrightarrow$ Trianguliert (Satz 4.3 im Buch)}
 
-\todo{LexBFS == PKE <=> Trianguliert}
+bew: \say{$\Rightarrow$} mein Satz \ref{thm:tri_PKE}
 
-bew: "=>" \ref{thm:tri_PKE}
-"<=" Vorherigen beiden Sätze
+\say{$\Leftarrow$} Der Beweis von Satz 4.3 im Buch (verwendet L3)
 
-Dessen Timecomplexity
+\todo{Dessen Timecomplexity}
+
+nervig, weil dumme Datenstrukturen
 
 \todo{Triangulated Graphs are Perfect}
 
+relativ ez, nur eine Seite im Buch
+
 \todo{Schneller Algo um Chomatische Zahl und maximale Cliquen zu finden}
+
+Das ist wieder relativ leicht, 4.16 und 4.17 im Buch
 
 \end{document}
