@@ -4,15 +4,15 @@
 \chapter{Triangulierte Graphen}
 \label{chapter:trigulated}
 
-Triangulierte Graphen waren eine der ersten Klassen, die als perfekt erkannt wurden. Sie erlauben die Bestimmung der Kliquenzahl und Chromatischen Zahl sowie die Erkennung in linearer Zeit. In diesem Kapitel werden wir den Algorithmus von Fulkerson und Gross kennenlernen, der in verschiedenen Varianten all diese Resultate liefert.
+Triangulierte Graphen waren eine der ersten Klassen, die als perfekt erkannt wurden. Sie erlauben die Bestimmung der Cliquenzahl und chromatischen Zahl sowie die Erkennung in linearer Zeit. In diesem Kapitel werden wir den Algorithmus von Fulkerson und Gross kennenlernen, der in verschiedenen Varianten all diese Resultate liefert.
 
 \begin{definition}
     Ein Graph heißt \emph{trianguliert}, wenn jeder Zyklus im Graphen mit Länge $\geq 4$ eine Sehne \emph{(Chord)} besitzt. Eine Sehne eines Zykluses ist eine Kante, die zwei im Zyklus nicht aufeinanderfolgende Knoten verbindet.
 \end{definition}
 
-Eine äquivalente Formulierung ist, das der zyklische Graph $C_n$ für $n\geq 4$ nicht als induzierter Teilgraph vorkommt. Etwas anachronistisch zeigt uns der Starke Perfekte-Graphen-Satz \ref{thm:spgt} damit gleich, das triangulierte Graphen perfekt sind. Um nicht mit Kanonen auf Spatzen zu schießen, zeigen wir die Perfektheit später im Stil von Berge nochmal.
+Eine äquivalente Formulierung ist, dass der zyklische Graph $C_n$ für $n\geq 4$ nicht als induzierter Teilgraph vorkommt. Etwas anachronistisch zeigt uns der starke Perfekte-Graphen-Satz \ref{thm:spgt} damit sofort, das triangulierte Graphen perfekt sind. Um nicht mit Kanonen auf Spatzen zu schießen, zeigen wir die Perfektheit später im Stil von Berge nochmal.
 
-Trianguliert sein ist eine hereditäre Eigenschaft, i.e.: Wenn $G = (V, E)$ ein triangulierter Graph ist, dann ist auch jeder induzierte Subgraph $G_A$ für $A \subset V$ trianguliert.
+\emph{Trianguliert} ist eine hereditäre Eigenschaft, i.e.: Wenn $G = (V, E)$ ein triangulierter Graph ist, dann ist auch jeder induzierte Subgraph $G_A$ für $A \subset V$ trianguliert. Ein Zyklus im Teilgraph ist auch ein Zyklus im ganzen Graph und behält seine Sehne in der Einschränkung.
 
 \begin{figure}[ht]
     \label{fig:trianguliert}
@@ -86,38 +86,44 @@ Trianguliert sein ist eine hereditäre Eigenschaft, i.e.: Wenn $G = (V, E)$ ein 
 \end{figure}
 
 \begin{bemerkung}
-    Triangulierte Graphen sind nicht Dreieck-Mesh-Graphen zu verwechselen, wie man sie zum Beispiel aus der Computergrafik kennt. Der Oktaeder-Graph (siehe Abbildung \ref{fig:oktaeder}) besteht nur aus Dreiecken, ist aber nicht trianguliert.
+    Triangulierte Graphen sind nicht mit Dreieck-Mesh-Graphen zu verwechselen, wie man sie zum Beispiel aus der Computergrafik kennt. Der Oktaeder-Graph (siehe Abbildung \ref{fig:oktaeder}) besteht nur aus Dreiecken, ist aber nicht trianguliert.
 \end{bemerkung}
 
 \section{Perfekte Knoten-Eliminationsschemen}
 
-Der Algorithmus von Fulkerson-Gross baut fundamental auf sogenannte Perfekte Knoten-Eliminationsschemen auf. Um diese zu beschreiben benötigen wir noch ein paar Definitionen und Resultate. Wir wollen zunächst eine Charakterisierung der Trianguliertheit über Knoten-Seperatoren beschreiben:
+Der Algorithmus von Fulkerson-Gross baut fundamental auf sogenannten \emph{Perfekte-Knoten-Eliminationsschemen} auf. Um diese zu beschreiben benötigen wir noch einige Definitionen und Resultate. Wir wollen zunächst eine Charakterisierung der Trianguliertheit über Knoten-Seperatoren beschreiben:
 
 \begin{definition}\label{def:seperator}
-    Für einen Graphen $G = (V, E)$ und zwei Knoten $a, b \in V$ nennen wir eine Menge $S \subset V$ einen \emph{Knoten-Seperator} oder \emph{$a$-$b$-Seperator}, wenn der induzierte Subgraph von $V \setminus S$ in zwei (oder mehr) Kompenenten zerfällt und $a$ und $b$ in verschiedenen Komponenten sind.
+    Für einen Graphen $G = (V, E)$ und zwei Knoten $a, b \in V$ nennen wir eine Menge $S \subset V$ einen \emph{Knoten-Seperator} oder \emph{$a$-$b$-Seperator}, wenn der induzierte Teilgraph von $V \setminus S$ in zwei (oder mehr) Kompenenten zerfällt und $a$ und $b$ in verschiedenen Komponenten sind.
     
     Wenn keine echte Teilmenge von $S$ selbst ein $a$-$b$-Seperator ist, dann nennen wir $S$ einen \emph{minimalen Knoten-Seperator}.
 \end{definition}
 
 % Thm 4.1 Teil 1
 \begin{satz}\label{thm:triangulated--completeSeperator}
-    Sei $G$ ein ungerichteter Graph. $G$ ist trianguliert, genau dann wenn jeder minimale Knoten-Seperator einen vollständigen Teilgraph induziert.
+    Sei $G$ ein Graph. $G$ ist trianguliert, genau dann, wenn jeder minimale Knoten-Seperator einen vollständigen Teilgraph induziert.
 \end{satz}
 \begin{proof}
-    $\Leftarrow$: Sei $[a, x, b, y_1, \hdots, y_k, a]$ ein Zyklus in $G$. Es ist zu zeigen, das dieser eine Sehne besitzt. Fall 1: $a$ und $b$ sind verbunden, dann ist $ab$ eine Sehne. Fall 2: $a$ und $b$ sind nicht verbunden. Sei $S$ ein minimaler Knoten-Seperator zwischen $a$ und $b$. Der Knoten $x$ muss auf jeden Fall in $S$ sein, da sonst $a$ und $b$ durch $S$ nicht separiert werden. Ebenso muss eines der $y_i$ in $S$ sein. Da $S$ laut Vorraussetzung vollständig ist, sind $x$ und $y_i$ verbunden, und damit ist $xy_i$ die gesuchte Sehne.
+    \say{$\Leftarrow$} Sei $[a, x, b, y_1, \hdots, y_k, a]$ ein Zyklus in $G$. Es ist zu zeigen, dass dieser eine Sehne besitzt.
+    \begin{itemize}
+        \item Fall 1: $a$ und $b$ sind verbunden, dann ist $ab$ eine Sehne.
+        \item Fall 2: $a$ und $b$ sind nicht verbunden. Sei $S$ ein minimaler Knoten-Seperator zwischen $a$ und $b$. Der Knoten $x$ muss auf jeden Fall in $S$ sein, da sonst $a$ und $b$ durch $S$ nicht separiert werden. Ebenso muss eines der $y_i$ in $S$ sein. Da $S$ laut Vorraussetzung vollständig ist, sind $x$ und $y_i$ verbunden, und damit ist $xy_i$ die gesuchte Sehne.
 
-    $\Rightarrow$: Sei $S$ ein minmaler $a$-$b$-Seperator und $G_A$ und $G_B$ die Komponenten von $G_{V \setminus S}$, in denen sich $a$ und $b$ jeweils befinden. Seien $x, y \in S$. Es ist zu zeigen, dass $x$ und $y$ verbunden sein. Da $S$ minimal ist, muss jeder Knoten $x \in S$ einen Nachbaren in $A$ und einen Nachbaren in $B$ haben. Man kann also einen Pfad von $x$ nach $y$ durch $A$ finden. Konkret sei $[x, a_1, \hdots, a_k, y]$ ein kürzester Pfad in $G_{A \cup S}$ mit $a_i \in A$ für alle $i$. Analog sei $[x, b_1, \hdots, b_h, y]$ ein kürzester Pfad in $G_{B \cup S}$ mit $b_i \in B$ für alle $i$. Die beiden Pfade kann man nun zu einem Zyklus in $G$ zusammenbauen: $[x, a_1, \hdots, a_k, y, b_h, \hdots, b_1, x]$ muss laut Vorraussetzung also eine Sehne besitzen. Wo kann sie sein?
-    
+    \end{itemize}
+
+    \say{$\Rightarrow$} Sei $S$ ein minmaler $a$-$b$-Seperator und $G_A$ und $G_B$ die Komponenten von $G_{V \setminus S}$, in denen sich $a$ und $b$ jeweils befinden. Seien $x, y \in S$. Es ist zu zeigen, dass $x$ und $y$ verbunden sind. Da $S$ minimal ist, muss jeder Knoten $x \in S$ einen Nachbarn in $A$ und einen Nachbarn in $B$ haben. Man kann also einen Pfad von $x$ nach $y$ durch $A$ finden. Konkret sei $[x, a_1, \hdots, a_k, y]$ ein kürzester Pfad in $G_{A \cup S}$ mit $a_i \in A$ für alle $i$. Analog sei $[x, b_1, \hdots, b_h, y]$ ein kürzester Pfad in $G_{B \cup S}$ mit $b_i \in B$ für alle $i$. Die beiden Pfade kann man nun zu einem Zyklus in $G$ verketten: $[x, a_1, \hdots, a_k, y, b_h, \hdots, b_1, x]$ muss laut Vorraussetzung also eine Sehne besitzen. Wo kann sie sein?
+
     \begin{itemize}
         \item Nicht zwischen einem $a_i$ und $b_j$, da $S$ ein Knoten-Seperator ist.
         \item Nicht zwischen zwei $a_i$ und $a_j$ oder einem $a_i$ und $x$ oder $y$, da der Pfad in $G_{A \cup S}$ kürzestmöglich ist.
         \item Analog für $b_i$ und $b_j$.
     \end{itemize}
-    Es bleibt also nur die Möglichkeit zwischen $x$ und $y$, was zu zeigen war.
+
+    Die Sehne ist also zwischen $x$ und $y$. Weil $x, y \in S$ beliebig war, ist also $S$ vollständig.
 \end{proof}
         
 \begin{definition}
-    Simplektischer Knoten: Ein Knoten $u$ heißt \emph{simplektisch} (\emph{simplical}), wenn seine Nachbaren alle untereinander verbunden sind, i.e. $adj(u)$ ist eine Clique.
+    Sei $G = (V, E)$ ein Graph. Ein Knoten $u \in V$ heißt \emph{simplektisch} (\emph{simplical}), wenn seine Nachbarn alle untereinander verbunden sind, i.e. $adj(u)$ ist eine Clique.
 \end{definition}
 
 % Lem 4.2 [Dirac 1961]
@@ -129,32 +135,34 @@ Der Algorithmus von Fulkerson-Gross baut fundamental auf sogenannte Perfekte Kno
     
     Induktionsanfang: Ein einzelner Knoten ist als Graph gesehen vollständig.
     
-    Induktionsschritt: Sei also $G$ nicht vollständig, also existieren zwei nicht benachbarte Knoten $a$ und $b$. Sei $S$ ein minimaler Knoten-Seperator für $a$ und $b$. Die Komponenten von $G_{V \setminus S}$, die $a$ und $b$ enthalten nennen wir jeweils $G_A$ und $G_B$. Nun nutzen wir die Induktionsvorraussetzung auf $G_{A \cup S}$: Entweder $A \cup S$ ist vollständig, dann ist jeder Knoten in $A$ simplektisch, oder es exitieren zwei simplektische nicht benachbarte Knoten in $A \cup S$ und es können nicht beide in $S$ sein, da $S$ laut Satz \ref{thm:triangulated--completeSeperator} vollständig ist. In jedem Fall existiert ein simplektischer Knoten in $A$ und analog in $B$ auch. Diese sind nicht benachbart, da $A$ und $B$ getrennte Kompnenten sind.
+    Induktionsschritt: Sei also $G$ nicht vollständig, also existieren zwei nicht benachbarte Knoten $a$ und $b$. Sei $S$ ein minimaler Knoten-Seperator für $a$ und $b$. Die Komponenten von $G_{V \setminus S}$, die $a$ und $b$ enthalten nennen wir jeweils $G_A$ und $G_B$. Nun nutzen wir die Induktionsvoraussetzung auf $G_{A \cup S}$: Entweder $A \cup S$ ist vollständig, dann ist jeder Knoten in $A$ simplektisch, oder es exitieren zwei simplektische nicht benachbarte Knoten in $A \cup S$. Es können nicht beide in $S$ sein, da $S$ laut Satz \ref{thm:triangulated--completeSeperator} vollständig ist. In jedem Fall existiert ein simplektischer Knoten in $A$ und analog auch in $B$. Diese sind nicht benachbart, da $A$ und $B$ getrennte Komponenten sind.
 \end{proof}
     
-Der vorherige Satz lässt uns auf einen ersten Algorithmus zum Erkennen von triangulierten Graphen schließen: Man suche nach simplektischen Knoten und entferne diese iterativ. Wenn immer simplektische Knoten gefunden werden können, bis der Graph leer ist, dann ist der Graph trianguliert. Wenn in einem Schritt kein simplektischer Knoten gefunden werden kann, dann ist der Graph nicht trianguliert.
+Lemma \ref{thm:4.2} lässt uns auf einen ersten Algorithmus zum Erkennen von triangulierten Graphen schließen: Man suche nach simplektischen Knoten und entferne diese iterativ. Wenn immer simplektische Knoten gefunden werden können, bis der Graph leer ist, dann ist der Graph trianguliert. Wenn in einem Schritt kein simplektischer Knoten gefunden werden kann, dann ist der Graph nicht trianguliert. Die Reihenfolge, in der man die Knoten entfernt nennt man Perfekte-Knoten-Eliminationsschema.
 
-Die Reihenfolge, in der man die Knoten entfernt nennt man ein perfektes Knoten-Eliminationsschema (PKE). Konkret ist eine Anordnung aller Knoten von $G$ namhaft $\sigma = [u_1, \hdots, u_n]$ genau dann ein PKE, wenn $\forall i : u_i$ ist simplektisch in $G_{\{u_i, \hdots, u_n\}}$.
+\begin{definition}
+    Sei $G = (V, E)$ ein Graph. Eine Anordnung aller Knoten $\sigma = [u_1, \hdots, u_n]$ von $G$ ist ein \emph{Perfekte-Knoten-Eliminationsschema (PKE)}, wenn $\forall i : u_i$ ist simplektisch in $G_{\{u_i, \hdots, u_n\}}$.
+\end{definition}
 
 %Thm 4.1 Teil 2
 \begin{satz} \label{thm:tri_PKE}
-    Sei $G = (V, E)$ ein Graph. Dann ist $G$ trianguliert, genau dann wenn $G$ ein perfektes Knoten-Eliminationsschema besitzt. Insbesondere kann jeder simplektischer Knoten ein perfektes Knoten-Eliminationsschema starten.
+    Sei $G = (V, E)$ ein Graph. Dann ist $G$ trianguliert, genau dann wenn $G$ ein Perfekte-Knoten-Eliminationsschema besitzt. Insbesondere kann jeder simplektische Knoten ein Perfekte-Knoten-Eliminationsschema starten.
 \end{satz}
 \begin{proof}
-    $\Rightarrow$: Aufgrund von Lemma \ref{thm:4.2} hat $G$ einen simplektischen Knoten $u \in V$. Der induzierte Subgraph $G_{V \setminus \{u\}}$ ist ebenfalls trianguliert und hat nach Induktion über Knotenanzahl ein perfektes Knoten-Eliminationsschema. Wenn man $u$ vorne an dieses anhängt, hat man ein perfektes Knoten-Eliminationsschema für ganz $G$.
+    \say{$\Rightarrow$} Nach von Lemma \ref{thm:4.2} hat $G$ einen simplektischen Knoten $u \in V$. Der induzierte Subgraph $G_{V \setminus \{u\}}$ ist ebenfalls trianguliert und hat nach Induktion über Knotenanzahl ein Perfekte-Knoten-Eliminationsschema $\sigma$. Wenn man $\sigma$ vorne um $u$ erweitert, hat man ein Perfekte-Knoten-Eliminationsschema für ganz $G$.
     
-    $\Leftarrow$: Sei $C$ ein Zyklus in $G$. Es ist zu zeigen, das $C$ eine Sehne hat. Sei also nach Vorraussetzung ein perfektes Knoten-Eliminationsschema gegeben. Wir nennen den Knoten in $C$ mit dem kleinsten Index im PKE $u$. Die beiden Nachbaren von $u$ im Zyklus werden erst nach $u$ im PKE enfernt und sind verbunden, da $u$ an diesem Punkt im PKE simplektisch ist. Sie bilden also eine Sehne.
+    \say{$\Leftarrow$} Sei $C$ ein Zyklus in $G$. Es ist zu zeigen, das $C$ eine Sehne hat. Sei also nach Vorraussetzung ein Perfekte-Knoten-Eliminationsschema $\sigma$ gegeben. Sei $u$ der Knoten in $C$ mit dem kleinsten Index in $\sigma$. Die beiden Nachbarn von $u$ in $C$ werden erst nach $u$ in $\sigma$ enfernt und sind verbunden, da $u$ an diesem Punkt im PKE simplektisch ist. Sie bilden also eine Sehne.
 \end{proof}    
 
 \section{Der Algorithmus von Fulkerson-Gross}
 
-Auf obige Weise ein PKE zu finden funktioniert zwar, ignoriert aber die Tatsache, das uns Satz \ref{thm:4.2} zwei simplektische Knoten liefert. Hier kommt die Idee von Fulkerson und Gross ins Spiel. Da es immer zwei simplektische Knoten gibt, könnten wir uns einen Knoten $u$ zu Beginn aussuchen und für den Schluss aufheben. Falls $u$ einer der beiden gefundenen simplektischen Knoten ist, entfernen wir stattdessen einfach den anderen. Desweiteren können wir uns einen Nachbaren $v$ von $u$ aussuchen, den wir uns für die vorletze Stelle im PKE behalten, da Satz \ref{thm:4.2} nicht benachbarte simplektische Knoten garantiert.
+Auf obige Weise ein PKE zu finden funktioniert zwar, ignoriert aber die Tatsache, dass uns Satz \ref{thm:4.2} zwei simplektische Knoten liefert. Hier kommt die Idee von Fulkerson und Gross ins Spiel. Da es immer zwei simplektische Knoten gibt, könnten wir uns einen Knoten $u$ zu Beginn aussuchen und für den Schluss aufheben. Falls $u$ einer der beiden gefundenen simplektischen Knoten ist, entfernen wir stattdessen einfach den anderen. Desweiteren können wir uns einen Nachbarn $v$ von $u$ aussuchen, den wir uns für die vorletze Stelle im PKE behalten, da Satz \ref{thm:4.2} nicht benachbarte simplektische Knoten garantiert.
 
 Tatsächlich können wir das ganze PKE von hinten aufbauen. Man muss nur die Knoten in der richtigen Reihenfolge auswählen und dafür gibt es mehrere Möglichkeiten. Wir werden hier zwei Varianten (\todo{oder vielleicht doch nur LexBFS?}) kennen lernen, Lexikographische Breitensuche (kurz \emph{LexBFS}) \todo{cite} und Maximale Kardinalitätssuche (kurz \emph{MCS}) \todo{also cite}.
 
 \subsection{Lexikographische Breitensuche}
 
-
+\todo{Fix this shit -> Wir geben den Knoten des PKE Label um deren Reihenfolge darzustellen. Diese verändern sich, wie im folgenden Pseudo-Pseudo-Code beschrieben bei laufendem Algorithmus. Es zeigt sich, dass Knoten deren Label aufeinander folgen stets durch Kanten verbunden sind. Gute Nacht <3}
 
 \begin{listing}[ht]
 \label{algo:LexBFS}
@@ -174,7 +182,7 @@ def Lex_BFS(G: Graph) -> list[Vertex]:
 
 \todo{LexBFS $\Rightarrow$ L3}
 
-\subsection{Kardinalitätssuche}
+\subsection{Maximale Kardinalitätssuche}
 
 \begin{listing}[ht]
 \label{algo:MCS}

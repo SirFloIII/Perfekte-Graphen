@@ -4,7 +4,7 @@
 \chapter{Vergleichbarkeitsgraphen}
 \label{chapter:ordnungsgraphen}
 
-Ein weiteres Beispiel für perfekte Graphen sind Vergleichbarkeitsgraphen. Dies sind jene Graphen $(V, E)$, welche die Vergleichbarkeitsrelation zu einer (strikten) Halbordnung $(V, <)$ darstellen, i.e. $uv \in E \Leftrightarrow u < v \vee v < u$. Ihre Perfektheit ist verglichen\footnote{Ba Dum Tss} nicht so trivial wie die vorherigen Beispiele.
+Ein weiteres Beispiel für perfekte Graphen sind Vergleichbarkeitsgraphen. Dies sind jene Graphen $(V, E)$, welche die Vergleichbarkeitsrelation zu einer (strikten) Halbordnung $(V, <)$ darstellen, i.e. $uv \in E \Leftrightarrow u < v \vee v < u$. Ihre Perfektheit ist verglichen\footnote{Ba Dum Tss} mit den vorherigen Beispielen nicht so trivial.
 
 Um im Rahmen der Graphentheorie zu bleiben, interpretieren wir diese strikte Halbordnung selbst als gerichteten Graphen.
 
@@ -18,10 +18,10 @@ Um im Rahmen der Graphentheorie zu bleiben, interpretieren wir diese strikte Hal
     Wir nennen den Graphen $(V, F)$ eine \emph{Orientierung} von $(V, E)$.
 \end{definition}
 
-Offensichtlich ist Vergleichbarkeitsgraph zu sein ebenfalls eine hereditäre Eigenschaft. Zu gegebener Knotenmenge $A \subset V$ ist $(A, F \cap (A \times A))$ eine Orientierung von $G_A$. Es reicht also wieder nur $\chi(G) = \omega(G)$ im nachfolgenden Teil zu zeigen.
+Offensichtlich ist die Eigenschaft \emph{Vergleichbarkeitsgraph} zu sein ebenfalls hereditär. Zu gegebener Knotenmenge $A \subset V$ ist $(A, F \cap (A \times A))$ eine Orientierung von $G_A$. Es reicht also wieder nur $\chi(G) = \omega(G)$ um die Perfektheit im nachfolgenden Teil zu zeigen.
 
 \begin{bemerkung}
-    Orientierungen von Vergleichbarkeitsgraphen sind nicht mit Hasse-Diagrammen zu verwechseln. Während in den Orientierungen explizit die Transitivität gefordert wird, sind in Hasse-Diagrammen Kanten, die wegen der Transitivität impliziert werden, weggelassen. (Vgl. Abbildung \ref{fig:hasse})
+    Orientierungen von Vergleichbarkeitsgraphen sind nicht mit Hasse-Diagrammen zu verwechseln. Während in den Orientierungen explizit die Transitivität gefordert wird, werden in Hasse-Diagrammen Kanten, die wegen der Transitivität impliziert werden, weggelassen. (Vgl. Abbildung \ref{fig:hasse})
 \end{bemerkung}
 
 \begin{figure}[ht]
@@ -102,21 +102,21 @@ Offensichtlich ist Vergleichbarkeitsgraph zu sein ebenfalls eine hereditäre Eig
     \begin{align*}
         h : V &\to \N \\
         v &\mapsto \begin{cases}
-            0 &v \text{ ist eine Senke}\\
+            0 &v \text{ ist eine Quelle}\\
             \max\limits_{wv \in F} h(w) + 1 &\text {sonst}
         \end{cases}
     \end{align*}
     
-    Aufgrund der Transitivität und der Antisymmetrie ist der Graph $(V, F)$ zyklenfrei und weil $V$ endlich ist gibt es mindestens eine Senke. Damit ist $h$ wohldefiniert. Definiere $m := \max_{v \in V} h(v)$.
+    Aufgrund der Transitivität und der Antisymmetrie ist der Graph $(V, F)$ zyklenfrei. Weil $V$ endlich ist gibt es mindestens eine Quelle, i.e. einen Knoten, der keine eingehenden Kanten hat. Damit ist $h$ wohldefiniert. Definiere $m := \max_{v \in V} h(v)$.
 
     Für eine Kante $uv \in F$ gilt
     $$h(u) \leq \max\limits_{wv \in F} h(w) = h(v) - 1 < h(v).$$
 
     Damit ist $h$ also eine zulässige Knotenfärbung für $(V, E)$ mit $m + 1$ vielen Farben.
     
-    Zu einem solchen Knoten $v$, bei dem $h(v) = m$ maximal ist, findet man einen Pfad $v =: u_m, \hdots, u_0$ von $v$ zu einer Senke $u_0$ mit $h(u_i) = i\, \forall i \in \N_{\leq m}$, indem man einfach in jedem Schritt einen Zeugen des Maximums in der Definiton von $h$ als nächsten Knoten wählt. Aufgrund der Transitivität von $F$ ist $\{u_i : i \in \N_{\leq m}\}$ sogar eine $m+1$ große Clique.
+    Zu einem solchen Knoten $v$, bei dem $h(v) = m$ maximal ist, findet man einen Pfad $v =: [u_m, \hdots, u_0]$ von $v$ zu einer Quelle $u_0$ mit $h(u_i) = i\, \forall i \in \N_{\leq m}$, indem man einfach in jedem Schritt einen Zeugen des Maximums in der Definiton von $h$ als nächsten Knoten wählt. Aufgrund der Transitivität von $F$ ist der Pfad $[u_m, \hdots, u_0]$ sogar eine $m+1$ große Clique.
     
-    Es kann also keine größere Clique und keine kleinere Färbung geben und $\chi(G) = m+1 = \omega(G)$. Wegen der Hereditärität ist $(V, E)$ also perfekt.
+    Es kann also keine größere Clique und keine kleinere Färbung als diese geben und $\chi(G) = m+1 = \omega(G)$. Wegen der Hereditärität ist $(V, E)$ also perfekt.
 \end{proof}
 
 \begin{korollar}
@@ -126,7 +126,7 @@ Offensichtlich ist Vergleichbarkeitsgraph zu sein ebenfalls eine hereditäre Eig
     
     Die Höhenfunktion $h: V \to \N$ aus dem vorherigen Beweis ist eine zulässige minimale Färbung und kann in linearer Zeit mit Algorithmus \ref{algo:heightfunction} berechnet werden.
     
-    \begin{figure}[ht]
+    \begin{listing}[ht]
         \label{algo:heightfunction}
         \centering
         \begin{minted}{python3}
@@ -150,15 +150,21 @@ def compute_height(G: DirectedGraph) -> dict[Vertex, int]:
     return h
         \end{minted}
         \caption{Pseudo-Pseudo-Code zur Berechnung der Höhenfunktion. Details zur Implementierung gibt es in Appendix \ref{appendix:code}.}
-    \end{figure}
+    \end{listing}
     
-    Der Algorithmus läuft über eine Tiefensuche \emph{(eng. Depth-First-Search, DFS)}, wobei $h$ für einen Knoten erst berechnet wird, wenn $h$ für alle Ausgang-Nachbaren bereits berechnet sind. In \verb|unset_outneighbor_count[u]| wird absteigend gezählt, wie oft die Funktion \verb|DFS| für einen Knoten \verb|u| aufgerufen wurde. Sobald \verb|DFS| von jedem seiner Ausgang-Nachbaren aufgerufen wurde und \verb|unset_outneighbor_count[u]| $= 0$ ist sicher, das $h$ für alle Ausgang-Nachbaren von \verb|u| berechnet wurde.
+    Der Algorithmus läuft über eine Tiefensuche \emph{(eng. Depth-First-Search, DFS)}, wobei $h$ für einen Knoten erst berechnet wird, wenn $h$ für alle Ausgang-Nachbarn bereits berechnet ist. In \verb|unset_inneighbor_count[u]| wird absteigend gezählt, wie oft die Funktion \verb|DFS| für einen Knoten \verb|u| aufgerufen wurde. Sobald \verb|DFS| von jedem seiner Ausgang-Nachbarn aufgerufen wurde, erkannt durch \verb|unset_inneighbor_count[u] == 0|, dass $h$ für alle Ausgang-Nachbaren von \verb|u| berechnet wurde.
     
-    \verb|DFS| wird pro Kante einmal aufgerufen und pro (nicht Senke-)Knoten $u$ wird einmal der Teil innerhalb der \verb|if|-Abfrage ausgeführt, welcher $O(Ausgrad(u))$ für das Maximum und $O(Ingrad(u))$ für das Aufrufen von \verb|DFS| braucht.
+    \verb|DFS| wird pro Kante einmal aufgerufen und pro Knoten $u$ wird einmal der Teil innerhalb der \verb|if|-Abfrage ausgeführt (falls $u$ keine Quelle ist):
+    \begin{itemize}
+        \item $O(Ingrad(u))$ für das Maximum
+        \item $O(Ausgrad(u))$ für das rekursive Aufrufen von \verb|DFS|
+    \end{itemize}
     
-    Die Vorbereitung von \verb|unset_outneighbor_count| sowie das Durchlaufen der Knoten auf der Suche nach den Senken braucht jeweils $O(|V|)$. Insgesamt braucht der Algorithmus also $O(2\cdot|V| + 3\cdot|F|) = O(|V| + |F|)$ viel Zeit.
+    Die Vorbereitung von \verb|unset_inneighbor_count| sowie das Durchlaufen der Knoten auf der Suche nach den Quellen braucht jeweils $O(|V|)$. Insgesamt braucht der Algorithmus also $O(2\cdot|V| + 3\cdot|F|) = O(|V| + |F|)$ viel Zeit.
 
-    \begin{figure}[ht]
+    Mit dem Algorithmus \ref{algo:clique} kann die maximale Clique in linearer Zeit gefunden werden. 
+
+    \begin{listing}[ht]
         \label{algo:clique}
         \centering
         \begin{minted}{python3}
@@ -179,8 +185,8 @@ def find_path(G: DirectedGraph) -> list[Vertex]:
     path.reverse()
     return path
         \end{minted}
-        \caption{Pseudo-Pseudo-Code zur Berechnung einer Clique.}
-    \end{figure}
+        \caption{Pseudo-Pseudo-Code zur Berechnung einer Clique. \todo{Remove Joke}}
+    \end{listing}
 
 \end{proof}
     
