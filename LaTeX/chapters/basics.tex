@@ -231,15 +231,55 @@ In den Anfängen der Theorie der perfekten Graphen wurden viele Resultate doppel
     \end{align}
     Insbesondere ist $G$ perfekt genau dann wenn $\overline G$ perfekt ist.
 \end{satz}
-\begin{proof}
-    (\ref{eq:P1}) $\Rightarrow$ (\ref{eq:P3}): Sei $A \subset V$ beliebig. Angenommen wir färben $G_A$ mit $\omega(G_A)$ Farben. Jede Farbe kann von höchstens $\omega(\overline{G_A})$ vielen Knoten angenommen werden, da gleichgefärbte Knoten eine Clique im Komplement $\overline{G_A}$ bilden. Über alle Farben aufsummiert ergibt sich $\omega(G_A) \cdot \omega(\overline{G_A}) \geq |A|$.
 
-    (\ref{eq:P3}) $\Rightarrow$ (\ref{eq:P1}): \todo{Finish Proof}
-\end{proof}
+Den Graph mit $n$ Knoten, bestehend aus einem einzelnen Zyklus $[u_1, \hdots, u_n, u_1]$, nennt man passenderweise \emph{zyklischen Graph} und wird als $C_n$ geschrieben.
 
-Den Graph mit $n$ Knoten, bestehend aus einem einzelnen Zyklus $[u_0, \hdots, u_n]$, nennt man passenderweise \emph{zyklischen Graph} und wird als $C_n$ geschrieben.
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[every node/.style={circle, draw=black, minimum size=8mm, inner sep=0pt},
+        edge/.style={draw=black, thick}]
+        \begin{scope}[xshift=0cm]
+            \node[fill=LimeGreen] (a1) at (90:1.1) {$u_1$};
+            \node[fill=TealBlue] (a2) at (0:1.1) {$u_2$};
+            \node[fill=LimeGreen] (a3) at (270:1.1) {$u_3$};
+            \node[fill=TealBlue] (a4) at (180:1.1) {$u_4$};
+            \draw[edge] (a1)--(a2)--(a3)--(a4)--(a1);
+            \node[draw=none, rectangle] at (0,-1.75) {$C_4$};
+        \end{scope}
+        \begin{scope}[xshift=3.4cm]
+            \node[fill=LimeGreen] (b1) at (90:1.1) {$u_1$};
+            \node[fill=TealBlue] (b2) at (18:1.1) {$u_2$};
+            \node[fill=LimeGreen] (b3) at (-54:1.1) {$u_3$};
+            \node[fill=TealBlue] (b4) at (-126:1.1) {$u_4$};
+            \node[fill=Dandelion] (b5) at (162:1.1) {$u_5$};
+            \draw[edge] (b1)--(b2)--(b3)--(b4)--(b5)--(b1);
+            \node[draw=none, rectangle] at (0,-1.75) {$C_5$};
+        \end{scope}
+        \begin{scope}[xshift=6.8cm]
+            \node[fill=LimeGreen] (c1) at (90:1.1) {$u_1$};
+            \node[fill=TealBlue] (c2) at (30:1.1) {$u_2$};
+            \node[fill=LimeGreen] (c3) at (-30:1.1) {$u_3$};
+            \node[fill=TealBlue] (c4) at (-90:1.1) {$u_4$};
+            \node[fill=LimeGreen] (c5) at (-150:1.1) {$u_5$};
+            \node[fill=TealBlue] (c6) at (150:1.1) {$u_6$};
+            \draw[edge] (c1)--(c2)--(c3)--(c4)--(c5)--(c6)--(c1);
+            \node[draw=none, rectangle] at (0,-1.75) {$C_6$};
+        \end{scope}
+        \begin{scope}[xshift=10.2cm]
+            \node[fill=LimeGreen] (d1) at (90:1.1) {$u_1$};
+            \node[fill=TealBlue] (d2) at (38.57:1.1) {$u_2$};
+            \node[fill=LimeGreen] (d3) at (-12.86:1.1) {$u_3$};
+            \node[fill=TealBlue] (d4) at (-64.29:1.1) {$u_4$};
+            \node[fill=LimeGreen] (d5) at (-115.71:1.1) {$u_5$};
+            \node[fill=TealBlue] (d6) at (-167.14:1.1) {$u_6$};
+            \node[fill=Dandelion] (d7) at (141.43:1.1) {$u_7$};
+            \draw[edge] (d1)--(d2)--(d3)--(d4)--(d5)--(d6)--(d7)--(d1);
+            \node[draw=none, rectangle] at (0,-1.75) {$C_7$};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Die zyklischen Graphen $C_4$, $C_5$, $C_6$ und $C_7$ mit ihren minmalen Färbungen.}
+\end{figure}
 
-\todo{graphics}
 
 Die zyklischen Graphen $C_n$ für $n \in \N, n > 3, n$ ungerade sind keine perfekten Graphen, da $\chi(C_n) = 3 \neq 2 = \omega(C_n)$. Da all deren induzierte Teilgraphen perfekt sind, stellen diese Graphen (auch \emph{ungerade Löcher} genannt) und deren Komplemente (\emph{ungerade Anti-Löcher}) in gewisserweise minimale Gegenbeispiele für die Perfektheit dar. Es stellt sich in natürlicher Weise die Frage: Gibt es noch andere Graphen, die nicht perfekt sind, aber deren echte induzierte Teilgraphen alle perfekt sind?
 
@@ -253,6 +293,42 @@ Dieses Resultat führt zu einer \emph{forbidden minor}-Charakterisierung der Per
 \end{satz}
 
 Wenig später liefern Chudnovsky et al. einen Algorithmus, um perfekte Graphen in polynomieller Zeit, genauer $O(|V|^9)$, zu erkennen. Zuvor war nicht klar, ob die Erkennung von perfekten Graphen nicht sogar womöglicherweise NP-schwer ist.\cite{recognizing_berge}
+
+\section{Der Beweis des schwachen Perfekte-Graphen-Satzes}
+
+Für den Beweis benötigen wir noch zwei Lemma und den Begriff der Knotenmultiplikation: Sei $G = (V, E)$ ein Graph und $u \in V$ ein Knoten. Der Graph $G \circ u$ sei definiert als der Graph $G$, erweitert um eine Kopie $u'$ von $u$. Zu jeder Kante $uv \in E$ gibt es eine Kante $u'v$ in $G \circ u$. Zwischen $u$ und $u'$ ist keine Kante.
+
+Für verschiedene Knoten $u, v \in V$ gilt
+\begin{equation*}
+    (G \circ u) - v = (G - v) \circ u.
+\end{equation*}
+
+Allgemeiner, für eine Funktion $\mathbf h: V \to \N$ definieren wir $H := G \circ \mathbf h$ als den Graphen mit den folgenden Eigenschaften:
+
+\begin{itemize}
+    \item Für jeden Knoten $u \in V$ gibt es $\mathbf h(u)$ viele Knoten $u_1, \hdots, u_{\mathbf h(u)}$ in $H$.
+    \item Genau wenn die Knoten $u$ und $v$ in $G$ verbunden sind, dann sind $u_i$ und $v_j$ für $1 \leq i \leq \mathbf h(u)$ und $1 \leq j \leq \mathbf h(v)$ in $H$ verbunden.
+\end{itemize}
+
+\todo{bla bla}
+
+\todo{Lemma 3.1}
+
+\todo{bla bla}
+
+\todo{Lemma 3.2}
+
+\todo{bla bla}
+
+Nun sind wir bereit, den Beweis von Satz \ref{thm:wpgt} durchzuführen.
+
+\begin{proof}
+    (\ref{eq:P1}) $\Rightarrow$ (\ref{eq:P3}): Sei $A \subset V$ beliebig. Angenommen wir färben $G_A$ mit $\omega(G_A)$ Farben. Jede Farbe kann von höchstens $\omega(\overline{G_A})$ vielen Knoten angenommen werden, da gleichgefärbte Knoten eine Clique im Komplement $\overline{G_A}$ bilden. Über alle Farben aufsummiert ergibt sich $\omega(G_A) \cdot \omega(\overline{G_A}) \geq |A|$.
+
+    (\ref{eq:P3}) $\Rightarrow$ (\ref{eq:P1}): \todo{Finish Proof}
+\end{proof}
+
+\section{Ausblick}
 
 In Kapitel \ref{chapter:grundlagen} haben wir bereits mehrere Klassen perfekter Graphen kennengelernt.
 In den folgenden Kapiteln betrachten wir drei weitere Klassen, deren Perfektheit weniger trivial zu erkennen ist. Wir lernen außerdem jeweils Algorithmen dazu kennen.

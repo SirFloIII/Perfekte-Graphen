@@ -10,7 +10,7 @@ Triangulierte Graphen waren eine der ersten Klassen, die als perfekt erkannt wur
     Ein Graph heißt \emph{trianguliert}, wenn jeder Zyklus im Graphen mit Länge $\geq 4$ eine Sehne \emph{(Chord)} besitzt. Eine Sehne eines Zykluses ist eine Kante, die zwei im Zyklus nicht aufeinanderfolgende Knoten verbindet.
 \end{definition}
 
-Eine äquivalente Formulierung ist, dass der zyklische Graph $C_n$ für $n\geq 4$ nicht als induzierter Teilgraph vorkommt. Etwas anachronistisch zeigt uns der starke Perfekte-Graphen-Satz \ref{thm:spgt} damit sofort, das triangulierte Graphen perfekt sind. Um nicht mit Kanonen auf Spatzen zu schießen, zeigen wir die Perfektheit später im Stil von Berge nochmal.
+Eine äquivalente Formulierung ist, dass der zyklische Graph $C_n$ für $n\geq 4$ nicht als induzierter Teilgraph vorkommt. Etwas anachronistisch zeigt uns der starke Perfekte-Graphen-Satz \ref{thm:spgt} damit sofort, das triangulierte Graphen perfekt sind.\footnote{$\overline{C_5} \cong C_5$ und für $n \geq 7$ ungerade ist $C_4$ als Teilgraph $\overline{C_n}$ in dem Zyklus $[u_1, u_4, u_2, u_5, u_1]$ zu finden. Damit sind auch die anderen Vorraussetzungen des SPGT erfüllt.} Um nicht mit Kanonen auf Spatzen zu schießen, zeigen wir die Perfektheit später im Stil von Berge nochmal.
 
 \emph{Trianguliert} ist eine hereditäre Eigenschaft, i.e.: Wenn $G = (V, E)$ ein triangulierter Graph ist, dann ist auch jeder induzierte Subgraph $G_A$ für $A \subset V$ trianguliert. Ein Zyklus im Teilgraph ist auch ein Zyklus im ganzen Graph und behält seine Sehne in der Einschränkung.
 
