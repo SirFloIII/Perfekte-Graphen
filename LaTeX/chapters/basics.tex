@@ -54,18 +54,18 @@ Es stellt offensichtlich keine große Herausforderung dar, eine beliebige zuläs
 
 \begin{definition}
     Sei $G = (V, E)$ ein Graph. Die \emph{Chromatische Zahl} $\chi(G) \in \mathbb N$ ist die minimale Anzahl von Farben in einer zulässigen Färbung von $G$.
-    \begin{equation}
+    \begin{equation*}
         \chi(G) := \min\limits_{c: V \to C \text{zulässig}} |C|
-    \end{equation}
+    \end{equation*}
 \end{definition}
 
 Im Allgemeinen ist die Berechnung der chromatische Zahl eines Graphens NP-schwer \cite{Karp1972}. Eine Möglichkeit, dies denoch zu tun ist mittels des chromatischen Polynoms \todo{cite this}. Der Aufwand dafür ist aber exponentiell, konkret $O(2^{|E|})$. Für bestimmte Klassen von Graphen gibt es aber polynomielle, also wesentlich schnellere, Methoden, die chromatische Zahl zu berechnen. Diese werden wir in den späteren Kapiteln dieser Arbeit kennenlernen.
 
 \begin{satz}
     Sei $G = (V, E)$ ein Graph. Die Anzahl der zulässigen Färbungen mit $\lambda \in \mathbb N$ Farben $\chi(G, \lambda)$ nennen wir \emph{chromatisches Polynom}. $\chi(G, \lambda)$ ist tatsächlich ein Polynom und erfüllt die Rekursionsgleichung für jede Kante $e \in E$:
-    \begin{equation}
+    \begin{equation*}
         \chi(G, \lambda) = \chi(G - e, \lambda) - \chi(G/e, \lambda)
-    \end{equation}
+    \end{equation*}
     wobei
     \begin{itemize}
         \item $G - e := (V, E \setminus \{e\})$ ist der Graph ohne der Kante $e$.
@@ -82,18 +82,18 @@ Das wohl bekannteste Graph-Färbe-Problem, wenn auch nicht in dieser Formulierun
 \section{Die Cliquen-Zahl}
 
 \begin{definition}
-    Sei $G = (V, E)$ ein Graph. Eine Knotenmenge $A \subset V$ heißt \emph{Clique} genau dann wenn alle Knoten in $A$ untereinander verbunden sind. Die Größe der größten Clique von $G$ nennen wir \emph{Cliquenzahl}, bezeichnet mit $\Omega{G}$.
+    Sei $G = (V, E)$ ein Graph. Eine Knotenmenge $A \subset V$ heißt \emph{Clique} genau dann wenn alle Knoten in $A$ untereinander verbunden sind. Die Größe der größten Clique von $G$ nennen wir \emph{Cliquenzahl}, bezeichnet mit $\omega(G)$.
 \end{definition}
 
 Die Suche nach der Cliquenzahl ist im allgemeinen ebenfalls NP-schwer \cite{Karp1972}, aber ähnlich wie bei der chromatischen Zahl werden wir für unsere speziellen Klassen effiziente Algorithmen für das Cliquenproblem kennen lernen.
 
 Zwischen der chromatischen Zahl und der Cliquen-Zahl kann man folgende grundsätzliche Abschätzung tätigen:
 
-\begin{satz}
-    Sei $G = (V, E)$ ein Graph. Dann gilt $\chi(G) \geq \Omega(G)$.
+\begin{satz}\label{thm:ineq}
+    Sei $G = (V, E)$ ein Graph. Dann gilt $\chi(G) \geq \omega(G)$.
 \end{satz}
 \begin{proof}
-    Sei $A$ die größte Clique von $G$ und $c: V \to C$ eine minimale zulässige Färbung von G. Da die Knoten von $A$ alle untereinander verbunden sind, müssen sie von $c$ verschiedene Farben zugewiesen bekommen. Damit folgt $\Omega(G) = |A| \leq |C| = \chi(G)$.
+    Sei $A$ die größte Clique von $G$ und $c: V \to C$ eine minimale zulässige Färbung von G. Da die Knoten von $A$ alle untereinander verbunden sind, müssen sie von $c$ verschiedene Farben zugewiesen bekommen. Damit folgt $\omega(G) = |A| \leq |C| = \chi(G)$.
 \end{proof}
 
 In natürlicher Weise stellt sich bei einer Ungleichung immer die Fragen: Wann ist die Ungleichung scharf? Die Antwort darauf führt zum zentralen Begriff dieser Arbeit, den perfekten Graphen. In die andere Richtung kann die chromatische Zahl und die Cliquen-Zahl beliebig weit auseinander liegen. Mit der Konstruktion von Jan Mycielski \cite{Mycielski1955} kann man aus einem Graph einen weiteren konstruieren, sodass die Cliquen-Zahl gleich bleibt, aber die chromatische Zahl um 1 steigt.
@@ -167,8 +167,8 @@ In natürlicher Weise stellt sich bei einer Ungleichung immer die Fragen: Wann i
     \begin{itemize}
         \item $(w, u_i, v_j)$ oder $(w, u_i, u_j)$: $w$ ist nicht mit den Originalknoten $u_i$ verbunden, also ist dies kein Dreieck.
         \item $(w, v_i, v_j)$ oder $(v_i, v_j, u_k)$ oder $(v_i, v_j, v_k)$: Die Knoten $v_i$ sind nicht untereinander verbunden, also ist auch dies kein Dreieck.
-        \item $(u_i, u_j, u_k)$: Aufgrund der Induktionsvorraussetzung ist $M_{n-1}$ dreieckfrei, also ist auch dies kein Dreieck.
-        \item $(u_i, u_j, v_k)$: Ist $k=i$ (bzw. $k=j$), dann ist $u_i$ (bzw. $u_j$) und $v_k$ nicht verbunden. Andernfalls ist $(u_i, u_j, v_k)$ genau dann ein Dreieck, wenn $(u_i, u_j, u_k)$ eines ist. Dies ist laut Induktionsvorraussetzung nicht der Fall.
+        \item $(u_i, u_j, u_k)$: Aufgrund der Induktionsvoraussetzung ist $M_{n-1}$ dreieckfrei, also ist auch dies kein Dreieck.
+        \item $(u_i, u_j, v_k)$: Ist $k=i$ (bzw. $k=j$), dann ist $u_i$ (bzw. $u_j$) und $v_k$ nicht verbunden. Andernfalls ist $(u_i, u_j, v_k)$ genau dann ein Dreieck, wenn $(u_i, u_j, u_k)$ eines ist. Dies ist laut Induktionsvoraussetzung nicht der Fall.
     \end{itemize}
     Damit ist $\omega(M_n) = 2$ gezeigt.
 
@@ -203,13 +203,13 @@ Eben diese Frage stellte sich Claude Berge bereits Anfang der 1960er Jahre.
 Im Zuge dessen definiert Berge den perfekten Graphen.
 
 \begin{definition}
-    Sei $G = (V, E)$ ein Graph. $G$ ist ein \emph{perfekter Graph}, wenn für alle induzierten Teilgraphen $G_A$ für $A \subset V$ gilt, dass $\chi(G_A) = \Omega(G_A)$.
+    Sei $G = (V, E)$ ein Graph. $G$ ist ein \emph{perfekter Graph}, wenn für alle induzierten Teilgraphen $G_A$ für $A \subset V$ gilt, dass $\chi(G_A) = \omega(G_A)$.
 \end{definition}
 
 %Reduktionsschema bzw. Induktion nach Knotenanzahl:
     %Eine typische Beweisidee: Wir sehen, die gefragte Aussage gilt trivialerweise für den Ein-Knoten-Graph, und nehmen an, das die Aussage schon für alle kleineren Graphen gezeigt ist. Dann wählen wir geschickt einen Knoten oder eine Teilmenge der Knoten aus, die wir aus dem Graphen entfernen. Der übrige Graph erfüllt die Aussage und das wieder hinzufügen der weggenommenen Knoten ist verträglich mit der Aussage. qed
 
-Betrachten wir zunächst einige Beispiele für Klassen von perfekten Graphen. Jede der in dieser Arbeit betrachteten Klassen ist \emph{hereditär}. Hereditär bedeutet: Wenn ein Graph $G  = (V, E)$ in einer Klasse $\Psi$ ist, dann sind auch alle induzierten Teilgraphen $G_A$ davon in der Klasse $\Psi$. Das macht es leicht, die Perfektheit von $G$ zu zeigen, da nur noch $\chi(G) =  \Omega(G)$ für $G$ selbst gezeigt werden muss und (mit Induduktion nach Knotenanzahl) $\chi(G_A) = \Omega(G_A)$ für alle induzierten Teilgraphen $G_A$ für $A \subset V$ damit automatisch mitgezeigt wird.
+Betrachten wir zunächst einige Beispiele für Klassen von perfekten Graphen. Jede der in dieser Arbeit betrachteten Klassen ist \emph{hereditär}. Hereditär bedeutet: Wenn ein Graph $G  = (V, E)$ in einer Klasse $\Psi$ ist, dann sind auch alle induzierten Teilgraphen $G_A$ davon in der Klasse $\Psi$. Das macht es leicht, die Perfektheit von $G$ zu zeigen, da nur noch $\chi(G) =  \omega(G)$ für $G$ selbst gezeigt werden muss und (mit Induduktion nach Knotenanzahl) $\chi(G_A) = \omega(G_A)$ für alle induzierten Teilgraphen $G_A$ für $A \subset V$ damit automatisch mitgezeigt wird.
 
 \begin{itemize}
     \item Vollständige Graphen: Ein Graph $G = (V, E)$ heißt \emph{vollständig}, wenn je zwei Knoten durch eine Kante verbunden sind. Offensichtlich gehören damit alle Knoten zur größten Clique von $G$ und $\omega(G) = |V|$. Jedem Knoten ist in einer zulässigen Färbung eine eigene Farbe zuzuordnen. Damit gilt $\chi(G) = |V|$. Ergo, vollständige Graphen sind perfekt.
@@ -217,9 +217,9 @@ Betrachten wir zunächst einige Beispiele für Klassen von perfekten Graphen. Je
     \item Bipartite Graphen: Ein Graph $G = (V, E)$ heißt \emph{bipartit}, wenn es zwei disjunkte Mengen $A, B \subset V$ gibt, für die gilt: $A \dot\cup B = V$ und $G_A, G_B$ sind leer. Alle Kanten laufen also zwischen $A$ und $B$. Wenn es keine Kante gibt, dann ist $G$ leer und damit ist schon gezeigt, das $G$ perfekt ist. Andernfalls, sei $uv \in E$ mit $u \in A$ und $v \in B$. Sei $w \in V$ ein beliebiger dritter Knoten. Falls $w \in A$, dann $uw \notin E$. Andernfalls $w \in B$ und $vw \notin E$. In jedem Fall ist $\{u, v, w\}$ keine Clique und damit (weil $uv$ und $w$ beliebig waren) $\{u, v\} \subset V$ bereits eine maximale Clique. Um eine zulässige Färbung zu erhalten, können wir alle Knoten aus $A$ apfelgrün und alle Knoten aus $B$ blau färben. Also gilt $\chi(G) = 2 = \omega(G)$, also sind bipartite Graphen perfekt.
 \end{itemize}
 
-Neben der chromatischen und der Cliquen-Zahl gibt es in diesem Zusammenhang auch noch die Stable-Set-Zahl $\alpha(G)$ und die Cliquen-Cover-Zahl $\kappa(G)$. Die Stable-Set-Zahl ist die Mächtigkeit der größten stabilen Menge, also der größten Knotenmenge bei der sich keine Kante des Graphen innerhalb der Menge befindet. Es gilt $\alpha(G) = \Omega(\overline G)$. Ein Cliquen-Cover ist eine Menge von Cliquen in $G$, deren Vereinigung ganz $V$ ist. Die Cliquen-Cover-Zahl ist die Mächtigkeit des kleinsten Cliquen-Covers von $G$. Analog gilt $\kappa(G) = \chi(\overline G)$.
+Neben der chromatischen und der Cliquen-Zahl gibt es in diesem Zusammenhang auch noch die Stabilitätszahl $\alpha(G)$ und die Cliquen-Cover-Zahl $\kappa(G)$. Die Stabilitätszahl ist die Mächtigkeit der größten stabilen Menge, also der größten Knotenmenge bei der sich keine Kante des Graphen innerhalb der Menge befindet. Es gilt $\alpha(G) = \omega(\overline G)$. Ein Cliquen-Cover ist eine Menge von Cliquen in $G$, deren Vereinigung ganz $V$ ist. Die Cliquen-Cover-Zahl ist die Mächtigkeit des kleinsten Cliquen-Covers von $G$. Analog gilt $\kappa(G) = \chi(\overline G)$.
 
-In den Anfängen der Theorie der perfekten Graphen wurden viele Resultate doppelt bewiesen, einmal für $\chi(G)$ und $\Omega(G)$, und einmal für $\alpha(G)$ und $\kappa(G)$. Diese Parallelen zwischen gegebenen Graphen $G$ und seinem Komplement $\overline G$ ließen Berge relativ schnell im Jahr 1961 die Vermutung aufstellen, dass die Perfektheit von $G$ und $\overline G$ äquivalent sind. 1972 wurde dies von László Lovász bewiesen und ist heutzutage als der schwache Perfekte-Graphen-Satz (WPGT) bekannt.
+In den Anfängen der Theorie der perfekten Graphen wurden viele Resultate doppelt bewiesen, einmal für $\chi(G)$ und $\omega(G)$, und einmal für $\alpha(G)$ und $\kappa(G)$. Diese Parallelen zwischen gegebenen Graphen $G$ und seinem Komplement $\overline G$ ließen Berge relativ schnell im Jahr 1961 die Vermutung aufstellen, dass die Perfektheit von $G$ und $\overline G$ äquivalent sind. 1972 wurde dies von László Lovász bewiesen und ist heutzutage als der schwache Perfekte-Graphen-Satz (WPGT) bekannt.
 
 \begin{satz}
     \label{thm:wpgt}
@@ -232,7 +232,7 @@ In den Anfängen der Theorie der perfekten Graphen wurden viele Resultate doppel
     Insbesondere ist $G$ perfekt genau dann wenn $\overline G$ perfekt ist.
 \end{satz}
 
-Den Graph mit $n$ Knoten, bestehend aus einem einzelnen Zyklus $[u_1, \hdots, u_n, u_1]$, nennt man passenderweise \emph{zyklischen Graph} und wird als $C_n$ geschrieben.
+Die Eigenschaft (\ref{eq:P1}) ist offensichtlich, dass $G$ perfekt ist und wird auch $\chi$-perfekt genannt. Die Eigenschaft (\ref{eq:P2}) wird auch $\alpha$-perfekt genannt, nach der Stabilitätszahl $\alpha(G) = \omega(\overline G)$. Die dritte Eigenschaft (\ref{eq:P3}) ist zentral für den Beweis, den wir auf das nächste Unterkapitel aufschieben.
 
 \begin{figure}[ht]
     \centering
@@ -280,6 +280,7 @@ Den Graph mit $n$ Knoten, bestehend aus einem einzelnen Zyklus $[u_1, \hdots, u_
     \caption{Die zyklischen Graphen $C_4$, $C_5$, $C_6$ und $C_7$ mit ihren minmalen Färbungen.}
 \end{figure}
 
+Den Graph mit $n$ Knoten, bestehend aus einem einzelnen Zyklus $[u_1, \hdots, u_n, u_1]$, nennt man passenderweise \emph{zyklischen Graph} und wird als $C_n$ geschrieben.
 
 Die zyklischen Graphen $C_n$ für $n \in \N, n > 3, n$ ungerade sind keine perfekten Graphen, da $\chi(C_n) = 3 \neq 2 = \omega(C_n)$. Da all deren induzierte Teilgraphen perfekt sind, stellen diese Graphen (auch \emph{ungerade Löcher} genannt) und deren Komplemente (\emph{ungerade Anti-Löcher}) in gewisserweise minimale Gegenbeispiele für die Perfektheit dar. Es stellt sich in natürlicher Weise die Frage: Gibt es noch andere Graphen, die nicht perfekt sind, aber deren echte induzierte Teilgraphen alle perfekt sind?
 
@@ -310,14 +311,80 @@ Allgemeiner, für eine Funktion $\mathbf h: V \to \N$ definieren wir $H := G \ci
     \item Genau wenn die Knoten $u$ und $v$ in $G$ verbunden sind, dann sind $u_i$ und $v_j$ für $1 \leq i \leq \mathbf h(u)$ und $1 \leq j \leq \mathbf h(v)$ in $H$ verbunden.
 \end{itemize}
 
-\todo{bla bla}
+Wir sagen $H$ entsteht durch Knotenmultiplikation aus $G$. Man beachte, das ein induzierter Teilgraph $G_A$ als $G \circ \mathbf h$ dargestellt werden kann, indem man $\mathbf h$ als geeignete 0-1-wertige Funktion, genauer die Indikatorfunktion von $A$, wählt.
 
-\todo{Lemma 3.1}
+\begin{satz}\label{thm:lemma3.1}
+    Sei $G = (V, E)$ ein Graph und $H = G \circ \mathbf h$ entstanden aus Knotenmultiplikation von $G$. Dann gilt:
+    \begin{enumerate}[label=(\roman*)]
+        \item $G$ erfüllt (\ref{eq:P1}) $\Rightarrow$ $H$ erfüllt (\ref{eq:P1})\label{eq:3.1.1}
+        \item $G$ erfüllt (\ref{eq:P2}) $\Rightarrow$ $H$ erfüllt (\ref{eq:P2})\label{eq:3.1.2}
+    \end{enumerate}
+\end{satz}
+\begin{proof}
+    mit Induktion nach Knotenanzahl: Für einen Graphen bestehend aus einem einzelnen Knoten ist \ref{eq:3.1.1} und \ref{eq:3.1.2} trivial.
 
-\todo{bla bla}
+    Sei $G$ ein Graph, der (\ref{eq:P1}) (bzw. (\ref{eq:P2})) erfüllt. Angenommen $\mathbf h(u) = 0$ für einen Knoten $u$. Dann kann $H$ auch als Knotenmultiplikation von $G - u$ gewonnen werden. Als Teilgraph von $G$ erfüllt $G - u$ (\ref{eq:P1}) (bzw. (\ref{eq:P2})) und damit nach Induktionsvoraussetzung erfüllt auch $H$ (\ref{eq:P1}) (bzw. (\ref{eq:P2})).
 
-\todo{Lemma 3.2}
+    Wir nehmen dementsprechend $\forall u \in V : \mathbf h(u) \geq 0$ an. Weiters, da eine solche Knotenmultiplikation iterativ durch Knotenmultiplikationen eines einzelnen Knotens aufgebaut werden kann, nehmen wir oBdA an, dass $H = G \circ u$ für einen Knoten $u$.
 
+    \begin{enumerate}[label=(\roman*)]
+        \item Sei $G$ gefärbt mit $\chi(G)$ Farben. Wenn wir $u'$ in gleicher Farbe wie $u$ färben, dann ist dies eine zulässige Färbung von $G \circ u$. Da einerseits die Cliquenzahl durch hinzufügen von $u'$ nicht sinken kann, aber wegen Satz \ref{thm:ineq} nicht steigen kann, gilt in Summe:
+        
+        \begin{equation*}
+            \chi(H) = \chi(G) = \omega(G) = \omega(H)
+        \end{equation*}
+        
+        und aufgrund der Induktionsvoraussetzung ist damit \ref{eq:3.1.1} bewiesen.
+        
+        \item Nehmen wir an, dass $G$ (\ref{eq:P2}) erfüllt. Zu zeigen ist $\chi(\overline{G \circ u}) = \omega(\overline{G \circ u})$. Sei $c : V \to C$ eine Färbung von $\overline G$ mit $\chi(\overline G) = \omega(\overline G)$ Farben. 
+        
+        \begin{itemize}
+            \item Fall 1: $u$ ist in einer maximalen Clique $K$ von $\overline G$ enthalten. In diesem Fall ist $K \cup \{u'\}$ eine maximale Clique in $\overline{G \circ u}$ und
+            
+            \begin{equation*}
+                \omega(\overline{G \circ u}) = \omega(\overline G) + 1.
+            \end{equation*}
+
+            Wenn wir $c$ auf $u'$ mit einer neuen Farbe erweitern haben wir eine zulässige Färbung von $\overline{G \circ u}$ mit einer Farbe mehr. Wegen Satz \ref{thm:ineq} ist dies eine optimale Färbung. Es folgt
+            
+            \begin{equation*}
+                \omega(\overline{G \circ u}) = \omega(\overline G) + 1 = \chi(\overline G) + 1 = \chi(\overline{G \circ u}).
+            \end{equation*}
+
+            \item Fall 2: Keine maximale Clique von $\overline G$ enthält $u$. In diesem Fall gilt
+            
+            \begin{equation*}
+                \omega(\overline{G \circ u}) = \omega(\overline G).
+            \end{equation*}
+            
+            Sei $S_u$ die (stabile) Menge aller Knoten mit der gleichen Farbe wie $u$. In jeder maximalen Clique kommt jede Farbe genau einmal vor, insbesondere die Farbe von $u$. Aber $u$ kommt nach Fall-Voraussetzung nicht in einer maximalen Clique vor, also schneidet die Menge $D := S_u \setminus \{u\}$ jede maximale Clique in genau einem Punkt. Das impliziert, gemeinsam mit der Induktionsvoraussetzung
+
+            \begin{equation*}
+                \chi(\overline{G_{V \setminus D}}) = \omega(\overline{G_{V \setminus D}}) = \omega(\overline G) - 1 = \omega(\overline{G \circ u}) - 1
+            \end{equation*}
+
+            Eine minimale Färbung von $\overline{G_{V \setminus D}}$ erweitert mit einer neuen Farbe für die (stabile) Menge $D \cup \{u'\}$ ist eine zulässige und minimale Färbung für $\overline{G \circ u}$ und es gilt:
+
+            \begin{equation*}
+                \chi(\overline{G \circ u}) = \chi(\overline{G_{V \setminus D}}) + 1 = \omega(\overline{G \circ u}) - 1 + 1 = \omega(\overline{G \circ u})
+            \end{equation*}
+        \end{itemize}
+        In beiden Fällen ist also die gewünschte Gleichheit gezeigt.
+    \end{enumerate}
+\end{proof}
+
+Analog würden wir gern den obigen Satz auch für (\ref{eq:P3}) zeigen. Dazu ist aber eine zusätzliche Vorraussetzung erforderlich:
+
+\begin{satz}\label{thm:lemma3.2}
+    Sei $G = (V, E)$ ein Graph und $H = G \circ \mathbf h$ entstanden aus Knotenmultiplikation von $G$. Außerdem erfülle jeder induzierte Teilgraph von $G$ die Eigenschaft (\ref{eq:P2}). Dann gilt:
+    
+    \begin{equation*}
+        \text{$G$ erfüllt (\ref{eq:P3}) $\Rightarrow$ $H$ erfüllt (\ref{eq:P3})}
+    \end{equation*}
+\end{satz}
+\begin{proof}
+    \todo{}
+\end{proof}
 \todo{bla bla}
 
 Nun sind wir bereit, den Beweis von Satz \ref{thm:wpgt} durchzuführen.
@@ -326,6 +393,8 @@ Nun sind wir bereit, den Beweis von Satz \ref{thm:wpgt} durchzuführen.
     (\ref{eq:P1}) $\Rightarrow$ (\ref{eq:P3}): Sei $A \subset V$ beliebig. Angenommen wir färben $G_A$ mit $\omega(G_A)$ Farben. Jede Farbe kann von höchstens $\omega(\overline{G_A})$ vielen Knoten angenommen werden, da gleichgefärbte Knoten eine Clique im Komplement $\overline{G_A}$ bilden. Über alle Farben aufsummiert ergibt sich $\omega(G_A) \cdot \omega(\overline{G_A}) \geq |A|$.
 
     (\ref{eq:P3}) $\Rightarrow$ (\ref{eq:P1}): \todo{Finish Proof}
+
+    (\ref{eq:P2}) $\Leftrightarrow$ (\ref{eq:P3}): Man beachte das (\ref{eq:P3}) bezüglich Komplementbildung symmetrisch ist und (\ref{eq:P1}) und (\ref{eq:P2}) diesbezüglich Spiegelbilder sind. Dementsprechend liefert obige Argumentation auf $\overline G$ angewendet den Beweis.
 \end{proof}
 
 \section{Ausblick}
