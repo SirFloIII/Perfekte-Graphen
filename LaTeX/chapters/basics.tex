@@ -383,9 +383,28 @@ Analog würden wir gern den obigen Satz auch für (\ref{eq:P3}) zeigen. Dazu ist
     \end{equation*}
 \end{satz}
 \begin{proof}
-    \todo{}
+    Analog zum vorherigen Beweis nehmen wir o.B.d.A. an, dass $\mathbf h(u) > 0$ für alle Knoten $u$. Für einen Widerspruchbeweis sei $G$ ein gegebener Graph, der (\ref{eq:P3}) erfüllt und $H$ ein minimales Gegenbeispiel, also ein Graph, der aus Knotenmultiplikation von $G$ ensteht und (\ref{eq:P3}) nicht erfüllt, aber alle induzierten Teilgraphen von $H$ erfüllen (\ref{eq:P3}). Für $X$ als die Knotenmenge von $H$ gilt also
+    \begin{equation}\label{eq:H_gegenbeispiel}
+        \omega(H)\omega(\overline H) < |X|
+    \end{equation}
+
+    Da $G \neq H$ muss es mindestens einen Knoten $u$ geben, für den $\mathbf h(u) \geq 2$. Sei $U = \{u_1, \hdots, u_k\}$ die Menge der Knoten in $H$ die mit $u$ assoziert sind.
+    
+    Aufgrund der Minimalität von $H$ erfüllt der Teilgraph $H_{X\setminus\{u_1\}}$ die Eigenschaft (\ref{eq:P3}). Wir erhalten
+    \begin{align*}
+        |X| - 1 = |X\setminus\{u_1\}| &\leq \omega\left(H_{X\setminus\{u_1\}}\right) \omega\left(\overline{H_{X\setminus\{u_1\}}}\right) &\text{wegen (\ref{eq:P3})}\\
+        &\leq \omega(H)\omega(\overline H) \\
+        &\leq |X| - 1 &\text{wegen (\ref{eq:H_gegenbeispiel})}
+    \end{align*}
+
+    Es gilt also überall die Gleichheit und wir definieren
+
+    \begin{align*}
+        1=1
+    \end{align*}
+
+    \todo{todiste}
 \end{proof}
-\todo{bla bla}
 
 Nun sind wir bereit, den Beweis von Satz \ref{thm:wpgt} durchzuführen.
 
