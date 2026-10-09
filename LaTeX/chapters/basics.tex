@@ -232,7 +232,7 @@ In den Anfängen der Theorie der perfekten Graphen wurden viele Resultate doppel
     Insbesondere ist $G$ perfekt genau dann wenn $\overline G$ perfekt ist.
 \end{satz}
 
-Die Eigenschaft (\ref{eq:P1}) ist offensichtlich, dass $G$ perfekt ist und wird auch $\chi$-perfekt genannt. Die Eigenschaft (\ref{eq:P2}) wird auch $\alpha$-perfekt genannt, nach der Stabilitätszahl $\alpha(G) = \omega(\overline G)$. Die dritte Eigenschaft (\ref{eq:P3}) ist zentral für den Beweis, den wir auf das nächste Unterkapitel aufschieben.
+Die Eigenschaft (\ref{eq:P1}) ist offensichtlich, dass $G$ perfekt ist und wird auch $\chi$-perfekt genannt. Die Eigenschaft (\ref{eq:P2}) wird auch $\alpha$-perfekt genannt, nach der Stabilitätszahl $\alpha(G) = \omega(\overline G)$. Die dritte Eigenschaft \eqref{eq:P3} ist zentral für den Beweis, den wir auf das nächste Unterkapitel aufschieben.
 
 \begin{figure}[ht]
     \centering
@@ -373,47 +373,75 @@ Wir sagen $H$ entsteht durch Knotenmultiplikation aus $G$. Man beachte, das ein 
     \end{enumerate}
 \end{proof}
 
-Analog würden wir gern den obigen Satz auch für (\ref{eq:P3}) zeigen. Dazu ist aber eine zusätzliche Vorraussetzung erforderlich:
+Analog würden wir gern den obigen Satz auch für \eqref{eq:P3} zeigen. Dazu ist aber eine zusätzliche Vorraussetzung erforderlich:
 
 \begin{satz}\label{thm:lemma3.2}
     Sei $G = (V, E)$ ein Graph und $H = G \circ \mathbf h$ entstanden aus Knotenmultiplikation von $G$. Außerdem erfülle jeder induzierte Teilgraph von $G$ die Eigenschaft (\ref{eq:P2}). Dann gilt:
     
     \begin{equation*}
-        \text{$G$ erfüllt (\ref{eq:P3}) $\Rightarrow$ $H$ erfüllt (\ref{eq:P3})}
+        \text{$G$ erfüllt \eqref{eq:P3} $\Rightarrow$ $H$ erfüllt \eqref{eq:P3}}
     \end{equation*}
 \end{satz}
 \begin{proof}
-    Analog zum vorherigen Beweis nehmen wir o.B.d.A. an, dass $\mathbf h(u) > 0$ für alle Knoten $u$. Für einen Widerspruchbeweis sei $G$ ein gegebener Graph, der (\ref{eq:P3}) erfüllt und $H$ ein minimales Gegenbeispiel, also ein Graph, der aus Knotenmultiplikation von $G$ ensteht und (\ref{eq:P3}) nicht erfüllt, aber alle induzierten Teilgraphen von $H$ erfüllen (\ref{eq:P3}). Für $X$ als die Knotenmenge von $H$ gilt also
+    Analog zum vorherigen Beweis nehmen wir o.B.d.A. an, dass $\mathbf h(u) > 0$ für alle Knoten $u$. Für einen Widerspruchbeweis sei $G$ ein gegebener Graph, der \eqref{eq:P3} erfüllt und $H$ ein minimales Gegenbeispiel, also ein Graph, der aus Knotenmultiplikation von $G$ ensteht und \eqref{eq:P3} nicht erfüllt, aber alle induzierten Teilgraphen von $H$ erfüllen \eqref{eq:P3}. Für $X$ als die Knotenmenge von $H$ gilt also
     \begin{equation}\label{eq:H_gegenbeispiel}
         \omega(H)\omega(\overline H) < |X|
     \end{equation}
 
-    Da $G \neq H$ muss es mindestens einen Knoten $u$ geben, für den $\mathbf h(u) \geq 2$. Sei $U = \{u_1, \hdots, u_k\}$ die Menge der Knoten in $H$ die mit $u$ assoziert sind.
+    Da $G \neq H$ muss es mindestens einen Knoten $u$ geben, für den $h := \mathbf h(u) \geq 2$. Sei $U = \{u_1, \hdots, u_h\}$ die Menge der Knoten in $H$ die mit $u$ assoziert sind.
     
-    Aufgrund der Minimalität von $H$ erfüllt der Teilgraph $H_{X\setminus\{u_1\}}$ die Eigenschaft (\ref{eq:P3}). Wir erhalten
+    Aufgrund der Minimalität von $H$ erfüllt der Teilgraph $H_{X\setminus\{u_1\}}$ die Eigenschaft \eqref{eq:P3}. Wir erhalten
     \begin{align*}
-        |X| - 1 = |X\setminus\{u_1\}| &\leq \omega\left(H_{X\setminus\{u_1\}}\right) \omega\left(\overline{H_{X\setminus\{u_1\}}}\right) &\text{wegen (\ref{eq:P3})}\\
+        |X| - 1 = |X\setminus\{u_1\}| &\leq \omega\left(H_{X\setminus\{u_1\}}\right) \omega\left(\overline{H_{X\setminus\{u_1\}}}\right) &\text{wegen \eqref{eq:P3}}\\
         &\leq \omega(H)\omega(\overline H) \\
         &\leq |X| - 1 &\text{wegen (\ref{eq:H_gegenbeispiel})}
     \end{align*}
 
-    Es gilt also überall die Gleichheit und wir definieren
-
+    Es gilt also überall die Gleichheit und wir definieren:
     \begin{align*}
-        1=1
+        p &:= \omega\left(H_{X\setminus\{u_1\}}\right) = \omega(H) \\
+        q &:= \omega\left(\overline{H_{X\setminus\{u_1\}}}\right) = \omega(\overline H)
+    \end{align*}
+    
+    Der Graph $G - u$ erfüllt nach Voraussetzung (\ref{eq:P2}) und dementsprechend erfüllt nach Satz \ref{thm:lemma3.1} der Graph $H_{X\setminus U}$ ebenfalls (\ref{eq:P2}). $\overline{H_{X\setminus U}}$ kann also mit $q$ Farben gefärbt werden und wir nennen die Mengen von jeweils gleichgefärbten Knoten $K_1$ bis $K_q$. Diese Mengen sind Cliquen und wir nehmen zusätzlich an, dass $|K_1| \geq |K_2| \geq \hdots \geq |K_q|$. Es folgt:
+    \begin{equation*}
+        \sum\limits_{i = 1}^{q} |K_i| = |X \setminus U| = |X| - h = pq - (h-1)
+    \end{equation*}
+    
+    Jede dieser $q$ Cliquen ist höchstens $p$ groß, also können höchstens $h-1$ viele Cliquen nicht $p$ groß sein. Insbesondere ist $|K_1| = |K_2| = \hdots = |K_{q-h+1}| = p$. Betrachten wir als nun den Teilgraph $H'$ von $H$ mit der Knotenmenge
+    \begin{align}\label{eq:Xstrich_cardinality}   
+        \begin{split}
+            &X' := K_1 \cup K_2 \cup \hdots \cup K_{q-h+1} \cup \{u_1\} \\
+            |&X'| = p(q-h+1) + 1
+        \end{split}
+    \end{align}
+        
+    Die Minimalität von $H$ garantiert uns, dass $H'$ die Eigenschaft \eqref{eq:P3} erfüllt. Gemeinsam mit der Tatsache, dass $p = \omega(H) \geq \omega(H')$ haben wir
+    \begin{align*}
+        \omega(\overline{H'}) &\geq \frac{|X'|}{\omega(H')} &\text{\eqref{eq:P3} umgeformt} \\
+        &\geq \frac{|X'|}{p} \\
+        &= q-h+1 + \frac{1}{p} &\text{nach \eqref{eq:Xstrich_cardinality}} \\
+        &> q - h + 1
     \end{align*}
 
-    \todo{todiste}
+    Sei dementsprechend also $S'$ eine $q-h+2$ große Klique in $\overline{H'}$, also eine stabile Menge in $H'$. Offensichtlich kann aus jeder Klique $K_i$ jeweils nur ein Knoten in $S'$ liegen, also muss $u_1$ in $S'$ sein. Betrachten wir die Menge $S' \cup U$. Sie ist stabil, da Kopien von $u$ nicht untereinander verbunden sind und auch nicht mit den Knoten in $S'$ verbunden sind, da $u_1$ es nicht ist.
+    \begin{align*}
+        |S| &= |S'| + |U| - 1 &u_1\text{ nicht doppelt zählen} \\
+        &= q - h + 2 + h - 1 \\
+        &= q + 1
+    \end{align*}
+    
+    $S$ ist also eine $q+1$ große Klique in $\overline{H}$, was ein Widerspruch zur definition von $q$ ist. Die Annahme, das $H$ als Gegenbeispiel existiert muss also falsch gewesen sein.
 \end{proof}
 
 Nun sind wir bereit, den Beweis von Satz \ref{thm:wpgt} durchzuführen.
 
 \begin{proof}
-    (\ref{eq:P1}) $\Rightarrow$ (\ref{eq:P3}): Sei $A \subset V$ beliebig. Angenommen wir färben $G_A$ mit $\omega(G_A)$ Farben. Jede Farbe kann von höchstens $\omega(\overline{G_A})$ vielen Knoten angenommen werden, da gleichgefärbte Knoten eine Clique im Komplement $\overline{G_A}$ bilden. Über alle Farben aufsummiert ergibt sich $\omega(G_A) \cdot \omega(\overline{G_A}) \geq |A|$.
+    (\ref{eq:P1}) $\Rightarrow$ \eqref{eq:P3}: Sei $A \subset V$ beliebig. Angenommen wir färben $G_A$ mit $\omega(G_A)$ Farben. Jede Farbe kann von höchstens $\omega(\overline{G_A})$ vielen Knoten angenommen werden, da gleichgefärbte Knoten eine Clique im Komplement $\overline{G_A}$ bilden. Über alle Farben aufsummiert ergibt sich $\omega(G_A) \cdot \omega(\overline{G_A}) \geq |A|$.
 
-    (\ref{eq:P3}) $\Rightarrow$ (\ref{eq:P1}): \todo{Finish Proof}
+    \eqref{eq:P3} $\Rightarrow$ (\ref{eq:P1}): \todo{Finish Proof}
 
-    (\ref{eq:P2}) $\Leftrightarrow$ (\ref{eq:P3}): Man beachte das (\ref{eq:P3}) bezüglich Komplementbildung symmetrisch ist und (\ref{eq:P1}) und (\ref{eq:P2}) diesbezüglich Spiegelbilder sind. Dementsprechend liefert obige Argumentation auf $\overline G$ angewendet den Beweis.
+    (\ref{eq:P2}) $\Leftrightarrow$ \eqref{eq:P3}: Man beachte das \eqref{eq:P3} bezüglich Komplementbildung symmetrisch ist und (\ref{eq:P1}) und (\ref{eq:P2}) diesbezüglich Spiegelbilder sind. Dementsprechend liefert obige Argumentation auf $\overline G$ angewendet den Beweis.
 \end{proof}
 
 \section{Ausblick}
